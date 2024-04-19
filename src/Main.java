@@ -6,6 +6,8 @@ import net.sourceforge.argparse4j.inf.Namespace;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.sourceforge.argparse4j.impl.Arguments.storeTrue;
+
 
 public class Main {
     // storing results in these ArrayLists
@@ -22,18 +24,30 @@ public class Main {
                 .type(Integer.class)
                 .nargs("+")
                 .help("input vector");
+        // adding switch for benchmarking
+        parser.addArgument("--b").action(storeTrue());
+
 
         Namespace ns = parser.parseArgs(args);
 
-        // get vec
-        java.util.List<Integer> vec = ns.getList("v");
+        boolean benchmark = ns.getBoolean("b");
 
-        benchmarkCode("naive", vec);
-        benchmarkCode("recursive", vec);
-        benchmarkCode("dynamic", vec);
-        // TODO: Jan
-        // benchmarkCode("divide", vec);
-        benchmarkCode("optimal", vec);
+        // if not --b then calculate mss for given vector --v
+        // in the else case we can adjust the input based on loops and generate data
+        // more easily
+        if (!benchmark) {
+            // get vec
+            java.util.List<Integer> vec = ns.getList("v");
+
+
+            benchmarkCode("naive", vec);
+            benchmarkCode("recursive", vec);
+            benchmarkCode("dynamic", vec);
+            // TODO: Jan
+            // benchmarkCode("divide", vec);
+            benchmarkCode("optimal", vec);
+
+        }
 
     }
 
