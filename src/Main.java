@@ -4,6 +4,8 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import static net.sourceforge.argparse4j.impl.Arguments.storeTrue;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,11 +45,11 @@ public class Main {
 
             Random random = new Random();
             vec = new ArrayList<>(); // reset vec
-            int min = -100; // Define the minimum value
-            int max = 100;  // Define the maximum value
-            for (int i = 0; i < 50000; i++) {
+            int min = -100000000; // Define the minimum value
+            int max = 100000000;  // Define the maximum value
+            for (int i = 0; i < 500; i++) {
                 for (int j = 0; j <= i; j++) {
-                    vec.add(random.nextInt(max-min) +min); // add one rand number to vec
+                    vec.add(random.nextInt(max - min) + min); // add one rand number to vec
 
                     benchmarkCode("naive", vec);
                     benchmarkCode("recursive", vec);
@@ -122,5 +124,10 @@ public class Main {
                 divideTimeStamps.add(elapsedTimeMicros);
                 break;
        }
+    }
+
+    public static void writeCsv(String path){
+        File file = new File(path);
+        BufferedWriter buff = new BufferedWriter(file);
     }
 }
