@@ -2,7 +2,7 @@ import java.util.List;
 
 public class SMSS_Problem {
 
-    public static int optimal(List<Integer> sequence) {
+    public static int[] optimal(List<Integer> sequence) {
         int max = 0;
         int l = 1;
         int r = 0;
@@ -22,10 +22,10 @@ public class SMSS_Problem {
                 r = i;
             }
         }
-        return max;
+        return new int[]{l, r, max};
     }
 
-    public static int divide_and_conquer (List<Integer> sequence) {
-        return 0;
+    public static int[] divide_and_conquer (List<Integer> sequence) {
+        return new int[]{0, 0, 0};
     }
 }
