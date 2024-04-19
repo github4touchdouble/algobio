@@ -35,6 +35,7 @@ public class Main {
         Namespace ns = parser.parseArgs(args);
         java.util.List<Integer> vec = ns.getList("v");
 
+        // if not null then calc all approaches for the given vec
         if (vec != null) {
             benchmarkCode("naive", vec);
             benchmarkCode("recursive", vec);
@@ -43,14 +44,15 @@ public class Main {
             // benchmarkCode("divide", vec);
             benchmarkCode("optimal", vec);
 
-        } else {
-
+        }
+        else // benchmark all approaches in this case
+        {
             Random random = new Random();
             vec = new ArrayList<>(); // reset vec
 
             int min = -100; // Define the minimum value
             int max = 100;  // Define the maximum value
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < 500; i++) {
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
 
                     benchmarkCode("naive", vec);
@@ -132,7 +134,7 @@ public class Main {
         BufferedWriter buff = new BufferedWriter(new FileWriter(path));
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Naive; Recursive; Dynamic; Divide; Optimal\n");
+        sb.append("Naive;Recursive;Dynamic;Divide;Optimal\n");
         for (int i = 0; i < naiveTimeStamps.size(); i++) {
             sb.append(naiveTimeStamps.get(i) +
                     ";" + recTimeStamps.get(i) +
