@@ -2,7 +2,7 @@ import java.util.List;
 
 public class SMSS_Problem {
 
-    public static int Optimal(List<Integer> sequence) {
+    public static int optimal(List<Integer> sequence) {
         int max = 0;
         int l = 1;
         int r = 0;
@@ -23,5 +23,9 @@ public class SMSS_Problem {
             }
         }
         return max;
+    }
+
+    public static int divide_and_conquer (List<Integer> sequence) {
+        return 0;
     }
 }
