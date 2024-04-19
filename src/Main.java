@@ -2,11 +2,13 @@ import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
+import static net.sourceforge.argparse4j.impl.Arguments.storeTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.sourceforge.argparse4j.impl.Arguments.storeTrue;
+import java.util.Random;
+
 
 
 public class Main {
@@ -24,22 +26,12 @@ public class Main {
                 .type(Integer.class)
                 .nargs("+")
                 .help("input vector");
-        // adding switch for benchmarking
-        parser.addArgument("--b").action(storeTrue());
 
-
+        // get vec
         Namespace ns = parser.parseArgs(args);
+        java.util.List<Integer> vec = ns.getList("v");
 
-        boolean benchmark = ns.getBoolean("b");
-
-        // if not --b then calculate mss for given vector --v
-        // in the else case we can adjust the input based on loops and generate data
-        // more easily
-        if (!benchmark) {
-            // get vec
-            java.util.List<Integer> vec = ns.getList("v");
-
-
+        if (vec != null) {
             benchmarkCode("naive", vec);
             benchmarkCode("recursive", vec);
             benchmarkCode("dynamic", vec);
@@ -47,6 +39,24 @@ public class Main {
             // benchmarkCode("divide", vec);
             benchmarkCode("optimal", vec);
 
+        } else {
+
+            Random random = new Random();
+            vec = new ArrayList<>(); // reset vec
+            int min = -100; // Define the minimum value
+            int max = 100;  // Define the maximum value
+            for (int i = 0; i < 50000; i++) {
+                for (int j = 0; j <= i; j++) {
+                    vec.add(random.nextInt(max-min) +min); // add one rand number to vec
+
+                    benchmarkCode("naive", vec);
+                    benchmarkCode("recursive", vec);
+                    benchmarkCode("dynamic", vec);
+                    // TODO: Jan
+                    // benchmarkCode("divide", vec);
+                    benchmarkCode("optimal", vec);
+                }
+            }
         }
 
     }
