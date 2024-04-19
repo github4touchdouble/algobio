@@ -25,6 +25,9 @@ public class Main {
 
         int[] resRec = SMSS_Problem.rec(vec);
         printRes(resRec);
+
+        int[] resDynamic = SMSS_Problem.dynamic(vec);
+        printRes(resDynamic);
     }
 
     public static void printRes(int[] res) {
