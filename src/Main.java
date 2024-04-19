@@ -6,6 +6,8 @@ import static net.sourceforge.argparse4j.impl.Arguments.storeTrue;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +18,12 @@ import java.util.Random;
 public class Main {
     // storing results in these ArrayLists
     // these will be written to a csv when benchmarking with python
-    private static ArrayList<Long> naiveTimeStamps = new ArrayList<>();
-    private static ArrayList<Long> recTimeStamps = new ArrayList<>();
-    private static ArrayList<Long> dynamicTimeStamps = new ArrayList<>();
-    private static ArrayList<Long> divideTimeStamps = new ArrayList<>();
-    private static ArrayList<Long> optimalTimeStamps = new ArrayList<>();
-    public static void main(String[] args) throws ArgumentParserException {
+    static ArrayList<Long> naiveTimeStamps = new ArrayList<>();
+    static ArrayList<Long> recTimeStamps = new ArrayList<>();
+    static ArrayList<Long> dynamicTimeStamps = new ArrayList<>();
+    static ArrayList<Long> divideTimeStamps = new ArrayList<>();
+    static ArrayList<Long> optimalTimeStamps = new ArrayList<>();
+    public static void main(String[] args) throws ArgumentParserException, IOException {
         ArgumentParser parser = ArgumentParsers.newFor("MSS").build().defaultHelp(true).description("Calculate maximum scoring subsequence for given input vector --v");
         parser.addArgument("--v")
                 .metavar("N")
@@ -45,10 +47,10 @@ public class Main {
 
             Random random = new Random();
             vec = new ArrayList<>(); // reset vec
-            int min = -100000000; // Define the minimum value
-            int max = 100000000;  // Define the maximum value
-            for (int i = 0; i < 500; i++) {
-                for (int j = 0; j <= i; j++) {
+
+            int min = -100; // Define the minimum value
+            int max = 100;  // Define the maximum value
+            for (int i = 0; i < 50; i++) {
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
 
                     benchmarkCode("naive", vec);
@@ -57,8 +59,8 @@ public class Main {
                     // TODO: Jan
                     // benchmarkCode("divide", vec);
                     benchmarkCode("optimal", vec);
-                }
             }
+            writeCsv("TEST.txt");
         }
 
     }
@@ -126,8 +128,20 @@ public class Main {
        }
     }
 
-    public static void writeCsv(String path){
-        File file = new File(path);
-        BufferedWriter buff = new BufferedWriter(file);
+    public static void writeCsv(String path) throws IOException {
+        BufferedWriter buff = new BufferedWriter(new FileWriter(path));
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Naive; Recursive; Dynamic; Divide; Optimal\n");
+        for (int i = 0; i < naiveTimeStamps.size(); i++) {
+            sb.append(naiveTimeStamps.get(i) +
+                    ";" + recTimeStamps.get(i) +
+                    ";" + dynamicTimeStamps.get(i) +
+                    //";" + divideTimeStamps.get(i) +
+                    ";" + optimalTimeStamps.get(i) + "\n");
+        }
+
+        String out = sb.toString();
+        buff.write(out);
     }
 }
