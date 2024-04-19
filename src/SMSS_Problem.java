@@ -55,4 +55,39 @@ public class SMSS_Problem {
         }
         return  res;
     }
+
+    public static int[] rec(List<Integer> sequence) {
+        int[] res = new int[3];
+        int maxscore = 0;
+        int l = 1;
+        int r = 0;
+
+        for (int i = 0; i <= sequence.size() - 1; i++) {
+            for (int j = i; j <= sequence.size() - 1; j++) {
+
+                int s = 0;
+                for (int k = 0; k <= j; k++) {
+                    s = s + sequence.get(k);
+                }
+
+                if (s >= maxscore) {
+                    maxscore = s;
+                    l = i;
+                    r = j;
+                    res[0] = maxscore;
+                    res[1] = l;
+                    res[2] = r;
+                }
+            }
+        }
+        return  res;
+    }
+    public static int sig(int i, int j, List<Integer> sequence) {
+        int sequenceScore = 0;
+        for (int k = i; k < j ; k++) {
+           sequenceScore += sequence.get(k);
+        }
+        return sequenceScore;
+    }
+
 }
