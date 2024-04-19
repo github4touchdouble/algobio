@@ -3,8 +3,6 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 
-import javax.naming.Name;
-
 
 public class Main {
     public static void main(String[] args) throws ArgumentParserException {
@@ -15,10 +13,14 @@ public class Main {
                 .help("input vector");
 
         Namespace ns = parser.parseArgs(args);
-        // get vals to list
+
+        // get vec
         java.util.List<Integer> vec = ns.getList("v");
 
         int[] resOptimal = SMSS_Problem.optimal(vec);
+        printRes(resOptimal);
+
+        int[] resNaive = SMSS_Problem.naive(vec);
         printRes(resOptimal);
     }
 

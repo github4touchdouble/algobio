@@ -29,18 +29,30 @@ public class SMSS_Problem {
         return new int[]{0, 0, 0};
     }
 
-    public static int[] naive(int[] a) {
-        int maxS = 0;
+    public static int[] naive(List<Integer> sequence) {
+        int maxscore = 0;
+        int[] res = new int[3];
         int l = 1;
         int r = 0;
 
-        for (int i = 0; i <= a.length; i++) {
-            for (int j = i; j <= a.length; j++) {
-                for (int k = 0; k <= j; k++) {
+        for (int i = 0; i <= sequence.size() - 1; i++) {
+            for (int j = i; j <= sequence.size() - 1; j++) {
 
+                int s = 0;
+                for (int k = 0; k <= j; k++) {
+                    s = s + sequence.get(k);
+                }
+
+                if (s >= maxscore) {
+                    maxscore = s;
+                    l = i;
+                    r = j;
+                    res[0] = maxscore;
+                    res[1] = l;
+                    res[2] = r;
                 }
             }
         }
-        return a;
+        return  res;
     }
 }
