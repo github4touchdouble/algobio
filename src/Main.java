@@ -60,7 +60,7 @@ public class Main {
                     // benchmarkCode("divide", vec);
                     benchmarkCode("optimal", vec);
             }
-            writeCsv("TEST.txt");
+            writeCsv("time.csv");
         }
 
     }
@@ -143,5 +143,6 @@ public class Main {
 
         String out = sb.toString();
         buff.write(out);
+        buff.close();
     }
 }
