@@ -29,6 +29,7 @@ public class SMSS_Problem {
         return rec_divide_and_conquer(sequence, 1, sequence.size());
 
     }
+    // todo: not finished
     private static int[] rec_divide_and_conquer(List<Integer> sequence, int i, int j) {
         if (i == j) {
             if (sequence.get(i) > 0) {
@@ -41,7 +42,7 @@ public class SMSS_Problem {
             int[] s1 = rec_divide_and_conquer(sequence, i, m);
             int[] s2 = rec_divide_and_conquer(sequence, m + 1, j);
         }
-
+        return new int[]{0, 0, 0};
     }
 
 
