@@ -38,7 +38,7 @@ public class SMSS_Problem {
         for (int i = 0; i < n; i++) {
             for (int j = i; j < n; j++) {
 
-                int s = sig(0, j, sequence);
+                int s = sig(i, j, sequence);
 
                 if (s >= res[2]) {
                     res[0] = i; // l
@@ -47,7 +47,7 @@ public class SMSS_Problem {
                 }
             }
         }
-        return  res;
+        return res;
     }
 
     public static int[] rec(List<Integer> sequence) {
