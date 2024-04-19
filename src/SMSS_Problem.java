@@ -28,4 +28,19 @@ public class SMSS_Problem {
     public static int[] divide_and_conquer (List<Integer> sequence) {
         return new int[]{0, 0, 0};
     }
+
+    public static int[] naive(int[] a) {
+        int maxS = 0;
+        int l = 1;
+        int r = 0;
+
+        for (int i = 0; i <= a.length; i++) {
+            for (int j = i; j <= a.length; j++) {
+                for (int k = 0; k < ; k++) {
+
+                }
+            }
+        }
+
+    }
 }
