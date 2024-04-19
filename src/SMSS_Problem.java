@@ -36,11 +36,11 @@ public class SMSS_Problem {
 
         for (int i = 0; i <= a.length; i++) {
             for (int j = i; j <= a.length; j++) {
-                for (int k = 0; k < ; k++) {
+                for (int k = 0; k <= j; k++) {
 
                 }
             }
         }
-
+        return a;
     }
 }

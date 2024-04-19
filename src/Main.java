@@ -18,6 +18,11 @@ public class Main {
         // get vals to list
         java.util.List<Integer> vec = ns.getList("v");
 
-        SMSS_Problem.Optimal(vec);
+        int[] resOptimal = SMSS_Problem.optimal(vec);
+        printRes(resOptimal);
+    }
+
+    public static void printRes(int[] res) {
+        System.out.println("[" + res[0] + "," + res[1] +"] mit score " + res[2]);
     }
 }
