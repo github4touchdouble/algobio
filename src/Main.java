@@ -22,6 +22,9 @@ public class Main {
 
         int[] resNaive = SMSS_Problem.naive(vec);
         printRes(resOptimal);
+
+        int[] resRec = SMSS_Problem.rec(vec);
+        printRes(resRec);
     }
 
     public static void printRes(int[] res) {

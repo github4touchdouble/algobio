@@ -30,26 +30,20 @@ public class SMSS_Problem {
     }
 
     public static int[] naive(List<Integer> sequence) {
-        int maxscore = 0;
-        int[] res = new int[3];
-        int l = 1;
-        int r = 0;
+        // init
+        // [l, r, max]
+        int[] res = new int[]{1,0,0};
+        int n = sequence.size();
 
-        for (int i = 0; i <= sequence.size() - 1; i++) {
-            for (int j = i; j <= sequence.size() - 1; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
 
-                int s = 0;
-                for (int k = 0; k <= j; k++) {
-                    s = s + sequence.get(k);
-                }
+                int s = sig(0, j, sequence);
 
-                if (s >= maxscore) {
-                    maxscore = s;
-                    l = i;
-                    r = j;
-                    res[0] = maxscore;
-                    res[1] = l;
-                    res[2] = r;
+                if (s >= res[2]) {
+                    res[0] = i; // l
+                    res[1] = j; // r
+                    res[2] = s; // update max score
                 }
             }
         }
@@ -57,37 +51,47 @@ public class SMSS_Problem {
     }
 
     public static int[] rec(List<Integer> sequence) {
-        int[] res = new int[3];
-        int maxscore = 0;
-        int l = 1;
-        int r = 0;
+        // init
+        // [l, r, max]
+        int[] res = new int[]{1,0,0};
+        int n = sequence.size();
 
-        for (int i = 0; i <= sequence.size() - 1; i++) {
-            for (int j = i; j <= sequence.size() - 1; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+               int s = sigRec(i, j, sequence);
 
-                int s = 0;
-                for (int k = 0; k <= j; k++) {
-                    s = s + sequence.get(k);
-                }
-
-                if (s >= maxscore) {
-                    maxscore = s;
-                    l = i;
-                    r = j;
-                    res[0] = maxscore;
-                    res[1] = l;
-                    res[2] = r;
-                }
+               if (s >= res[2]) {
+                   res[0] = i; // l
+                   res[1] = j; // r
+                   res[2] = s; // update max score
+               }
             }
         }
+
         return  res;
     }
+
     public static int sig(int i, int j, List<Integer> sequence) {
         int sequenceScore = 0;
-        for (int k = i; k < j ; k++) {
+        for (int k = i; k <= j ; k++) {
            sequenceScore += sequence.get(k);
         }
         return sequenceScore;
+    }
+
+
+    public static int sigRec(int i, int j, List<Integer> sequence) {
+        if (i > j) {
+            return 0;
+        } else if (i == j) {
+            return sequence.get(i);
+        } else {
+            for (int k = i; k < j; k++) {
+                return sigRec(i,k, sequence) + sigRec(k + 1, j, sequence);
+            }
+        }
+
+        return 0; // this should never be reached
     }
 
 }
