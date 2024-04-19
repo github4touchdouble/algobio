@@ -3,10 +3,18 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Main {
+    // storing results in these ArrayLists
+    // these will be written to a csv when benchmarking with python
+    private static ArrayList<Long> naiveTimeStamps = new ArrayList<>();
+    private static ArrayList<Long> recTimeStamps = new ArrayList<>();
+    private static ArrayList<Long> dynamicTimeStamps = new ArrayList<>();
+    private static ArrayList<Long> divideTimeStamps = new ArrayList<>();
+    private static ArrayList<Long> optimalTimeStamps = new ArrayList<>();
     public static void main(String[] args) throws ArgumentParserException {
         ArgumentParser parser = ArgumentParsers.newFor("MSS").build().defaultHelp(true).description("Calculate maximum scoring subsequence for given input vector --v");
         parser.addArgument("--v")
@@ -23,6 +31,8 @@ public class Main {
         benchmarkCode("naive", vec);
         benchmarkCode("recursive", vec);
         benchmarkCode("dynamic", vec);
+        // TODO: Jan
+        // benchmarkCode("divide", vec);
         benchmarkCode("optimal", vec);
 
     }
@@ -45,6 +55,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Optimal:");
                 printRes(resOptimal, elapsedTimeMicros);
+                optimalTimeStamps.add(elapsedTimeMicros);
                 break;
 
             case("naive"):
@@ -54,6 +65,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Naive:");
                 printRes(resNai, elapsedTimeMicros);
+                naiveTimeStamps.add(elapsedTimeMicros);
                 break;
 
             case ("recursive"):
@@ -63,6 +75,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Recursive:");
                 printRes(resRec, elapsedTimeMicros);
+                recTimeStamps.add(elapsedTimeMicros);
                 break;
 
             case ("dynamic"):
@@ -72,10 +85,18 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Dynamic Programming:");
                 printRes(resDyn, elapsedTimeMicros);
+                dynamicTimeStamps.add(elapsedTimeMicros);
                 break;
 
-
-
+            case("divide"):
+                startTime = System.nanoTime();
+                int[] resDiv = SMSS_Problem.divide_and_conquer(vec);
+                endTime = System.nanoTime();
+                elapsedTimeMicros = (endTime - startTime) / 1000;
+                System.out.println("Divide and Conquer:");
+                printRes(resDiv, elapsedTimeMicros);
+                divideTimeStamps.add(elapsedTimeMicros);
+                break;
        }
     }
 }

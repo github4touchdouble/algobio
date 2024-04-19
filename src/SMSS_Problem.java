@@ -1,6 +1,8 @@
 import java.util.List;
 
 public class SMSS_Problem {
+    // run config 1 args: --v -5 2 4 -4 5
+    // run config 2 args: --v 5 ,-2 ,5 ,-2 ,1 ,-9 ,12 ,-2 ,24 ,-5 ,13 ,-12 ,3 ,-13 ,5
 
     public static int[] optimal(List<Integer> sequence) {
         int max = 0;
