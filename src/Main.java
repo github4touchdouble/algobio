@@ -23,6 +23,7 @@ public class Main {
     static ArrayList<Long> dynamicTimeStamps = new ArrayList<>();
     static ArrayList<Long> divideTimeStamps = new ArrayList<>();
     static ArrayList<Long> optimalTimeStamps = new ArrayList<>();
+    static ArrayList<Long> allTimeStamps = new ArrayList<>();
     public static void main(String[] args) throws ArgumentParserException, IOException {
         ArgumentParser parser = ArgumentParsers.newFor("MSS").build().defaultHelp(true).description("Calculate maximum scoring subsequence for given input vector --v");
         parser.addArgument("--v")
@@ -43,22 +44,7 @@ public class Main {
             // TODO: Jan
             // benchmarkCode("divide", vec);
             benchmarkCode("optimal", vec);
-
-            ArrayList<int[]> scores = SMSS_Problem.optimalAll(vec);
-            int lastL = Integer.MIN_VALUE;
-            int lastR = Integer.MIN_VALUE;
-            for(int[] x: scores) {
-                // case one
-                if (x[0] > lastL && x[1] > lastR) {
-                    lastL = x[0];
-                    lastR = x[1];
-
-                    printRes(x, 0L);
-                }
-                // else if (x[0] <= lastL && x[1] >= lastR) {
-                //     System.out.println("s");
-                // }
-            }
+            benchmarkCode("all", vec);
 
         }
         else // benchmark all approaches in this case
@@ -77,6 +63,7 @@ public class Main {
                     // TODO: Jan
                     // benchmarkCode("divide", vec);
                     benchmarkCode("optimal", vec);
+                    benchmarkCode("all", vec);
             }
             writeCsv("time.csv");
         }
@@ -143,6 +130,27 @@ public class Main {
                 printRes(resDiv, elapsedTimeMicros);
                 divideTimeStamps.add(elapsedTimeMicros);
                 break;
+
+            case("all"):
+                startTime = System.nanoTime();
+                ArrayList<int[]> resAll = SMSS_Problem.optimalAll(vec);
+                endTime = System.nanoTime();
+                elapsedTimeMicros = (endTime - startTime) / 1000;
+                System.out.println("All MSS:");
+                int lastL = Integer.MIN_VALUE;
+                int lastR = Integer.MIN_VALUE;
+                for(int[] res: resAll) {
+                    if (res[0] > lastL && res[1] > lastR) {
+                        lastL = res[0];
+                        lastR = res[1];
+                        printRes(res, elapsedTimeMicros);
+                    }
+                    // else if (x[0] <= lastL && x[1] >= lastR) {
+                    //     System.out.println("s");
+                    // }
+                }
+                allTimeStamps.add(elapsedTimeMicros);
+
        }
     }
 
@@ -150,13 +158,14 @@ public class Main {
         BufferedWriter buff = new BufferedWriter(new FileWriter(path));
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Naive;Recursive;Dynamic;Divide;Optimal\n");
+        sb.append("Naive;Recursive;Dynamic;Divide;Optimal;All\n");
         for (int i = 0; i < naiveTimeStamps.size(); i++) {
             sb.append(naiveTimeStamps.get(i) +
                     ";" + recTimeStamps.get(i) +
                     ";" + dynamicTimeStamps.get(i) +
                     //";" + divideTimeStamps.get(i) +
-                    ";" + optimalTimeStamps.get(i) + "\n");
+                    ";" + optimalTimeStamps.get(i) +
+                    ";" + allTimeStamps.get(i) + "\n");
         }
 
         String out = sb.toString();
