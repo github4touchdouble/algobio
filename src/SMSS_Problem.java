@@ -1,8 +1,11 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SMSS_Problem {
     // run config 1 args: --v -5 2 4 -4 5
-    // run config 2 args: --v 5 ,-2 ,5 ,-2 ,1 ,-9 ,12 ,-2 ,24 ,-5 ,13 ,-12 ,3 ,-13 ,5
+    // run config 2 args: --v 5 -2 5 -2 1 -9 12 -2 24 -5 13 -12 3 -13 5
+    // run test case slides: --v 5 -2 5 -2 1 -9 5 -2 4 -5 1 -2 3 -1 5 -3 2 -1 2
 
     public static int[] optimal(List<Integer> sequence) {
         int max = 0;
@@ -94,6 +97,37 @@ public class SMSS_Problem {
         }
 
         return res;
+    }
+
+    // Aufgabe 3a
+
+    public static ArrayList<int[]> optimalAll(List<Integer> sequence) {
+        ArrayList<ArrayList<int[]>> scores = new ArrayList<>();
+        scores.add(new ArrayList<>()); // init first sub list
+        int max = 0;
+        int l = 1;
+        int r = 0;
+        int rmax = 0;
+        int rstart = 1;
+        int n = sequence.size();
+        for (int i = 0; i < n; i++) {
+            if (rmax > 0) {
+                rmax = rmax + sequence.get(i);
+            } else {
+                rmax = sequence.get(i);
+                rstart = i;
+            }
+            if (rmax > max) {
+                max = rmax;
+                l = rstart;
+                r = i;
+                scores.add(new ArrayList<>());
+                scores.get(scores.size()-1).add(new int[] {l, r, max});
+            } else if (rmax == max) {
+                scores.get(scores.size()-1).add(new int[] {rstart, i, max});
+            }
+        }
+        return scores.get(scores.size() - 1);
     }
 
     public static int sig(int i, int j, List<Integer> sequence) {
