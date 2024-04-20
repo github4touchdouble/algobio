@@ -44,10 +44,26 @@ public class Main {
             // benchmarkCode("divide", vec);
             benchmarkCode("optimal", vec);
 
+            ArrayList<int[]> scores = SMSS_Problem.optimalAll(vec);
+            int lastL = Integer.MIN_VALUE;
+            int lastR = Integer.MIN_VALUE;
+            for(int[] x: scores) {
+                // case one
+                if (x[0] > lastL && x[1] > lastR) {
+                    lastL = x[0];
+                    lastR = x[1];
+
+                    printRes(x, 0L);
+                }
+                // else if (x[0] <= lastL && x[1] >= lastR) {
+                //     System.out.println("s");
+                // }
+            }
+
         }
         else // benchmark all approaches in this case
         {
-            Random random = new Random();
+            Random random = new Random(42L); // seed for reproducibility
             vec = new ArrayList<>(); // reset vec
 
             int min = -100; // Define the minimum value
