@@ -65,7 +65,8 @@ public class Main {
                     benchmarkCode("optimal", vec);
                     benchmarkCode("all", vec);
             }
-            writeCsv("time.csv");
+
+            // writeCsv("time.csv");
         }
 
     }
@@ -92,13 +93,16 @@ public class Main {
                 break;
 
             case("naive"):
+
                 startTime = System.nanoTime();
                 int[] resNai = SMSS_Problem.naive(vec);
                 endTime = System.nanoTime();
+
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Naive:");
                 printRes(resNai, elapsedTimeMicros);
                 naiveTimeStamps.add(elapsedTimeMicros);
+
                 break;
 
             case ("recursive"):
@@ -137,25 +141,9 @@ public class Main {
                 endTime = System.nanoTime();
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("All MSS:");
-                int lastL = Integer.MIN_VALUE;
-                int lastR = Integer.MIN_VALUE;
 
                 for(int[] res: resAll) {
-                    if (res[0] > lastL && res[1] > lastR) {
-                        lastL = res[0];
-                        lastR = res[1];
-                        printRes(res, elapsedTimeMicros);
-                    }
-
-                    // 1: ---+=====+---------: <--- this is also no possible configuration
-                    // 2: ---+===+-----------:
-
-                    // 1: ---+===+-----------: <--- this case can happen and gets caught (meaning the seg 2 will be left out)
-                    // 2: ---+=====+---------:
-
-                    // also not possible
-                    // 1: -----+=+-----------:
-                    // 2: ---+=====+---------:
+                    printRes(res, elapsedTimeMicros);
                 }
                 allTimeStamps.add(elapsedTimeMicros);
        }
@@ -179,5 +167,11 @@ public class Main {
         String out = sb.toString();
         buff.write(out);
         buff.close();
+    }
+
+    // get memory usage
+    private static long getMemoryUsage() {
+        Runtime runtime = Runtime.getRuntime();
+        return runtime.totalMemory() - runtime.freeMemory();
     }
 }

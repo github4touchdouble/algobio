@@ -148,7 +148,6 @@ public class SMSS_Problem {
     }
 
     // Aufgabe 3a
-
     public static ArrayList<int[]> optimalAll(List<Integer> sequence) {
         ArrayList<ArrayList<int[]>> scores = new ArrayList<>();
         scores.add(new ArrayList<>()); // init first sub list
@@ -157,7 +156,9 @@ public class SMSS_Problem {
         int r = 0;
         int rmax = 0;
         int rstart = 1;
+
         int n = sequence.size();
+
         for (int i = 0; i < n; i++) {
             if (rmax > 0) {
                 rmax = rmax + sequence.get(i);
@@ -165,17 +166,61 @@ public class SMSS_Problem {
                 rmax = sequence.get(i);
                 rstart = i;
             }
-            if (rmax > max) {
+            if (rmax > max) { // open new list of new max score
                 max = rmax;
                 l = rstart;
                 r = i;
                 scores.add(new ArrayList<>());
                 scores.get(scores.size() - 1).add(new int[]{l, r, max});
-            } else if (rmax == max) {
+            } else if (rmax == max) { // append to current max score
                 scores.get(scores.size() - 1).add(new int[]{rstart, i, max});
             }
         }
-        return scores.get(scores.size() - 1);
+
+
+        // deal with overlapping sequences
+        int lastL = Integer.MIN_VALUE;
+        int lastR = Integer.MIN_VALUE;
+        ArrayList<int[]> finalRes = new ArrayList<>();
+
+        // O(n), go through all segments of mss list
+        for(int[] segment: scores.get(scores.size() - 1)) {
+            if (segment[0] > lastL && segment[1] > lastR) {
+                lastL = segment[0];
+                lastR = segment[1];
+                finalRes.add(segment);
+            }
+        }
+
+        // We assume the following:
+        // Segments get added in a certain order:
+        // this constellation is not possible, because seg 2 would've been found before seg 1
+        // 1: ---+=====+---------:
+        // 2: ---+===+-----------:
+
+        // this is the above but in reversed order,
+        // in this case, seg one gets added to final res
+        // but seg 2 wont be added since segment[0] (leftIndex) == lastL, thus the if condition is not met
+        // these two cases are the only case we need to account for:
+        // CASE 1
+        // 1: ---+===+-----------:
+        // 2: ---+=====+---------:
+
+        // CASE 2
+        // here the if condition above is also not met since seg 2 end index == lastR
+        // 1: -----+===+---------:
+        // 2: ---+=====+---------:
+
+        // Overlaps like this are not possible
+        // overlapping segments always share either their starting index
+        // or end index
+        // 1: -----+=+-----------:
+        // 2: ---+=====+---------:
+
+        // 1: ---+=====+---------:
+        // 2: -----+=+-----------:
+
+        return finalRes;
     }
 
     public static int sig(int i, int j, List<Integer> sequence) {
