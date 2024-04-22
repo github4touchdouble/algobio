@@ -30,6 +30,7 @@ public class SMSS_Problem {
         return new int[]{l, r, max};
     }
 
+    //todo: bugfix
     public static int[] divide_and_conquer(List<Integer> sequence) {
         return rec_divide_and_conquer(sequence, 0, sequence.size() - 1);
     }
@@ -70,13 +71,15 @@ public class SMSS_Problem {
             }
         }
     }
-
+    /*
     public static void main(String[] args) {
         int[] test = new int[]{-5, 2, 4, -4, 5};
         //int[] optimal = optimal(new ArrayList<>(List.of(-5, 2, 4, -4, 5)));
         int[] optimal = divide_and_conquer(new ArrayList<>(List.of(-5, 2, 4, -4, 5)));
         System.out.println("Optimal: [" + optimal[0] + "," + optimal[1] + "] mit score " + optimal[2]);
     }
+    */
+
 
 
     public static int[] naive(List<Integer> sequence) {
