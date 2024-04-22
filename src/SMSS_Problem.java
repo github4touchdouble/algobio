@@ -41,31 +41,33 @@ public class SMSS_Problem {
             } else {
                 return new int[]{i, i - 1, 0};
             }
-        }
-        int m = (i + j - 1) / 2;
-        int[] t1 = rec_divide_and_conquer(sequence, i, m);
-        int[] t2 = rec_divide_and_conquer(sequence, m + 1, j);
-        int[] t3 = new int[]{0, 0, 0};
-        for (int k = i; k <= m; k++) {
-            int sigma = sigRec(k, m, sequence);
-            if (sigma > t3[0]) {
-                t3[0] = sigma;
-            }
-        }
-        for (int k = m + 1; k <= j; k++) {
-            int sigma = sigRec(m + 1, k, sequence);
-            if (sigma < t3[1]) {
-                t3[1] = sigma;
-            }
-        }
-        t3[2] = sig(t3[0], t3[1], sequence);
-
-        if (t1[2] > t2[2] && t1[2] > t3[2]) {
-            return t1;
-        } else if (t2[2] > t1[2] && t2[2] > t3[2]) {
-            return t2;
         } else {
-            return t3;
+            int m = (i + j - 1) / 2;
+            int[] t1 = rec_divide_and_conquer(sequence, i, m);
+            int[] t2 = rec_divide_and_conquer(sequence, m + 1, j);
+            int[] t3 = new int[]{0, 0, 0};
+            for (int k = i; k <= m; k++) {
+                int sigma = sigRec(k, m, sequence);
+                if (sigma > t3[0]) {
+                    t3[0] = sigma;
+                }
+            }
+            for (int k = m + 1; k <= j; k++) {
+                int sigma = sigRec(m + 1, k, sequence);
+                if (sigma < t3[1]) {
+                    t3[1] = sigma;
+                }
+            }
+            t3[2] = sig(t3[0], t3[1], sequence);
+            System.out.println(t3[0] + " " + t3[1] + " " + t3[2]);
+
+            if (t1[2] > t2[2] && t1[2] > t3[2]) {
+                return t1;
+            } else if (t2[2] > t1[2] && t2[2] > t3[2]) {
+                return t2;
+            } else {
+                return t3;
+            }
         }
     }
 
