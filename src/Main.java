@@ -139,21 +139,29 @@ public class Main {
                 System.out.println("All MSS:");
                 int lastL = Integer.MIN_VALUE;
                 int lastR = Integer.MIN_VALUE;
+
                 for(int[] res: resAll) {
                     if (res[0] > lastL && res[1] > lastR) {
                         lastL = res[0];
                         lastR = res[1];
                         printRes(res, elapsedTimeMicros);
                     }
-                    // else if (x[0] <= lastL && x[1] >= lastR) {
-                    //     System.out.println("s");
-                    // }
+
+                    // 1: ---+=====+---------: <--- this is also no possible configuration
+                    // 2: ---+===+-----------:
+
+                    // 1: ---+===+-----------: <--- this case can happen and gets caught (meaning the seg 2 will be left out)
+                    // 2: ---+=====+---------:
+
+                    // also not possible
+                    // 1: -----+=+-----------:
+                    // 2: ---+=====+---------:
                 }
                 allTimeStamps.add(elapsedTimeMicros);
-
        }
     }
 
+    // TODO:
     public static void writeCsv(String path) throws IOException {
         BufferedWriter buff = new BufferedWriter(new FileWriter(path));
         StringBuilder sb = new StringBuilder();
