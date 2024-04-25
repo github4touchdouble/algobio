@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SMSS_Problem {
@@ -220,6 +221,25 @@ public class SMSS_Problem {
         // 2: -----+=+-----------:
 
         return finalRes;
+    }
+
+    public static ArrayList<int[]> allMSS_1_3b(List<Integer> sequence) {
+        ArrayList<int[]> bin = allMSS_1_3a(sequence);
+        int min_length = 0;
+        HashMap<Integer, ArrayList<int[]>> mss = new HashMap<>();
+        for (int[] s : bin) {
+            int length = s[1] - s[0] + 1;
+            if (length < min_length || min_length == 0) {
+                min_length = length;
+            }
+            if (mss.containsKey(length)) {
+                mss.get(length).add(s);
+            } else {
+                mss.put(length, new ArrayList<>());
+                mss.get(length).add(s);
+            }
+        }
+        return mss.get(min_length);
     }
 
     public static int sig(int i, int j, List<Integer> sequence) {
