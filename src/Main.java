@@ -7,6 +7,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.Random;
@@ -16,12 +17,7 @@ import java.util.Random;
 public class Main {
     // storing results in these ArrayLists
     // these will be written to a csv when benchmarking with python
-    static ArrayList<Long> naiveTimeStamps = new ArrayList<>();
-    static ArrayList<Long> recTimeStamps = new ArrayList<>();
-    static ArrayList<Long> dynamicTimeStamps = new ArrayList<>();
-    static ArrayList<Long> divideTimeStamps = new ArrayList<>();
-    static ArrayList<Long> optimalTimeStamps = new ArrayList<>();
-    static ArrayList<Long> allTimeStamps = new ArrayList<>();
+    static HashMap<String, ArrayList<Long>> timeStamps = new HashMap<>();
     public static void main(String[] args) throws ArgumentParserException, IOException {
         ArgumentParser parser = ArgumentParsers.newFor("MSS").build().defaultHelp(true).description("Calculate maximum scoring subsequence for given input vector --v");
         parser.addArgument("--v")
@@ -29,21 +25,41 @@ public class Main {
                 .type(Integer.class)
                 .nargs("+")
                 .help("input vector");
+        parser.addArgument("--a")
+                .metavar("N")
+                .type(String.class)
+                .nargs("+")
+                .help("algorithm type");
 
         // get vec
         Namespace ns = parser.parseArgs(args);
         java.util.List<Integer> vec = ns.getList("v");
+        java.util.List<String> algs = ns.getList("a");
+
+        // init all HashMaps for storing time stamps
+        timeStamps.put("naive", new ArrayList<>());
+        timeStamps.put("recursive", new ArrayList<>());
+        timeStamps.put("divide", new ArrayList<>());
+        timeStamps.put("dynamic", new ArrayList<>());
+        timeStamps.put("optimal", new ArrayList<>());
+        timeStamps.put("smss", new ArrayList<>());
+
 
         // if not null then calc all approaches for the given vec
         if (vec != null) {
-            benchmarkCode("naive", vec);
-            benchmarkCode("recursive", vec);
-            benchmarkCode("dynamic", vec);
-            // TODO: Jan
-            // benchmarkCode("divide", vec);
-            benchmarkCode("optimal", vec);
-            benchmarkCode("all", vec);
-
+            if (algs != null) { // if specific algs are given, only calculate for these algs
+                for(String algorithm : algs) {
+                    benchmarkCode(algorithm, vec);
+                }
+            }
+            else {
+                benchmarkCode("naive", vec);
+                benchmarkCode("recursive", vec);
+                benchmarkCode("dynamic", vec);
+                benchmarkCode("divide", vec);
+                benchmarkCode("optimal", vec);
+                benchmarkCode("smss", vec);
+            }
         }
         else // benchmark all approaches in this case
         {
@@ -58,8 +74,7 @@ public class Main {
                     benchmarkCode("naive", vec);
                     benchmarkCode("recursive", vec);
                     benchmarkCode("dynamic", vec);
-                    // TODO: Jan
-                    // benchmarkCode("divide", vec);
+                    benchmarkCode("divide", vec);
                     benchmarkCode("optimal", vec);
                     benchmarkCode("all", vec);
             }
@@ -87,7 +102,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Optimal:");
                 printRes(resOptimal, elapsedTimeMicros);
-                optimalTimeStamps.add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros);
                 break;
 
             case("naive"):
@@ -99,7 +114,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Naive:");
                 printRes(resNai, elapsedTimeMicros);
-                naiveTimeStamps.add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros);
 
                 break;
 
@@ -110,7 +125,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Recursive:");
                 printRes(resRec, elapsedTimeMicros);
-                recTimeStamps.add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros);
                 break;
 
             case ("dynamic"):
@@ -120,7 +135,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Dynamic Programming:");
                 printRes(resDyn, elapsedTimeMicros);
-                dynamicTimeStamps.add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros);
                 break;
 
             case("divide"):
@@ -130,20 +145,20 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Divide and Conquer:");
                 printRes(resDiv, elapsedTimeMicros);
-                divideTimeStamps.add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros);
                 break;
 
-            case("all"):
+            case("smss"):
                 startTime = System.nanoTime();
-                ArrayList<int[]> resAll = SMSS_Problem.allMSS_1_3a(vec);
+                ArrayList<int[]> resAll = SMSS_Problem.allMSS_1_3b(vec);
                 endTime = System.nanoTime();
                 elapsedTimeMicros = (endTime - startTime) / 1000;
-                System.out.println("All MSS:");
+                System.out.println("SMSS:");
 
                 for(int[] res: resAll) {
                     printRes(res, elapsedTimeMicros);
                 }
-                allTimeStamps.add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros);
        }
     }
 
@@ -151,17 +166,6 @@ public class Main {
     public static void writeCsv(String path) throws IOException {
         BufferedWriter buff = new BufferedWriter(new FileWriter(path));
         StringBuilder sb = new StringBuilder();
-
-        sb.append("Naive;Recursive;Dynamic;Divide;Optimal;All\n");
-        for (int i = 0; i < naiveTimeStamps.size(); i++) {
-            sb.append(naiveTimeStamps.get(i) +
-                    ";" + recTimeStamps.get(i) +
-                    ";" + dynamicTimeStamps.get(i) +
-                    //";" + divideTimeStamps.get(i) +
-                    ";" + optimalTimeStamps.get(i) +
-                    ";" + allTimeStamps.get(i) + "\n");
-        }
-
         String out = sb.toString();
         buff.write(out);
         buff.close();
