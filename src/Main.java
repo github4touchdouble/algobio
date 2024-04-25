@@ -6,18 +6,14 @@ import net.sourceforge.argparse4j.inf.Namespace;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import java.util.Random;
-
+import java.util.*;
 
 
 public class Main {
     // storing results in these ArrayLists
     // these will be written to a csv when benchmarking with python
     static HashMap<String, ArrayList<Long>> timeStamps = new HashMap<>();
+    static final ArrayList<String> DEFAULT_TYPES = new ArrayList<>();
     public static void main(String[] args) throws ArgumentParserException, IOException {
         ArgumentParser parser = ArgumentParsers.newFor("MSS").build().defaultHelp(true).description("Calculate maximum scoring subsequence for given input vector --v");
         parser.addArgument("--v")
@@ -30,11 +26,22 @@ public class Main {
                 .type(String.class)
                 .nargs("+")
                 .help("algorithm type");
+        parser.addArgument("--p").
+                setDefault("times.csv").
+                help("specify csv path");
+
+        DEFAULT_TYPES.add("naive");
+        DEFAULT_TYPES.add("recursive");
+        DEFAULT_TYPES.add("dynamic");
+        DEFAULT_TYPES.add("divide");
+        DEFAULT_TYPES.add("optimal");
+        DEFAULT_TYPES.add("smss");
 
         // get vec
         Namespace ns = parser.parseArgs(args);
         java.util.List<Integer> vec = ns.getList("v");
         java.util.List<String> algs = ns.getList("a");
+        String path = ns.get("p");
 
         // init all HashMaps for storing time stamps
         timeStamps.put("naive", new ArrayList<>());
@@ -52,14 +59,26 @@ public class Main {
                     benchmarkCode(algorithm, vec);
                 }
             }
-            else {
-                benchmarkCode("naive", vec);
-                benchmarkCode("recursive", vec);
-                benchmarkCode("dynamic", vec);
-                benchmarkCode("divide", vec);
-                benchmarkCode("optimal", vec);
-                benchmarkCode("smss", vec);
+            else { // run all algorithms
+                for(String algorithm : DEFAULT_TYPES) {
+                    benchmarkCode(algorithm, vec);
+                }
             }
+        }
+        else if (algs != null) { // benchmark only algorithms in algs
+            Random random = new Random(42L); // seed for reproducibility
+            vec = new ArrayList<>(); // reset vec
+
+            int min = -100; // Define the minimum value
+            int max = 100;  // Define the maximum value
+
+            for (int i = 0; i < 500; i++) {
+                vec.add(random.nextInt(max - min) + min); // add one rand number to vec
+                for(String algorithm : algs) {
+                    benchmarkCode(algorithm, vec);
+                }
+            }
+            writeCsv(path, algs);
         }
         else // benchmark all approaches in this case
         {
@@ -68,20 +87,14 @@ public class Main {
 
             int min = -100; // Define the minimum value
             int max = 100;  // Define the maximum value
-            for (int i = 0; i < 500; i++) {
+            for (int i = 0; i < 100; i++) {
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
-
-                    benchmarkCode("naive", vec);
-                    benchmarkCode("recursive", vec);
-                    benchmarkCode("dynamic", vec);
-                    benchmarkCode("divide", vec);
-                    benchmarkCode("optimal", vec);
-                    benchmarkCode("all", vec);
+                for(String algorithm : DEFAULT_TYPES) {
+                    benchmarkCode(algorithm, vec);
+                }
             }
-
-            // writeCsv("time.csv");
+            writeCsv(path, DEFAULT_TYPES);
         }
-
     }
 
     public static void printRes(int[] res, long time) {
@@ -106,16 +119,13 @@ public class Main {
                 break;
 
             case("naive"):
-
                 startTime = System.nanoTime();
                 int[] resNai = SMSS_Problem.naive(vec);
                 endTime = System.nanoTime();
-
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Naive:");
                 printRes(resNai, elapsedTimeMicros);
                 timeStamps.get(type).add(elapsedTimeMicros);
-
                 break;
 
             case ("recursive"):
@@ -162,18 +172,31 @@ public class Main {
        }
     }
 
-    // TODO:
-    public static void writeCsv(String path) throws IOException {
+    public static void writeCsv(String path, List<String> types) throws IOException {
         BufferedWriter buff = new BufferedWriter(new FileWriter(path));
         StringBuilder sb = new StringBuilder();
+
+        // create column names and save size
+        for(String algType : types) {
+           sb.append(algType + ";");
+        }
+        sb.deleteCharAt(sb.length()-1);
+        sb.append("\n");
+
+        int totalSize = timeStamps.get(types.get(0)).size(); // get size of first list (they are all the same length)
+
+        int index = 0;
+        for (int i = 0; i < totalSize; i++) {
+            for (String algType : types) {
+                sb.append(timeStamps.get(algType).get(index) + ";");
+            }
+            sb.deleteCharAt(sb.length()-1);
+            sb.append("\n");
+            index++;
+        }
+
         String out = sb.toString();
         buff.write(out);
         buff.close();
-    }
-
-    // get memory usage
-    private static long getMemoryUsage() {
-        Runtime runtime = Runtime.getRuntime();
-        return runtime.totalMemory() - runtime.freeMemory();
     }
 }
