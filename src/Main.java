@@ -2,10 +2,8 @@ import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
-import static net.sourceforge.argparse4j.impl.Arguments.storeTrue;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -137,7 +135,7 @@ public class Main {
 
             case("all"):
                 startTime = System.nanoTime();
-                ArrayList<int[]> resAll = SMSS_Problem.optimalAll(vec);
+                ArrayList<int[]> resAll = SMSS_Problem.allMSS_1_3a(vec);
                 endTime = System.nanoTime();
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("All MSS:");

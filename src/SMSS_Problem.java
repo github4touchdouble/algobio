@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,7 +147,7 @@ public class SMSS_Problem {
     }
 
     // Aufgabe 3a
-    public static ArrayList<int[]> optimalAll(List<Integer> sequence) {
+    public static ArrayList<int[]> allMSS_1_3a(List<Integer> sequence) {
         ArrayList<ArrayList<int[]>> scores = new ArrayList<>();
         scores.add(new ArrayList<>()); // init first sub list
         int max = 0;
