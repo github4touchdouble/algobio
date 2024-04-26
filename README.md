@@ -5,7 +5,7 @@ This project is contained in one single `jar`. Based on the input params
 the `jar` reacts in different ways.
 
 ```sh
-java jar main.jar [--v] [--a] [--p]
+java -jar main.jar [--v] [--a] [--p]
 ```
 - `--v` can be a space seperated vector of $n$ values. If not provided, `jar` will switch to **benchmark mode**
 - `--a` can be any combination of algorithms (space seperated) in this set:  
@@ -20,31 +20,31 @@ java jar main.jar [--v] [--a] [--p]
 
 ### Example 1
 ```sh
-java jar main.jar --v  5 -2 5 -2 1 -9 5 -2 4 -5 1 -2 3 -1 5 -3 2 -1 2 --a naive optimal 
+java -jar main.jar --v  5 -2 5 -2 1 -9 5 -2 4 -5 1 -2 3 -1 5 -3 2 -1 2 --a naive optimal 
 ```
 Runs `naive` and `optimal` on vector `v`
 
 ### Example 2
 ```sh
-java jar main.jar --a naive optimal dynamic
+java -jar main.jar --a naive optimal dynamic
 ```
 Benchmarks `naive`, `optimal`, `dynamic` 
 
 ### Example 3
 ```sh
-java jar main.jar --a naive optimal dynamic
+java -jar main.jar --a naive optimal dynamic
 ```
 Benchmarks `naive`, `optimal`, `dynamic` 
 
 ### Example 4
 ```sh
-java jar main.jar 
+java -jar main.jar 
 ```
 Benchmarks all
 
 ### Example 5
 ```sh
-java jar main.jar --v 1 2 3 -3 10 1
+java -jar main.jar --v 1 2 3 -3 10 1
 ```
 Runs all algorithms on `v`
 

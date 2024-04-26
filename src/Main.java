@@ -72,7 +72,9 @@ public class Main {
             int min = -100; // Define the minimum value
             int max = 100;  // Define the maximum value
 
-            for (int i = 0; i < 500; i++) {
+            for (int i = 0; i < 1000; i++) {
+                // TODO: add if statement for slow algs and pass -1
+                // TODO: Maybe increase size more radical
                 vec.add(random.nextInt(max - min) + min); // add one rand number to vec
                 for(String algorithm : algs) {
                     benchmarkCode(algorithm, vec);
@@ -87,8 +89,10 @@ public class Main {
 
             int min = -100; // Define the minimum value
             int max = 100;  // Define the maximum value
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 1000; i++) {
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
+                // TODO: add if statement for slow algs and pass -1
+                // TODO: Maybe increase size more radical
                 for(String algorithm : DEFAULT_TYPES) {
                     benchmarkCode(algorithm, vec);
                 }
