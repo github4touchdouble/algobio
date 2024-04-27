@@ -52,4 +52,11 @@ java -jar main.jar --v 1 2 3 -3 10 1
 ```
 Runs all algorithms on `v`
 
+## Plotting Results
+```sh
+python3 plot.py <name.csv>
+
+```
+Saves plot as `<name.png>`:  
+![Example](./times_1000_all.png)
 
