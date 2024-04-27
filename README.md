@@ -54,9 +54,9 @@ Runs all algorithms on `v`
 
 ## Plotting Results
 ```sh
-python3 plot.py <name.csv>
+python3 plot.py -p <name.csv> -m <metric>
 
 ```
-Saves plot as `<name.png>`:  
+Saves plot as `<name.png>` and labels y-axis with `<metric>`:  
 ![Example](times_1000_all.png)
 
