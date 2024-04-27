@@ -1,17 +1,20 @@
 # Maximal Scoring Subsequence
 
 ## Usage
-This project is contained in one single `jar`. Based on the input params
+This project is contained in one single `jar`. Based on the input parameters
 the `jar` reacts in different ways.
 
 ```sh
-java -jar main.jar [--v] [--a] [--p]
+java -jar main.jar [--v] [--a] [--p] [--s] [--f]
 ```
-- `--v` can be a space seperated vector of $n$ values. If not provided, `jar` will switch to **benchmark mode**
-- `--a` can be any combination of algorithms (space seperated) in this set:  
+- `--v` can be a space separated vector of $n$ values. If not provided, `jar` will switch to **benchmark mode**.
+- `--a` can be any combination of algorithms (space separated) in this set:  
    `{naive, recursive, divide, dynamic, optimal, smss}`. 
    If not provided, all elements of the set will be executed.
-- `--p` can be the name of the csv file, `default=times.csv` 
+- `--p` can be the name of the csv file, `default=times.csv`.
+- `--s` convert μs into s (in csv out).
+- `--f` this flag is used in benchmarking. The input vec of each iteration is 
+   increased by this constant per iteration, `default=1`.
 
 > [!NOTE]  
 > A csv containing the execution times per algorithm is only created when in `benchmark mode` (meaning no `--v` is passed)
@@ -32,9 +35,10 @@ Benchmarks `naive`, `optimal`, `dynamic`
 
 ### Example 3
 ```sh
-java -jar main.jar --a naive optimal dynamic
+java -jar main.jar --a naive optimal dynamic --f 300 --s
 ```
-Benchmarks `naive`, `optimal`, `dynamic` 
+Benchmarks `naive`, `optimal`, `dynamic`, increases input vec by 300 each iteration.
+Converts μs in s in `times.csv`
 
 ### Example 4
 ```sh
