@@ -32,7 +32,7 @@ public class Main {
                 .nargs("+")
                 .help("algorithm type");
         parser.addArgument("--p").
-                setDefault("times.csv").
+                setDefault("times").
                 help("specify csv path");
         parser.addArgument("--f").
                 type(Integer.class).
@@ -256,7 +256,7 @@ public class Main {
         }
 
         String out = sb.toString();
-        buff.write(out);
+        buff.write(out + ".csv");
         buff.close();
     }
 }

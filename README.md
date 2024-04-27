@@ -29,9 +29,9 @@ Runs `naive` and `optimal` on vector `v`
 
 ### Example 2
 ```sh
-java -jar main.jar --a naive optimal dynamic
+java -jar main.jar --a naive optimal dynamic --p test
 ```
-Benchmarks `naive`, `optimal`, `dynamic` 
+Benchmarks `naive`, `optimal`, `dynamic` and saves time (in microseconds) as `test.csv`
 
 ### Example 3
 ```sh
