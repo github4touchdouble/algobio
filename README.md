@@ -58,5 +58,5 @@ python3 plot.py <name.csv>
 
 ```
 Saves plot as `<name.png>`:  
-![Example](./times_1000_all.png)
+![Example](times_1000_all.png)
 
