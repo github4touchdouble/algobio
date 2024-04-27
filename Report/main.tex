@@ -1,0 +1,83 @@
+\documentclass[10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{bbold}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{xcolor}
+\usepackage{bbold}
+\usepackage{soul}
+\usepackage{tikz,pgfplots, lipsum,lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{adigraph}
+\pgfplotsset{compat=1.18, width=10cm}
+\usetikzlibrary{positioning}
+
+\usepackage[tmargin=2cm,rmargin=1in,lmargin=1in,margin=0.85in,bmargin=2cm,footskip=.2in]{geometry}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+\usepackage[varbb]{newpxmath}
+\usepackage{xfrac}
+\usepackage[makeroom]{cancel}
+\usepackage{mathtools}
+\usepackage{bookmark}
+\usepackage{enumitem}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{varwidth}
+\usepackage{varwidth}
+\usepackage{etoolbox}
+%\usepackage{authblk}
+\usepackage{nameref}
+\usepackage{multicol,array}
+\usepackage{tikz-cd}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+
+\definecolor{gre}{RGB}{101, 191, 127}
+\definecolor{gree}{RGB}{7, 135, 44}
+
+\newtcolorbox{defin}[2][]{colback=mygr!10,enhanced,title= #2,#1,
+attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=mygr,colbacktitle=mygr,boxed title style={
+    frame code={ 
+        \fill[mygr](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
+        \draw[line width=1mm,mygr]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
+        
+        \draw[line width=1mm,mygr]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
+        \fill[mygr!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;
+    }
+}
+}
+
+\newtcolorbox{Box1}[2][]{sidebyside,
+lower separated=false,
+colback=white,
+colframe=mygr,fonttitle=\bfseries,
+colbacktitle=mygr,enhanced,
+attach boxed title to top left={xshift=1cm,
+yshift=-2mm},
+title=#2,#1}
+
+\newcommand{\uproman}[1]{\uppercase\expandafter{\romannumeral#1}}
+
+\definecolor{mygr}{HTML}{2C3338}
+\newcolumntype{?}[1]{!{\vrule width #1}}
+
+\title{Report - Praxisblatt 1}
+\author{Jan P. Hummel & Malte A. Weyrich}
+\begin{document}
+\maketitle
+
+\section{Aufgabe}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../times_1000_all.png}
+    \caption{all}
+    \label{fig:Test}
+\end{figure}
+\end{document}
