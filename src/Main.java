@@ -51,11 +51,11 @@ public class Main {
 
         // get vec
         Namespace ns = parser.parseArgs(args);
-        java.util.List<Integer> vec = ns.getList("v");
-        java.util.List<String> algs = ns.getList("a");
-        String path = ns.get("p");
+        java.util.List<Integer> vec = ns.getList("v"); // input vec
+        java.util.List<String> algs = ns.getList("a"); // algorithm (alg) types
+        String path = ns.get("p"); // out path, default = times.csv
         seconds = ns.getBoolean("s"); // set global
-        stepSize = ns.get("f");
+        stepSize = ns.get("f"); // set global
 
         // init all HashMaps for storing time stamps
         timeStamps.put("naive", new ArrayList<>());
@@ -87,7 +87,7 @@ public class Main {
             int min = -100; // Define the minimum value
             int max = 100;  // Define the maximum value
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 5; i++) {
 
                 for (int j = 0; j < stepSize; j++) { // increase n based on global stepSize
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
@@ -108,7 +108,7 @@ public class Main {
 
             int min = -100; // Define the minimum value
             int max = 100;  // Define the maximum value
-            for (int i = 0; i < 500; i++) {
+            for (int i = 0; i < 5; i++) {
 
                 for (int j = 0; j < stepSize; j++) {
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
@@ -142,6 +142,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Optimal:");
                 printRes(resOptimal, elapsedTimeMicros);
+
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
                 } else {
@@ -156,6 +157,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Naive:");
                 printRes(resNai, elapsedTimeMicros);
+
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
                 } else {
@@ -170,6 +172,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Recursive:");
                 printRes(resRec, elapsedTimeMicros);
+
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
                 } else {
@@ -184,6 +187,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Dynamic Programming:");
                 printRes(resDyn, elapsedTimeMicros);
+
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
                 } else {
@@ -198,6 +202,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Divide and Conquer:");
                 printRes(resDiv, elapsedTimeMicros);
+
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
                 } else {
@@ -215,6 +220,7 @@ public class Main {
                 for(int[] res: resAll) {
                     printRes(res, elapsedTimeMicros);
                 }
+
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
                 } else {
