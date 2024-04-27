@@ -58,5 +58,5 @@ python3 plot.py -p <name.csv> -m <metric>
 
 ```
 Saves plot as `<name.png>` and labels y-axis with `<metric>`:  
-![Example](times_1000_all.png)
+![Example](times_sec_1000_all.png)
 
