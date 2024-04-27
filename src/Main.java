@@ -13,6 +13,7 @@ public class Main {
     // storing results in these ArrayLists
     // these will be written to a csv when benchmarking with python
     static HashMap<String, ArrayList<Long>> timeStamps = new HashMap<>();
+    static ArrayList<Integer> inSize = new ArrayList<>();
     static final ArrayList<String> DEFAULT_TYPES = new ArrayList<>();
     public static void main(String[] args) throws ArgumentParserException, IOException {
         ArgumentParser parser = ArgumentParsers.newFor("MSS").build().defaultHelp(true).description("Calculate maximum scoring subsequence for given input vector --v");
@@ -73,10 +74,12 @@ public class Main {
             int max = 100;  // Define the maximum value
 
             for (int i = 0; i < 1000; i++) {
-                // TODO: add if statement for slow algs and pass -1
-                // TODO: Maybe increase size more radical
+
                 vec.add(random.nextInt(max - min) + min); // add one rand number to vec
+                inSize.add(vec.size()); // add size of vec
+
                 for(String algorithm : algs) {
+                    // TODO: add if statement for slow algs and pass -1
                     benchmarkCode(algorithm, vec);
                 }
             }
@@ -89,11 +92,12 @@ public class Main {
 
             int min = -100; // Define the minimum value
             int max = 100;  // Define the maximum value
-            for (int i = 0; i < 1000; i++) {
-                    vec.add(random.nextInt(max - min) + min); // add one rand number to vec
-                // TODO: add if statement for slow algs and pass -1
-                // TODO: Maybe increase size more radical
+            for (int i = 0; i < 500; i++) {
+                vec.add(random.nextInt(max - min) + min); // add one rand number to vec
+                inSize.add(vec.size()); // add size of vec
+
                 for(String algorithm : DEFAULT_TYPES) {
+                    // TODO: add if statement for slow algs and pass -1
                     benchmarkCode(algorithm, vec);
                 }
             }
@@ -119,7 +123,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Optimal:");
                 printRes(resOptimal, elapsedTimeMicros);
-                timeStamps.get(type).add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
             case("naive"):
@@ -129,7 +133,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Naive:");
                 printRes(resNai, elapsedTimeMicros);
-                timeStamps.get(type).add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
             case ("recursive"):
@@ -139,7 +143,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Recursive:");
                 printRes(resRec, elapsedTimeMicros);
-                timeStamps.get(type).add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
             case ("dynamic"):
@@ -149,7 +153,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Dynamic Programming:");
                 printRes(resDyn, elapsedTimeMicros);
-                timeStamps.get(type).add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
             case("divide"):
@@ -159,7 +163,7 @@ public class Main {
                 elapsedTimeMicros = (endTime - startTime) / 1000;
                 System.out.println("Divide and Conquer:");
                 printRes(resDiv, elapsedTimeMicros);
-                timeStamps.get(type).add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
             case("smss"):
@@ -172,7 +176,7 @@ public class Main {
                 for(int[] res: resAll) {
                     printRes(res, elapsedTimeMicros);
                 }
-                timeStamps.get(type).add(elapsedTimeMicros);
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
        }
     }
 
@@ -181,6 +185,7 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         // create column names and save size
+        sb.append("n;"); // input size
         for(String algType : types) {
            sb.append(algType + ";");
         }
@@ -191,6 +196,8 @@ public class Main {
 
         int index = 0;
         for (int i = 0; i < totalSize; i++) {
+            sb.append(inSize.get(index) + ";"); // append n
+            // append time vals for given n
             for (String algType : types) {
                 sb.append(timeStamps.get(algType).get(index) + ";");
             }
