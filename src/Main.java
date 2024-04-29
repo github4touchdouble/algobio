@@ -18,7 +18,7 @@ public class Main {
     static ArrayList<Integer> inSize = new ArrayList<>();
     static final ArrayList<String> DEFAULT_TYPES = new ArrayList<>();
     static boolean seconds;
-    static int stepSize;
+    static Integer stepSize;
     public static void main(String[] args) throws ArgumentParserException, IOException {
         ArgumentParser parser = ArgumentParsers.newFor("MSS").build().defaultHelp(true).description("Calculate maximum scoring subsequence for given input vector --v");
         parser.addArgument("--v")
@@ -36,7 +36,7 @@ public class Main {
                 help("specify csv path");
         parser.addArgument("--f").
                 type(Integer.class).
-                setDefault("1").
+                setDefault(1).
                 help("when benchmarking, increase n with this constant for each iteration");
         parser.addArgument("--s").
                 action(storeTrue()).
@@ -55,7 +55,7 @@ public class Main {
         java.util.List<String> algs = ns.getList("a"); // algorithm (alg) types
         String path = ns.get("p"); // out path, default = times.csv
         seconds = ns.getBoolean("s"); // set global
-        stepSize = ns.get("f"); // set global
+        stepSize = ns.getInt("f"); // set global
 
         // init all HashMaps for storing time stamps
         timeStamps.put("naive", new ArrayList<>());
