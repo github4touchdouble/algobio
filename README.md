@@ -9,7 +9,7 @@ java -jar main.jar [--v] [--a] [--p] [--s] [--f]
 ```
 - `--v` can be a space separated vector of $n$ values. If not provided, `jar` will switch to **benchmark mode**.
 - `--a` can be any combination of algorithms (space separated) in this set:  
-   `{naive, recursive, divide, dynamic, optimal, smss}`. 
+   `{naive, recursive, divide, dynamic, optimal, 2_a, 2_b, 2_c}`. 
    If not provided, all elements of the set will be executed.
 - `--p` can be the name of the csv file, `default=times.csv`.
 - `--s` convert μs into s (in csv out).

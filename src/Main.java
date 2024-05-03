@@ -47,7 +47,9 @@ public class Main {
         DEFAULT_TYPES.add("dynamic");
         DEFAULT_TYPES.add("divide");
         DEFAULT_TYPES.add("optimal");
-        DEFAULT_TYPES.add("smss");
+        DEFAULT_TYPES.add("2_a");
+        DEFAULT_TYPES.add("2_b");
+        DEFAULT_TYPES.add("2_c");
 
         // get vec
         Namespace ns = parser.parseArgs(args);
@@ -58,16 +60,13 @@ public class Main {
         stepSize = ns.getInt("f"); // set global
 
         // init all HashMaps for storing time stamps
-        timeStamps.put("naive", new ArrayList<>());
-        timeStamps.put("recursive", new ArrayList<>());
-        timeStamps.put("divide", new ArrayList<>());
-        timeStamps.put("dynamic", new ArrayList<>());
-        timeStamps.put("optimal", new ArrayList<>());
-        timeStamps.put("smss", new ArrayList<>());
-
+        for (String type : DEFAULT_TYPES) {
+            timeStamps.put(type, new ArrayList<>());
+        }
 
         // if not null then calc all approaches for the given vec
         if (vec != null) {
+            int n = vec.size();
             if (algorithms != null) { // if specific algorithms are given, only exec these
                 for(String algorithm : algorithms) {
                     benchmarkCode(algorithm, vec);
@@ -125,15 +124,25 @@ public class Main {
         }
     }
 
-    public static void printRes(int[] res, long time) {
-        System.out.println("[" + res[0] + "," + res[1] +"] mit score " + res[2]);
-        System.out.println(time + " µs\n");
+    public static void printRes(int[] res, long time, int n) {
+        System.out.println("// \t[" + res[0] + "," + res[1] +"] mit score " + res[2]);
+        System.out.println("// \t" + time + " µs");
+        System.out.println("// \t for input size " + n);
+    }
+    public static void printRes(ArrayList<int[]> results, long time, int n) {
+        for (int[] res : results) {
+            System.out.println("// \t[" + res[0] + "," + res[1] +"] mit score " + res[2]);
+        }
+        System.out.println("// \t" + time + " µs");
+        System.out.println("// \t for input size " + n);
     }
 
     public static void benchmarkCode(String type, List<Integer> vec) {
         long startTime = 0;
         long endTime = 0;
         long elapsedTimeMicros = 0;
+        ArrayList<int[]> resAll;
+        int n = vec.size();
 
         switch (type) {
             case ("optimal"):
@@ -141,8 +150,8 @@ public class Main {
                 int[] resOptimal = SMSS_Problem.optimal(vec);
                 endTime = System.nanoTime();
                 elapsedTimeMicros = (endTime - startTime) / 1000;
-                System.out.println("Optimal:");
-                printRes(resOptimal, elapsedTimeMicros);
+                System.out.println("// Optimal:");
+                printRes(resOptimal, elapsedTimeMicros, n);
 
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
@@ -156,8 +165,9 @@ public class Main {
                 int[] resNai = SMSS_Problem.naive(vec);
                 endTime = System.nanoTime();
                 elapsedTimeMicros = (endTime - startTime) / 1000;
-                System.out.println("Naive:");
-                printRes(resNai, elapsedTimeMicros);
+                System.out.println("// Naive:");
+                System.out.println("//");
+                printRes(resNai, elapsedTimeMicros, n);
 
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
@@ -171,8 +181,9 @@ public class Main {
                 int[] resRec = SMSS_Problem.rec(vec);
                 endTime = System.nanoTime();
                 elapsedTimeMicros = (endTime - startTime) / 1000;
-                System.out.println("Recursive:");
-                printRes(resRec, elapsedTimeMicros);
+                System.out.println("// Recursive:");
+                System.out.println("//");
+                printRes(resRec, elapsedTimeMicros, n);
 
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
@@ -186,8 +197,9 @@ public class Main {
                 int[] resDyn = SMSS_Problem.dynamic(vec);
                 endTime = System.nanoTime();
                 elapsedTimeMicros = (endTime - startTime) / 1000;
-                System.out.println("Dynamic Programming:");
-                printRes(resDyn, elapsedTimeMicros);
+                System.out.println("// Dynamic Programming:");
+                System.out.println("//");
+                printRes(resDyn, elapsedTimeMicros, n);
 
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
@@ -201,8 +213,9 @@ public class Main {
                 int[] resDiv = SMSS_Problem.divide_and_conquer(vec);
                 endTime = System.nanoTime();
                 elapsedTimeMicros = (endTime - startTime) / 1000;
-                System.out.println("Divide and Conquer:");
-                printRes(resDiv, elapsedTimeMicros);
+                System.out.println("// Divide and Conquer:");
+                System.out.println("//");
+                printRes(resDiv, elapsedTimeMicros, n);
 
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
@@ -211,23 +224,55 @@ public class Main {
                 }
                 break;
 
-            case("smss"):
+            case("2_a"):
                 startTime = System.nanoTime();
-                ArrayList<int[]> resAll = SMSS_Problem.allMSS_1_3b(vec);
+                resAll = SMSS_Problem.MSS_2a(vec);
                 endTime = System.nanoTime();
                 elapsedTimeMicros = (endTime - startTime) / 1000;
-                System.out.println("SMSS:");
-
-                for(int[] res: resAll) {
-                    printRes(res, elapsedTimeMicros);
-                }
+                System.out.println("// 2_a (MSS):");
+                System.out.println("//");
+                printRes(resAll, elapsedTimeMicros, n);
 
                 if (seconds) {
                     timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
                 } else {
                     timeStamps.get(type).add(elapsedTimeMicros); // append time
                 }
+                break;
+
+            case("2_b"):
+                startTime = System.nanoTime();
+                resAll = SMSS_Problem.MSS_2b(vec);
+                endTime = System.nanoTime();
+                elapsedTimeMicros = (endTime - startTime) / 1000;
+                System.out.println("// 2_b (SMSS):");
+                System.out.println("//");
+                printRes(resAll, elapsedTimeMicros, n);
+
+                if (seconds) {
+                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
+                } else {
+                    timeStamps.get(type).add(elapsedTimeMicros); // append time
+                }
+                break;
+
+            case("2_c"):
+                startTime = System.nanoTime();
+                resAll = SMSS_Problem.MSS_2c(vec);
+                endTime = System.nanoTime();
+                elapsedTimeMicros = (endTime - startTime) / 1000;
+                System.out.println("// 2_c (All SMSS):");
+                System.out.println("//");
+                printRes(resAll, elapsedTimeMicros, n);
+
+                if (seconds) {
+                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
+                } else {
+                    timeStamps.get(type).add(elapsedTimeMicros); // append time
+                }
+                break;
        }
+       System.out.println();
     }
 
     public static void writeCsv(String path, List<String> types) throws IOException {

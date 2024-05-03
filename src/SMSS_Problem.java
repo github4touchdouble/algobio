@@ -132,12 +132,12 @@ public class SMSS_Problem {
 
         int[][] S = new int[n][n];
 
-        for (int i = 1; i < n; i++) {
-            for (int j = i; j < n; j++) {
-                S[i][j] = S[i][j - 1] + sequence.get(j);
+        for (int i = 0; i < n; i++) {
+            for (int j = i+1; j < n; j++) {
+                S[i][j] = S[i][j-1] + sequence.get(j);
 
                 if (S[i][j] >= res[2]) {
-                    res[0] = i; // l
+                    res[0] = i+1; // l
                     res[1] = j; // r
                     res[2] = S[i][j]; // update max score
                 }
@@ -147,8 +147,8 @@ public class SMSS_Problem {
         return res;
     }
 
-    // Aufgabe 3a
-    public static ArrayList<int[]> allMSS_1_3a(List<Integer> sequence) {
+    // Aufgabe 2a
+    public static ArrayList<int[]> MSS_2a(List<Integer> sequence) {
         ArrayList<ArrayList<int[]>> scores = new ArrayList<>();
         scores.add(new ArrayList<>()); // init first sub list
         int max = 0;
@@ -191,40 +191,11 @@ public class SMSS_Problem {
                 finalRes.add(segment);
             }
         }
-
-        // We assume the following:
-        // Segments get added in a certain order:
-        // this constellation is not possible, because seg 2 would've been found before seg 1
-        // 1: ---+=====+---------:
-        // 2: ---+===+-----------:
-
-        // this is the above but in reversed order,
-        // in this case, seg one gets added to final res
-        // but seg 2 wont be added since segment[0] (leftIndex) == lastL, thus the if condition is not met
-        // these two cases are the only case we need to account for:
-        // CASE 1
-        // 1: ---+===+-----------:
-        // 2: ---+=====+---------:
-
-        // CASE 2
-        // here the if condition above is also not met since seg 2 end index == lastR
-        // 1: -----+===+---------:
-        // 2: ---+=====+---------:
-
-        // Overlaps like this are not possible
-        // overlapping segments always share either their starting index
-        // or end index
-        // 1: -----+=+-----------:
-        // 2: ---+=====+---------:
-
-        // 1: ---+=====+---------:
-        // 2: -----+=+-----------:
-
         return finalRes;
     }
 
-    public static ArrayList<int[]> allMSS_1_3b(List<Integer> sequence) {
-        ArrayList<int[]> bin = allMSS_1_3a(sequence);
+    public static ArrayList<int[]> MSS_2b(List<Integer> sequence) {
+        ArrayList<int[]> bin = MSS_2a(sequence);
         int min_length = 0;
         HashMap<Integer, ArrayList<int[]>> mss = new HashMap<>();
         for (int[] s : bin) {
@@ -240,6 +211,43 @@ public class SMSS_Problem {
             }
         }
         return mss.get(min_length);
+    }
+
+
+    // 2_c
+    public static ArrayList<int[]> MSS_2c(List<Integer> sequence) {
+        ArrayList<ArrayList<int[]>> scores = new ArrayList<>();
+        scores.add(new ArrayList<>()); // init first
+
+        // init
+        // [l, r, max]
+        int[] res = new int[]{0, 0, sequence.get(0)};
+        int n = sequence.size();
+
+        int[][] S = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                if (i == 0 && j == 0) {
+                    S[i][j] = sequence.get(j);
+                } else {
+                    S[i][j] = S[i][j - 1] + sequence.get(j);
+                }
+                if (S[i][j] == res[2]) { // append
+                    res[0] = i; // l
+                    res[1] = j; // r
+                    res[2] = S[i][j]; // update max score
+                    scores.get(scores.size() - 1).add(new int[]{i, j, S[i][j]});
+                } else if (S[i][j] >= res[2]) { // create new
+                    res[0] = i; // l
+                    res[1] = j; // r
+                    res[2] = S[i][j]; // update max score
+                    scores.add(new ArrayList<>());
+                    scores.get(scores.size() - 1).add(new int[]{i, j, S[i][j]});
+                }
+            }
+        }
+        return scores.get(scores.size()-1);
     }
 
     public static int sig(int i, int j, List<Integer> sequence) {
