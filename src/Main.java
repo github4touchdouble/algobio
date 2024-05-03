@@ -52,7 +52,7 @@ public class Main {
         // get vec
         Namespace ns = parser.parseArgs(args);
         java.util.List<Integer> vec = ns.getList("v"); // input vec
-        java.util.List<String> algs = ns.getList("a"); // algorithm (alg) types
+        java.util.List<String> algorithms = ns.getList("a"); // algorithm (alg) types
         String path = ns.get("p"); // out path, default = times.csv
         seconds = ns.getBoolean("s"); // set global
         stepSize = ns.getInt("f"); // set global
@@ -68,19 +68,19 @@ public class Main {
 
         // if not null then calc all approaches for the given vec
         if (vec != null) {
-            if (algs != null) { // if specific algs are given, only calculate for these algs
-                for(String algorithm : algs) {
+            if (algorithms != null) { // if specific algorithms are given, only exec these
+                for(String algorithm : algorithms) {
                     benchmarkCode(algorithm, vec);
                 }
             }
-            else { // run all algorithms
+            else { // run all algorithms if none are given
                 for(String algorithm : DEFAULT_TYPES) {
                     benchmarkCode(algorithm, vec);
                 }
             }
         }
         // benchmarking case
-        else if (algs != null) { // benchmark only algorithms in algs
+        else if (algorithms != null) { // for specific algorithms
             Random random = new Random(42L); // seed for reproducibility
             vec = new ArrayList<>(); // reset vec
 
@@ -95,12 +95,13 @@ public class Main {
 
                 inSize.add(vec.size()); // add size of vec
 
-                for(String algorithm : algs) {
+                for(String algorithm : algorithms) {
                     benchmarkCode(algorithm, vec);
                 }
             }
-            writeCsv(path, algs);
+            writeCsv(path, algorithms);
         }
+
         else // benchmark all approaches in this case
         {
             Random random = new Random(42L); // seed for reproducibility vec = new ArrayList<>(); // reset vec
