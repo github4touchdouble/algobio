@@ -5,15 +5,18 @@ This project is contained in one single `jar`. Based on the input parameters
 the `jar` reacts in different ways.
 
 ```sh
-java -jar main.jar [--v] [--a] [--p] [--s] [--f]
+java -jar main.jar [--vec] [--algorithms] [--path] [--sec] [--step] [--size]
 ```
-- `--v` can be a space separated vector of $n$ values. If not provided, `jar` will switch to **benchmark mode**.
-- `--a` can be any combination of algorithms (space separated) in this set:  
-   `{naive, recursive, divide, dynamic, optimal, 2_a, 2_b, 2_c}`. 
-   If not provided, all elements of the set will be executed.
-- `--p` can be the name of the csv file, `default=times.csv`.
-- `--s` convert μs into s (in csv out).
-- `--f` this flag is used in benchmarking. The input vec of each iteration is 
+- `--vec` can be a space separated vector of $n$ values. If not provided, `jar` will switch to **benchmark mode**.
+  - `--algorithms` can be any combination of algorithms (space separated) in this set:  
+     `{naive, recursive, divide, dynamic, optimal, 2_a, 2_b, 2_c, 2_c_1}`.
+     Note that `2_c_1` is also the same algorithm as `2_c` (utilizing) the dynamic programming algorithm, but
+     in `2_c_1` we optimized the array usage by only creating as many ints in the arrays as necessary. 
+     It is still not optimal, but it works on larger input `n` (see report).
+     If not provided, all elements of the set will be executed.
+- `--path` can be the name of the csv file, `default=times.csv`.
+- `--sec` convert μs into s (in csv out).
+- `--step` this flag is used in benchmarking. The input vec of each iteration is 
    increased by this constant per iteration, `default=1`.
 
 > [!NOTE]  
