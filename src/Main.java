@@ -19,26 +19,31 @@ public class Main {
     static final ArrayList<String> DEFAULT_TYPES = new ArrayList<>();
     static boolean seconds;
     static Integer stepSize;
+    static Integer size;
     public static void main(String[] args) throws ArgumentParserException, IOException {
         ArgumentParser parser = ArgumentParsers.newFor("MSS").build().defaultHelp(true).description("Calculate maximum scoring subsequence for given input vector --v");
-        parser.addArgument("--v")
+        parser.addArgument("--vec")
                 .metavar("N")
                 .type(Integer.class)
                 .nargs("+")
                 .help("input vector");
-        parser.addArgument("--a")
+        parser.addArgument("--algorithms")
                 .metavar("N")
                 .type(String.class)
                 .nargs("+")
                 .help("algorithm type");
-        parser.addArgument("--p").
+        parser.addArgument("--path").
                 setDefault("times").
                 help("specify csv path");
-        parser.addArgument("--f").
+        parser.addArgument("--size").
+                type(Integer.class).
+                setDefault(0).
+                help("run given algorithms on a fixed size input (good for testing)");
+        parser.addArgument("--step").
                 type(Integer.class).
                 setDefault(1).
                 help("when benchmarking, increase n with this constant for each iteration");
-        parser.addArgument("--s").
+        parser.addArgument("--sec").
                 action(storeTrue()).
                 help("convert micro seconds to seconds");
 
@@ -50,14 +55,16 @@ public class Main {
         DEFAULT_TYPES.add("2_a");
         DEFAULT_TYPES.add("2_b");
         DEFAULT_TYPES.add("2_c");
+        DEFAULT_TYPES.add("2_c_1");
 
         // get vec
         Namespace ns = parser.parseArgs(args);
-        java.util.List<Integer> vec = ns.getList("v"); // input vec
-        java.util.List<String> algorithms = ns.getList("a"); // algorithm (alg) types
-        String path = ns.get("p"); // out path, default = times.csv
-        seconds = ns.getBoolean("s"); // set global
-        stepSize = ns.getInt("f"); // set global
+        java.util.List<Integer> vec = ns.getList("vec"); // input vec
+        java.util.List<String> algorithms = ns.getList("algorithms"); // algorithm (alg) types
+        String path = ns.get("path"); // out path, default = times.csv
+        seconds = ns.getBoolean("sec"); // set global
+        stepSize = ns.getInt("step"); // set global
+        size = ns.getInt("size"); // set global
 
         // init all HashMaps for storing time stamps
         for (String type : DEFAULT_TYPES) {
@@ -86,19 +93,34 @@ public class Main {
             int min = -100; // Define the minimum value
             int max = 100;  // Define the maximum value
 
-            for (int i = 0; i < 5; i++) {
 
-                for (int j = 0; j < stepSize; j++) { // increase n based on global stepSize
+                for (int i = 0; i < size; i++) {
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
                 }
 
-                inSize.add(vec.size()); // add size of vec
+                for (int i = 0; i < 10; i++) {
 
-                for(String algorithm : algorithms) {
-                    benchmarkCode(algorithm, vec);
+                    for (int j = 0; j < stepSize; j++) { // increase n based on global stepSize
+                        vec.add(random.nextInt(max - min) + min); // add one rand number to vec
+                    }
+
+                    inSize.add(vec.size()); // add size of vec
+
+                    for(String algorithm : algorithms) {
+                        benchmarkCode(algorithm, vec);
+                    }
                 }
-            }
-            writeCsv(path, algorithms);
+
+                // for (int i = 0; i < size; i++) {
+                //     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
+                // }
+                // inSize.add(vec.size()); // add size of vec
+
+                // for(String algorithm : algorithms) {
+                //     benchmarkCode(algorithm, vec);
+                // }
+
+                writeCsv(path, algorithms);
         }
 
         else // benchmark all approaches in this case
@@ -271,12 +293,28 @@ public class Main {
                     timeStamps.get(type).add(elapsedTimeMicros); // append time
                 }
                 break;
+
+           case("2_c_1"):
+                startTime = System.nanoTime();
+                resAll = SMSS_Problem.MSS_2c_1(vec);
+                endTime = System.nanoTime();
+                elapsedTimeMicros = (endTime - startTime) / 1000;
+                System.out.println("// 2_c_1 (All SMSS & Optimized space usage):");
+                System.out.println("//");
+                printRes(resAll, elapsedTimeMicros, n);
+
+                if (seconds) {
+                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
+                } else {
+                    timeStamps.get(type).add(elapsedTimeMicros); // append time
+                }
+                break;
        }
        System.out.println();
     }
 
     public static void writeCsv(String path, List<String> types) throws IOException {
-        BufferedWriter buff = new BufferedWriter(new FileWriter(path));
+        BufferedWriter buff = new BufferedWriter(new FileWriter(path + ".csv"));
         StringBuilder sb = new StringBuilder();
 
         // create column names and save size
@@ -302,7 +340,7 @@ public class Main {
         }
 
         String out = sb.toString();
-        buff.write(out + ".csv");
+        buff.write(out);
         buff.close();
     }
 }

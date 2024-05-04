@@ -249,6 +249,49 @@ public class SMSS_Problem {
         }
         return scores.get(scores.size()-1);
     }
+    public static ArrayList<int[]> MSS_2c_1(List<Integer> sequence) {
+        ArrayList<ArrayList<int[]>> scores = new ArrayList<>();
+        scores.add(new ArrayList<>()); // init first
+
+        // init
+        // [l, r, max]
+        int[] res = new int[]{0, 0, sequence.get(0)};
+        int n = sequence.size();
+
+        ArrayList<int[]> Snew = new ArrayList<>();
+        for (int i = sequence.size(); i > 0; i--) {
+            Snew.add(new int[i]);
+        }
+
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                if (i == 0 && j == 0) {
+                    Snew.get(i)[j] = sequence.get(j);
+                } else {
+                    if (j > i) {
+                        Snew.get(i)[j-i] = Snew.get(i)[j-1-i] + sequence.get(j);
+                    } else {
+                        Snew.get(i)[j-i] = sequence.get(j);
+                    }
+                }
+
+                if (Snew.get(i)[j-i] == res[2]) { // append
+                    res[0] = i; // l
+                    res[1] = j; // r
+                    res[2] = Snew.get(i)[j-i]; // update max score
+                    scores.get(scores.size() - 1).add(new int[]{i, j, Snew.get(i)[j-i]});
+                } else if (Snew.get(i)[j-i] >= res[2]) { // create new
+                    res[0] = i; // l
+                    res[1] = j; // r
+                    res[2] = Snew.get(i)[j-i]; // update max score
+                    scores.add(new ArrayList<>());
+                    scores.get(scores.size() - 1).add(new int[]{i, j, Snew.get(i)[j-i]});
+                }
+            }
+        }
+        return scores.get(scores.size()-1);
+    }
 
     public static int sig(int i, int j, List<Integer> sequence) {
         int sequenceScore = 0;
