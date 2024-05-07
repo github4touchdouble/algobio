@@ -23,7 +23,7 @@ java -jar main.jar [--vec] [--algorithms] [--path] [--step] [--size]
 
 ## Run all algorithms on input from sheet
 ```
-java -jar SMSS --vec 5 -2 5 -2 1 -9 12 -2 24 -5 13 -12 3 -13 5 -2 -1 2
+java -jar SMSS.jar --vec 5 -2 5 -2 1 -9 12 -2 24 -5 13 -12 3 -13 5 -2 -1 2
 ```
 
 > // Naive:   
@@ -61,19 +61,19 @@ java -jar SMSS --vec 5 -2 5 -2 1 -9 12 -2 24 -5 13 -12 3 -13 5 -2 -1 2
 > // 	24 µs   
 > // 	for input size 19   
 >    
-> // 2_b (SMSS):   
+> // 2_b (SMSS.jar):   
 > //   
 > // 	[6,10] mit score 42   
 > // 	24 µs   
 > // 	for input size 19   
 >    
-> // 2_c (All SMSS):   
+> // 2_c (All SMSS.jar):   
 > //   
 > // 	[6,10] mit score 42   
 > // 	32 µs   
 > // 	for input size 19   
 >    
-> // 2_c_1 (All SMSS & Optimized space usage):   
+> // 2_c_1 (All SMSS.jar & Optimized space usage):   
 > //   
 > // 	[6,10] mit score 42   
 > // 	49 µs   
@@ -83,31 +83,31 @@ java -jar SMSS --vec 5 -2 5 -2 1 -9 12 -2 24 -5 13 -12 3 -13 5 -2 -1 2
 
 ### Example 1
 ```sh
-java -jar SMSS --vec  5 -2 5 -2 1 -9 5 -2 4 -5 1 -2 3 -1 5 -3 2 -1 2 --algorithms naive optimal 
+java -jar SMSS.jar --vec  5 -2 5 -2 1 -9 5 -2 4 -5 1 -2 3 -1 5 -3 2 -1 2 --algorithms naive optimal 
 ```
 Runs `naive` and `optimal` on vector `v`
 
 ### Example 2
 ```sh
-java -jar SMSS --algorithms naive optimal dynamic --path test
+java -jar SMSS.jar --algorithms naive optimal dynamic --path test
 ```
 Benchmarks `naive`, `optimal`, `dynamic` and saves time (in microseconds) as `test.csv`
 
 ### Example 3
 ```sh
-java -jar SMSS --algorithms naive optimal dynamic --step 300 
+java -jar SMSS.jar --algorithms naive optimal dynamic --step 300 
 ```
 Benchmarks `naive`, `optimal`, `dynamic`, increases input vec by 300 each iteration.
 
 ### Example 4
 ```sh
-java -jar SMSS
+java -jar SMSS.jar
 ```
 Benchmarks all and saves times to `times.csv`
 
 ### Example 5
 ```sh
-java -jar SMSS --vec 1 2 3 -3 10 1
+java -jar SMSS.jar --vec 1 2 3 -3 10 1
 ```
 Runs all algorithms on `v`
 
@@ -117,6 +117,6 @@ python3 plot.py -p <name.csv>
 
 ```
 Saves plot as `<name.png>` and labels y-axis with seconds:  
-![Example](times_sec_1000_all.png)
+TODO: ![Example](times_sec_1000_all.png)
 
 
