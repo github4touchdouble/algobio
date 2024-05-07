@@ -75,19 +75,129 @@ title=#2,#1}
 
 \maketitle
 \section{Aufgabe}
-\lipsum[1]
+
+    Für einen Vector $C$ der Länge $n$ macht der naive Ansatz ganze:
+    \[
+        \frac{n^{3}+3n^{2}+2n}{6} 
+    \]
+    Additionen. 
+    Für unser $n$ wären das $\approx 4.11 \times 10^{17}$ Additionen. 
+    Nehmen wir an, der Rechner würde eine Addition innerhalb von $0.01 ms$ abschlie\ss en en,
+    dann wäre:\\
+    $4.11 \times 10^{17} \cdot 0.01ms \approx 4 \times 10^{15} ms = 4 \times 10^{12} s \approx 130 045$ Jahre.
+    Also wäre das Problem unlösbar für die gegebene Hardware.
+
+    
+    \textbf{Anmerkung:} 
+    Additionen dauern je nach grö\ss e der zu addierenden zahlen oft unterschiedlich lang, das obige ist eine grobe
+    Schätzung.
+
+    Der rekursive Ansatz wird genau wie der naive Ansatz zu lange dauern, der Unterschied der Komplexitäten ist 
+    zwar da, jedoch skalieren beide Algorithmen auf diesem gro\ss en Input schlecht. Der dominante Term bleibt weiterhin
+    $n^{3}$.
+
+    Zudem kommt es bei dem rekursiven Ansatz auch zu Problemen mit dem Stack:
+    Der Algorithmus hat enorm vile Methodenaufrufe und es kann sehr gut sein, dass es hierbei
+    zu einem StackOverflow kommen könnte.
+
+    Der Ansatz hat eine \textit{Komplexität} von
+    \[
+        \frac{n^{2}+n}{2} 
+    .\]
+    In diesem Ansatz bedienen wir uns eines Arrays, welches bereits berechnete Ergebnisse zwischenspeichert und somit
+    Redundante Berechnungen verhindert. Es ist davon auszugehen, dass die Werte in \textit{ints} gespeichert werden 
+    (1 \textit{int} = 4 Bytes = 32 Bit). Dieses 2d Array ist insgesamt $n \times n$ gro\ss, wenn man davon ausgeht,
+    dass das Array am Anfang des Ausführend des Programms basierend auf dem Eingabe Wert Initialisiert wird.
+
+    Der Algorithmus benutzt zwar nur die Hälfte der Matrix, jedoch ist die andere (ungenutzte) Hälfte der Matrix ebenfalls
+    mit \textit{ints} initialisiert worden (es sei denn der Algorithmus Initialisiert die Matrix optimal, was nicht aus 
+    dem \textit{pseudo-code} hervorgeht). 
+    Für das Beispiel gehen wir davon aus, dass die Matrix vollständig, mit der Grö\ss e $n \times n$ initialisiert wurde: \\
+
+    Hierbei sind $\times$ genutzte \textit{ints} und alles unter der Diagonalen sind \textit{ints} die mit 0 
+    initialisiert wurden. Die grö\ss e beträgt $2.47 \times 10^{6} \times 2.47 \times 10^{6}$. In jeder der Zellen steht
+    eine Adresse auf einen reservierten, 32 Bit gro\ss en Bereich.
+    Also insgesamt $\big(2.47 \times 10^{6}\big)^{2} \cdot 32 Bit = 6.1009 \times 10^{12} \cdot 32 Bit = 1.952288 \times 10^{14} \approx 22727.62 GB$ 
+    welches $> 1.2 GB$ ist. Also passt das Array nicht in den Arbeitsspeicher.
+    
+
+   \textbf{Divide and Conquer} hat eine Komplexität von:
+   $$
+        n \cdot \log n - 2 n + 2
+   $$
+
+   Was für unsere Eingabe $n$ und unserem geschätzten Wert pro Addition ($0.01ms$) also:
+   \[
+       \approx 10 849 963 \cdot 0.01ms \approx 108499ms \approx 1.8 min
+   .\]
+
+   Zeitlich ist es also kein Problem.
+
+   Lediglich bei der rekursiven Zerlegung könnte es vielleicht auch zu Problemen bezüglich des Stacks kommen.
+
+   \textbf{Optimaler Ansatz}:\\
+   Da der optimal Ansatz das Problem in linearer Zeit ($\mathcal O (n)$) löst, gibt es keine 
+   Komplikationen bezüglich des Ausführens des Algorithmus.
+
+   Bei einer Eingabe $C^{n}$ und mit unserer Schätzung von $0.01ms$, beträgt die Laufzeit:
+   \[
+       2.47 \times 10^{6} \cdot 0.01ms \approx 24 s
+   \]
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{../times_1000_all.png}
-    \caption{all}
-    \label{fig:Test}
+    \caption{Überblick aller Algorithmen für Eingabeintervall [1; 1000]}
+    \label{fig:Ueberblick}
 \end{figure}
 
 \section{Aufgabe}
 
-\lipsum[1]
 \subsection{2a - SMSS}\label{2a}
-\lipsum[1]
+Wir erweitern den optimalen Ansatz, indem wir jedes gefundene \textit{segment} in einer \textit{ArrayList< ArrayList<int[3]> >} abspeichern.
+Die äu\ss ere Liste initialisiert für jeden neuen \textit{max\_score} der gefunden wurde eine neue innere Liste. Diese innere
+Liste wird so lange mit gleichwertigen \textit{segmenten} befüllt, bis ein \textit{segment} gefunden wurde, mit einen grö\ss erem
+\textit{max\_score}. So ist die Liste von links nach rechts aufsteigend nach \textit{max\_score} sortiert (d.h. die letzte innere Liste beinhaltet alle \textit{MSS}).
+Am Ende wird einmal über die am \textit{Endindex} stehende Liste in $\mathcal{O}(n)$ iteriert, um die tatsächlichen non overlapping
+\textit{MSS} in einer finale Liste zu speichern.
+
+Folgende Fälle werden abgedeckt: \\
+\begin{verbatim} 
+   CASE 1:
+   1: ---+===+-----------
+   2: ---+=====+---------
+\end{verbatim}
+Hier darf das $segment_{2}$ nicht ausgegeben werden, da $segment_{1} \subseteq segment_2$. Also merken wir uns
+jeweils den Start- und Endindex des letzten \textit{segments}. So können wir die letzten Indizes mit den 
+momentanen vergleichen und \textbf{CASE 1} abfangen. 
+
+\begin{verbatim}
+   CASE 2:
+   1: ---+=====+---------
+   2: ---+===+-----------
+\end{verbatim}
+\textbf{CASE 2} ist nicht möglich, da $segment_{2}$ vor $segment_{1}$ in der Liste abgespeichert ist.
+Der Algorithmus ist so konzipiert, dass er wie bei \textbf{CASE 1} erst das kürzere $segment_{1}$ findet und dann das
+längere $segment_{2}$. Also müssen wir uns nicht um \textbf{CASE 2} kümmern.
+\begin{verbatim}
+   CASE 3:
+   1: -----+=+-----------
+   2: ---+=====+---------
+
+   CASE 4
+   1: ---+=====+---------
+   2: -----+=+-----------
+\end{verbatim}
+\textbf{CASE 3 \& 4} Sind ebenfalls nicht möglich, da \textit{MSS} entweder den gleichen Start- oder Endindex haben.
+
+\begin{verbatim} 
+   CASE 5:
+   1: -----+===+---------
+   2: ---+=====+---------
+\end{verbatim}
+Hier wird sich in der \textit{i-ten} Iteration die Start- und Endindizes von $segment_{1}$ gemerkt
+und demnach das $segment_{2}$ in der \textit{i+1-ten} Iteration nicht dem Endresultat hinzugefügt,
+da der Endindex von $segment_2 \not >$  Endindex von $segment_1$.
 \subsection{2b - SMSS mit minimaler Länge}\label{2b}
 \lipsum[1]
 \subsection{2c - Alle MSS} 
@@ -112,8 +222,9 @@ die der \textit{optimale Algorithmus} nicht in Betracht zieht.
                               +====================+
 \end{verbatim}
 
+\newpage
 Der \textit{dynamic programming Algorithmus} betrachtet in dem oberen Beispiel alle der Teilfolgen. 
-Also haben wir wieder wie in \ref{2a} eine äu\ss ere Liste mit inneren Listen erstellt, und für jeden neuen \textit{maxscore} eine neue innere Liste
+Also haben wir wieder wie in TODO eine äu\ss ere Liste mit inneren Listen erstellt, und für jeden neuen \textit{maxscore} eine neue innere Liste
 erstellt, die dann mit allen gleichwertigen Segmenten (also allen Segmenten mit demselben \textit{maxscore}) befüllt wird, bis ein grö\ss erer \textit{maxscore} gefunden wird.
 So findet der \textit{2\_c Algorithmus} also definitiv alle MSS, denn wir wissen bereits, dass der \textit{dynamic programming} Ansatz korrekt ist und
 alle Kombinationen in Betracht zieht. Jedoch bu\ss t dieser Ansatz bei der Speicherkomplexität ein, das \textit{int[][]} Array wächst 
@@ -136,10 +247,7 @@ $$
     \end{pNiceMatrix}
 $$
 
-Man könnte also Platz einsparen, wo nur \textit{0er} stehen:
-\newpage
-
- \textbf{Beispiel}\\
+\textbf{Beispiel}\\
  Betrachten wir die jeweiligen Endzustände der Datenstrukturen von Algorithmus \textit{2\_c} und der 
  Arbeitsspeicher schonenden Variante \textit{2\_c\_1}:
  \begin{itemize}

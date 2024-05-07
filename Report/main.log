@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.16)  7 MAY 2024 11:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.16)  7 MAY 2024 15:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1354,18 +1354,28 @@ You have given more \span or & marks than there were
 in the preamble to the \halign or \valign now in progress.
 So I'll assume that you meant to type \cr instead.
 
-<../times_1000_all.png, id=43, 658.3797pt x 389.5353pt>
-File: ../times_1000_all.png Graphic file (type png)
-<use ../times_1000_all.png>
-Package pdftex.def Info: ../times_1000_all.png  used on input line 81.
-(pdftex.def)             Requested size: 393.1496pt x 232.60553pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 112--116
+
+ []
+
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <../times_1000_all.png>]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 103.
- (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+<../times_1000_all.png, id=62, 658.3797pt x 389.5353pt>
+File: ../times_1000_all.png Graphic file (type png)
+<use ../times_1000_all.png>
+Package pdftex.def Info: ../times_1000_all.png  used on input line 149.
+(pdftex.def)             Requested size: 393.1496pt x 232.60553pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 164--165
+
+ []
+
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 165.
+(/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
+) [2 <../times_1000_all.png>] [3]
 \g__nicematrix_max_cell_width_dim=\dimen389
 \c@iRow=\count426
 \c@jCol=\count427
@@ -1389,34 +1399,33 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 \l__nicematrix_initial_j_int=\count431
 \l__nicematrix_final_i_int=\count432
 \l__nicematrix_final_j_int=\count433
- [2]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 146.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 254.
  (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<../times_2c_20000.png, id=75, 625.1355pt x 399.6531pt>
+<../times_2c_20000.png, id=81, 625.1355pt x 399.6531pt>
 File: ../times_2c_20000.png Graphic file (type png)
 <use ../times_2c_20000.png>
-Package pdftex.def Info: ../times_2c_20000.png  used on input line 192.
+Package pdftex.def Info: ../times_2c_20000.png  used on input line 300.
 (pdftex.def)             Requested size: 393.1496pt x 251.3437pt.
- [3]
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 210.
+ [4]
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 318.
  (/usr/share/texmf/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [4 <../times_2c_20000.png>] [5] (./main.aux) ) 
+) [5 <../times_2c_20000.png>] [6] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 51140 strings out of 478287
- 1175527 string characters out of 5849289
- 1707470 words of memory out of 5000000
+ 51147 strings out of 478287
+ 1175579 string characters out of 5849289
+ 1707601 words of memory out of 5000000
  68430 multiletter control sequences out of 15000+600000
- 559957 words of font info for 142 fonts, out of 8000000 for 9000
+ 561638 words of font info for 148 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,15n,96p,724b,732s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/newpx/NewPXMI.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newpx/pxmiaX.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newpx/pxsys.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txexs.pfb>
-Output written on main.pdf (5 pages, 328020 bytes).
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/newpx/NewPXMI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newpx/NewPXMI_gnu.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newpx/pxmiaX.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newpx/pxsys.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txexs.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/txsyb.pfb>
+Output written on main.pdf (6 pages, 358117 bytes).
 PDF statistics:
- 184 PDF objects out of 1000 (max. 8388607)
- 118 compressed objects within 2 object streams
- 14 named destinations out of 1000 (max. 500000)
+ 197 PDF objects out of 1000 (max. 8388607)
+ 126 compressed objects within 2 object streams
+ 15 named destinations out of 1000 (max. 500000)
  215 words of extra memory for PDF output out of 10000 (max. 10000000)
 
