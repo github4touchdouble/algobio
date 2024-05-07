@@ -17,7 +17,6 @@ public class Main {
     static HashMap<String, ArrayList<Long>> timeStamps = new HashMap<>();
     static ArrayList<Integer> inSize = new ArrayList<>();
     static final ArrayList<String> DEFAULT_TYPES = new ArrayList<>();
-    static boolean seconds;
     static Integer stepSize;
     static Integer size;
     public static void main(String[] args) throws ArgumentParserException, IOException {
@@ -43,9 +42,6 @@ public class Main {
                 type(Integer.class).
                 setDefault(1).
                 help("when benchmarking, increase n with this constant for each iteration");
-        parser.addArgument("--sec").
-                action(storeTrue()).
-                help("convert micro seconds to seconds");
 
         DEFAULT_TYPES.add("naive");
         DEFAULT_TYPES.add("recursive");
@@ -62,7 +58,6 @@ public class Main {
         java.util.List<Integer> vec = ns.getList("vec"); // input vec
         java.util.List<String> algorithms = ns.getList("algorithms"); // algorithm (alg) types
         String path = ns.get("path"); // out path, default = times.csv
-        seconds = ns.getBoolean("sec"); // set global
         stepSize = ns.getInt("step"); // set global
         size = ns.getInt("size"); // set global
 
@@ -175,11 +170,7 @@ public class Main {
                 System.out.println("// Optimal:");
                 printRes(resOptimal, elapsedTimeMicros, n);
 
-                if (seconds) {
-                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
-                } else {
-                    timeStamps.get(type).add(elapsedTimeMicros); // append time
-                }
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
             case("naive"):
@@ -191,11 +182,7 @@ public class Main {
                 System.out.println("//");
                 printRes(resNai, elapsedTimeMicros, n);
 
-                if (seconds) {
-                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
-                } else {
-                    timeStamps.get(type).add(elapsedTimeMicros); // append time
-                }
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
             case ("recursive"):
@@ -207,11 +194,7 @@ public class Main {
                 System.out.println("//");
                 printRes(resRec, elapsedTimeMicros, n);
 
-                if (seconds) {
-                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
-                } else {
-                    timeStamps.get(type).add(elapsedTimeMicros); // append time
-                }
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
             case ("dynamic"):
@@ -222,12 +205,8 @@ public class Main {
                 System.out.println("// Dynamic Programming:");
                 System.out.println("//");
                 printRes(resDyn, elapsedTimeMicros, n);
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
 
-                if (seconds) {
-                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
-                } else {
-                    timeStamps.get(type).add(elapsedTimeMicros); // append time
-                }
                 break;
 
             case("divide"):
@@ -239,11 +218,7 @@ public class Main {
                 System.out.println("//");
                 printRes(resDiv, elapsedTimeMicros, n);
 
-                if (seconds) {
-                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
-                } else {
-                    timeStamps.get(type).add(elapsedTimeMicros); // append time
-                }
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
             case("2_a"):
@@ -254,12 +229,7 @@ public class Main {
                 System.out.println("// 2_a (MSS):");
                 System.out.println("//");
                 printRes(resAll, elapsedTimeMicros, n);
-
-                if (seconds) {
-                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
-                } else {
-                    timeStamps.get(type).add(elapsedTimeMicros); // append time
-                }
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
             case("2_b"):
@@ -271,11 +241,7 @@ public class Main {
                 System.out.println("//");
                 printRes(resAll, elapsedTimeMicros, n);
 
-                if (seconds) {
-                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
-                } else {
-                    timeStamps.get(type).add(elapsedTimeMicros); // append time
-                }
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
             case("2_c"):
@@ -286,12 +252,7 @@ public class Main {
                 System.out.println("// 2_c (All SMSS):");
                 System.out.println("//");
                 printRes(resAll, elapsedTimeMicros, n);
-
-                if (seconds) {
-                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
-                } else {
-                    timeStamps.get(type).add(elapsedTimeMicros); // append time
-                }
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
 
            case("2_c_1"):
@@ -302,12 +263,7 @@ public class Main {
                 System.out.println("// 2_c_1 (All SMSS & Optimized space usage):");
                 System.out.println("//");
                 printRes(resAll, elapsedTimeMicros, n);
-
-                if (seconds) {
-                    timeStamps.get(type).add((long) elapsedTimeMicros / 1000000L); // append time
-                } else {
-                    timeStamps.get(type).add(elapsedTimeMicros); // append time
-                }
+                timeStamps.get(type).add(elapsedTimeMicros); // append time
                 break;
        }
        System.out.println();
