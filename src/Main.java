@@ -98,7 +98,7 @@ public class Main {
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
                 }
 
-                for (int i = 0; i < 10000; i++) {
+                for (int i = 0; i < 200; i++) {
 
                     for (int j = 0; j < stepSize; j++) { // increase n based on global stepSize
                         vec.add(random.nextInt(max - min) + min); // add one rand number to vec
@@ -149,14 +149,14 @@ public class Main {
     public static void printRes(int[] res, long time, int n) {
         System.out.println("// \t[" + res[0] + "," + res[1] +"] mit score " + res[2]);
         System.out.println("// \t" + time + " µs");
-        System.out.println("// \t for input size " + n);
+        System.out.println("// \tfor input size " + n);
     }
     public static void printRes(ArrayList<int[]> results, long time, int n) {
         for (int[] res : results) {
             System.out.println("// \t[" + res[0] + "," + res[1] +"] mit score " + res[2]);
         }
         System.out.println("// \t" + time + " µs");
-        System.out.println("// \t for input size " + n);
+        System.out.println("// \tfor input size " + n);
     }
 
     public static void benchmarkCode(String type, List<Integer> vec) {
