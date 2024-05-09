@@ -9,8 +9,8 @@ java -jar main.jar [--vec] [--algorithms] [--path] [--step] [--size]
 ```
 - `--vec` can be a space separated vector of $n$ values. If not provided, `jar` will switch to **benchmark mode**.
   - `--algorithms` can be any combination of algorithms (space separated) in this set:  
-     `{naive, recursive, divide, dynamic, optimal, 2_a, 2_b, 2_c, 2_c_1}`.
-     Note that `2_c_1` is also the same algorithm as `2_c` (utilizing) the dynamic programming algorithm, but
+     `{naive, recursive, divide, dynamic, optimal, 2_a, 2_b, 2_c, 2_c_1}`.  
+     Note that `2_c_1` is also the same algorithm as `2_c` (utilizing) the dynamic programming algorithm, but  
      in `2_c_1` we optimized the array usage by only creating as many ints in the arrays as necessary. 
      It is still not optimal, but it works on larger input `n` (see report).
      If not provided, all elements of the set will be executed.
@@ -19,7 +19,8 @@ java -jar main.jar [--vec] [--algorithms] [--path] [--step] [--size]
    increased by this constant per iteration, `default=1`.
 
 > [!NOTE]  
-> A csv containing the execution times per algorithm is only created when in `benchmark mode` (meaning no `--vec` is passed)
+> A csv containing the execution times per algorithm is only created when in `benchmark mode`   
+> (meaning no `--vec` is passed)
 
 ## Run all algorithms on input from sheet
 ```
@@ -46,8 +47,8 @@ java -jar SMSS.jar --vec 5 -2 5 -2 1 -9 12 -2 24 -5 13 -12 3 -13 5 -2 -1 2
 >    
 > // Divide and Conquer:   
 > //   
-> // 	[8,8] mit score 24   
-> // 	847 µs   
+> // 	[6,10] mit score 42
+> // 	25 µs   
 > // 	for input size 19   
 >    
 > // Optimal:   
@@ -85,7 +86,7 @@ java -jar SMSS.jar --vec 5 -2 5 -2 1 -9 12 -2 24 -5 13 -12 3 -13 5 -2 -1 2
 ```sh
 java -jar SMSS.jar --vec  5 -2 5 -2 1 -9 5 -2 4 -5 1 -2 3 -1 5 -3 2 -1 2 --algorithms naive optimal 
 ```
-Runs `naive` and `optimal` on vector `v`
+Runs `naive` and `optimal` on vector `vec`
 
 ### Example 2
 ```sh
@@ -109,14 +110,14 @@ Benchmarks all and saves times to `times.csv`
 ```sh
 java -jar SMSS.jar --vec 1 2 3 -3 10 1
 ```
-Runs all algorithms on `v`
+Runs all algorithms on `vec`
 
 ## Plotting Results
 ```sh
 python3 plot.py -p <name.csv>
 
 ```
-Saves plot as `<name.png>` and labels y-axis with seconds:  
-TODO: ![Example](times_sec_1000_all.png)
+Saves plot as `<name.png>` and labels y-axis with seconds:
+![Example](times_sec_1000_all.png)
 
 
