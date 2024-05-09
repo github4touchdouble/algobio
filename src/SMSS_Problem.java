@@ -193,7 +193,7 @@ public class SMSS_Problem {
         }
         return finalRes;
     }
-
+    // 2_b
     public static ArrayList<int[]> MSS_2b(List<Integer> sequence) {
         ArrayList<int[]> bin = MSS_2a(sequence);
         int min_length = 0;
