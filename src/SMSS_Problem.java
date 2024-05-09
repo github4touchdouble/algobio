@@ -30,56 +30,84 @@ public class SMSS_Problem {
         return new int[]{l, r, max};
     }
 
-    //todo: bugfix
     public static int[] divide_and_conquer(List<Integer> sequence) {
-        return rec_divide_and_conquer(sequence, 0, sequence.size() - 1);
+        int[] res = new int[]{0, 0, 0};
+        rec_divide_and_conquer(sequence, 0, sequence.size() - 1, res);
+        return res;
     }
 
-    private static int[] rec_divide_and_conquer(List<Integer> sequence, int i, int j) {
+    private static int[] rec_divide_and_conquer(List<Integer> sequence, int i, int j, int[] res) {
         if (i == j) {
             if (sequence.get(i) > 0) {
-                return new int[]{i, i, sequence.get(i)};
+                res[0] = i;
+                res[1] = i;
+                res[2] = sequence.get(i);
+                return res;
             } else {
-                return new int[]{i, i - 1, 0};
+                res[0] = i;
+                res[1] = i - 1;
+                res[2] = 0;
+                return res;
             }
-        } else {
-            int m = (i + j - 1) / 2;
-            int[] t1 = rec_divide_and_conquer(sequence, i, m);
-            int[] t2 = rec_divide_and_conquer(sequence, m + 1, j);
-            int[] t3 = new int[]{0, 0, 0};
-            for (int k = i; k <= m; k++) {
-                int sigma = sigRec(k, m, sequence);
-                if (sigma > t3[0]) {
-                    t3[0] = sigma;
-                }
-            }
-            for (int k = m + 1; k <= j; k++) {
-                int sigma = sigRec(m + 1, k, sequence);
-                if (sigma < t3[1]) {
-                    t3[1] = sigma;
-                }
-            }
-            t3[2] = sig(t3[0], t3[1], sequence);
-            System.out.println(t3[0] + " " + t3[1] + " " + t3[2]);
 
-            if (t1[2] > t2[2] && t1[2] > t3[2]) {
-                return t1;
-            } else if (t2[2] > t1[2] && t2[2] > t3[2]) {
-                return t2;
-            } else {
-                return t3;
+        } else {
+            int m = (i + j) / 2;
+            int mxls = 0;
+            int crls = 0;
+            int mxli = m;
+            for (int k = m; k >= i; k--) {
+                crls += sequence.get(k);
+                if (crls > mxls) {
+                    mxls = crls;
+                    mxli = k;
+                }
             }
+
+            int mxrs = 0;
+            int crrs = 0;
+            int mxri = m + 1;
+            for (int k = m + 1; k <= j; k++) {
+                crrs += sequence.get(k);
+                if (crrs > mxrs) {
+                    mxrs = crrs;
+                    mxri = k;
+                }
+            }
+
+            int mxs = mxls + mxrs;
+            int ls = rec_divide_and_conquer(sequence, i, m, res)[2];
+            int rs = rec_divide_and_conquer(sequence, m + 1, j, res)[2];
+            if (ls >= rs && ls >= mxs) {
+                res[0] = i;
+                res[1] = m;
+                res[2] = ls;
+                return res;
+            } else if (rs >= ls && rs >= mxs) {
+                res[0] = m + 1;
+                res[1] = j;
+                res[2] = rs;
+                return res;
+            } else {
+                res[0] = mxli;
+                res[1] = mxri;
+                res[2] = mxs;
+                return res;
+            }
+
         }
     }
+
     /*
     public static void main(String[] args) {
         int[] test = new int[]{-5, 2, 4, -4, 5};
         //int[] optimal = optimal(new ArrayList<>(List.of(-5, 2, 4, -4, 5)));
         int[] optimal = divide_and_conquer(new ArrayList<>(List.of(-5, 2, 4, -4, 5)));
+
+        //int[] optimal = maxSubsequence(test);
         System.out.println("Optimal: [" + optimal[0] + "," + optimal[1] + "] mit score " + optimal[2]);
     }
-    */
 
+     */
 
 
     public static int[] naive(List<Integer> sequence) {
@@ -133,11 +161,11 @@ public class SMSS_Problem {
         int[][] S = new int[n][n];
 
         for (int i = 0; i < n; i++) {
-            for (int j = i+1; j < n; j++) {
-                S[i][j] = S[i][j-1] + sequence.get(j);
+            for (int j = i + 1; j < n; j++) {
+                S[i][j] = S[i][j - 1] + sequence.get(j);
 
                 if (S[i][j] >= res[2]) {
-                    res[0] = i+1; // l
+                    res[0] = i + 1; // l
                     res[1] = j; // r
                     res[2] = S[i][j]; // update max score
                 }
@@ -184,7 +212,7 @@ public class SMSS_Problem {
         ArrayList<int[]> finalRes = new ArrayList<>();
 
         // O(n), go through all segments of mss list
-        for(int[] segment: scores.get(scores.size() - 1)) {
+        for (int[] segment : scores.get(scores.size() - 1)) {
             if (segment[0] > lastL && segment[1] > lastR) {
                 lastL = segment[0];
                 lastR = segment[1];
@@ -193,6 +221,7 @@ public class SMSS_Problem {
         }
         return finalRes;
     }
+
     // 2_b
     public static ArrayList<int[]> MSS_2b(List<Integer> sequence) {
         ArrayList<int[]> bin = MSS_2a(sequence);
@@ -247,8 +276,9 @@ public class SMSS_Problem {
                 }
             }
         }
-        return scores.get(scores.size()-1);
+        return scores.get(scores.size() - 1);
     }
+
     public static ArrayList<int[]> MSS_2c_1(List<Integer> sequence) {
         ArrayList<ArrayList<int[]>> scores = new ArrayList<>();
         scores.add(new ArrayList<>()); // init first
@@ -270,27 +300,27 @@ public class SMSS_Problem {
                     Snew.get(i)[j] = sequence.get(j);
                 } else {
                     if (j > i) {
-                        Snew.get(i)[j-i] = Snew.get(i)[j-1-i] + sequence.get(j);
+                        Snew.get(i)[j - i] = Snew.get(i)[j - 1 - i] + sequence.get(j);
                     } else {
-                        Snew.get(i)[j-i] = sequence.get(j);
+                        Snew.get(i)[j - i] = sequence.get(j);
                     }
                 }
 
-                if (Snew.get(i)[j-i] == res[2]) { // append
+                if (Snew.get(i)[j - i] == res[2]) { // append
                     res[0] = i; // l
                     res[1] = j; // r
-                    res[2] = Snew.get(i)[j-i]; // update max score
-                    scores.get(scores.size() - 1).add(new int[]{i, j, Snew.get(i)[j-i]});
-                } else if (Snew.get(i)[j-i] >= res[2]) { // create new
+                    res[2] = Snew.get(i)[j - i]; // update max score
+                    scores.get(scores.size() - 1).add(new int[]{i, j, Snew.get(i)[j - i]});
+                } else if (Snew.get(i)[j - i] >= res[2]) { // create new
                     res[0] = i; // l
                     res[1] = j; // r
-                    res[2] = Snew.get(i)[j-i]; // update max score
+                    res[2] = Snew.get(i)[j - i]; // update max score
                     scores.add(new ArrayList<>());
-                    scores.get(scores.size() - 1).add(new int[]{i, j, Snew.get(i)[j-i]});
+                    scores.get(scores.size() - 1).add(new int[]{i, j, Snew.get(i)[j - i]});
                 }
             }
         }
-        return scores.get(scores.size()-1);
+        return scores.get(scores.size() - 1);
     }
 
     public static int sig(int i, int j, List<Integer> sequence) {
