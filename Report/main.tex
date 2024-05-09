@@ -1,96 +1,147 @@
 \documentclass[10pt]{article}
-\usepackage[T1]{fontenc} \usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{listings}
-\usepackage[version=4]{mhchem}
+\usepackage[T1]{fontenc} 
 \usepackage{bbold}
-\usepackage{graphicx}
-\usepackage[export]{adjustbox}
-\usepackage{xcolor}
-\usepackage{bbold}
-\usepackage{soul}
-\usepackage{tikz,pgfplots, lipsum,lmodern}
-\usepackage[T1]{fontenc}
-\usepackage[ngerman]{babel}
-\usepackage{adigraph}
-\pgfplotsset{compat=1.18, width=10cm}
-\usetikzlibrary{positioning}
+\usepackage{tikz, lipsum,lmodern}
+\usepackage{hyperref}
 
 \usepackage{nicematrix,tikz}
 \usepackage[tmargin=2cm,rmargin=1in,lmargin=1in,margin=0.85in,bmargin=2cm,footskip=.2in]{geometry}
 \usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
-\usepackage[varbb]{newpxmath}
-\usepackage{xfrac}
-\usepackage[makeroom]{cancel}
-\usepackage{mathtools}
-\usepackage{bookmark}
-\usepackage{enumitem}
-\usepackage[most,many,breakable]{tcolorbox}
-\usepackage{varwidth}
-\usepackage{varwidth}
-\usepackage{etoolbox}
 %\usepackage{authblk}
 \usepackage{nameref}
 \usepackage{multicol,array}
 \usepackage{tikz-cd}
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
-\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
-\usepackage{import}
-\usepackage{xifthen}
 \usepackage{pdfpages}
 
-\definecolor{gre}{RGB}{101, 191, 127}
-\definecolor{gree}{RGB}{7, 135, 44}
-
-\newtcolorbox{defin}[2][]{colback=mygr!10,enhanced,title= #2,#1,
-attach boxed title to top left={xshift=-4mm},boxrule=0pt,after skip=1cm,before skip=1cm,right skip=0cm,breakable,fonttitle=\bfseries,toprule=0pt,bottomrule=0pt,rightrule=0pt,leftrule=4pt,arc=0mm,skin=enhancedlast jigsaw,sharp corners,colframe=mygr,colbacktitle=mygr,boxed title style={
-    frame code={ 
-        \fill[mygr](frame.south west)--(frame.north west)--(frame.north east)--([xshift=3mm]frame.east)--(frame.south east)--cycle;
-        \draw[line width=1mm,mygr]([xshift=2mm]frame.north east)--([xshift=5mm]frame.east)--([xshift=2mm]frame.south east);
-        
-        \draw[line width=1mm,mygr]([xshift=5mm]frame.north east)--([xshift=8mm]frame.east)--([xshift=5mm]frame.south east);
-        \fill[mygr!40](frame.south west)--+(4mm,-2mm)--+(4mm,2mm)--cycle;
-    }
-}
-}
-
-\newtcolorbox{Box1}[2][]{sidebyside,
-lower separated=false,
-colback=white,
-colframe=mygr,fonttitle=\bfseries,
-colbacktitle=mygr,enhanced,
-attach boxed title to top left={xshift=1cm,
-yshift=-2mm},
-title=#2,#1}
-
-\newcommand{\uproman}[1]{\uppercase\expandafter{\romannumeral#1}}
-
-\definecolor{mygr}{HTML}{2C3338}
-\newcolumntype{?}[1]{!{\vrule width #1}}
 
 \title{Report - Praxisblatt 1}
-\author{Malte A. Weyrich & Jan P. Hummel}
+\author{Malte A. Weyrich \& Jan P. Hummel}
 \begin{document}
 
 \maketitle
+\section*{Disclaimer}
+    Alle Werte die in diesem Report vorgestellt werden, wurden auf einem \textit{Lenovo-ThinkPad-Gen-1} Rechner mit
+    folgender Hardware \textit{AMD® Ryzen 7 pro 4750u with radeon graphics × 16; Memory: 16.0 GB} erhoben. 
+    Die Dokumentation zur \textit{usage} der \textit{SMSS JAR} ist auf dem \textbf{README.md} des folgenden
+    \textit{GitHub Repository:} \url{http://https://github.com/github4touchdouble/smss} zu finden.
+
 \section{Aufgabe}
-\lipsum[1]
-\begin{figure}[h]
+    \subsection{Naive Approaches}
+    Der \textit{naive} Ansatz verfolgt eine recht simple Strategie, um alle Segmente in dem
+    Vector C zu identifizieren und die Summe zu bilden. Vom Arbeitsspeicher her ist dieser Ansatz
+    sehr schonend, da die Variablen ( wie z.B. \textit{maxscore, l, r} usw.) immer einzeln gespeichert werden
+    und gegebenen Falls überschrieben werden. Jedoch liegt der gro\ss e Nachteil bei der Laufzeit, welche sich
+    folgender ma\ss en beschreiben lässt:
+    \[
+        \frac{n^{3}+3n^{2}+2n}{6} 
+    \]
+    Der \textit{rekursive} Ansatz spart sich einige Schritte in der Berechnung, jedoch bleibt der dominante Term weiterhin
+    $n^{3}$:
+    \[
+       \frac{n^{3}-n}{6}  
+    .\]
+    Zudem leidet der Stack unter den polynomiell steigenden Funktionsaufrufen, was bereits bei 
+    kleinen Eingaben zu Problemen führt. Man könnte also argumentieren, dass obwohl der \textit{rekursive}
+    Ansatz auf dem Papier etwas effizienter ist, für gro\ss e Eingaben immer noch der \textit{naive} Ansatz
+    am realistischen ist. Beide Algorithmen sind zeitlich eingeschränkt, vor allem ist aber der 
+    \textit{rekursive} Ansatz klar limitiert (vom Arbeitsspeicher) was die Eingabegrö\ss e $n$ an geht.
+     
+    In der folgenden Abbildung ist die Laufzeit in Sekunden beider Ansätze gegen die Eingabelänge $n$ grafisch dargestellt:
+
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=0.45\textwidth]{../naive_vs_rec_times.png}
+        \caption{\textit{Naive} algorithm versus \textit{recursive} solution.}
+    \end{figure}
+
+        \newpage
+    Wie sich herausstellt, skaliert der \textit{naive} Ansatz auf der gegebene Hardware besser als der \textit{rekursive} Ansatz.
+    Das liegt wahrscheinlich an den vielen rekursiven Aufrufen, die alle ebenfalls Zeit kosten und daran, wie Java 
+    intern mit den Rekursionsaufrufen umgeht. 
+
+    \subsection{Dynamic Programming}\label{sec:dynamic}
+    Der \textit{dynamic programming} Ansatz bedient sich eines Arrays, welches bereits berechnete Ergebnisse zwischenspeichert und somit
+    redundante Berechnungen verhindert. Somit verbessert sich die Laufzeit stark verglichen zu den oberen Ansätzen:
+
+    \[
+        \frac{n^{2}+n}{2} 
+    .\]
+
+    Jedoch bu\ss t dieser Ansatz damit ein, dass der Speicherplatzbedarf quadratisch steigt und das Array jedes mal 
+    initialisiert werden muss, was wiederum Zeit benötigt. Zudem ist die Nutzung des Arrays nicht optimal. Es wird jeweils nur die 
+    Hälfte des reservierten Speicherplatzes tatsächlich genutzt. In \ref{sec:2c} wird diese Optimierung 
+    umgesetzt.
+
+    \subsection{Divide and Conquer \& Optimal Solution}
+   Der \textit{divide and conquer} hat eine Komplexität von ....
+       TODO JAAAN
+
+
+
+   Der \textit{optimale} Ansatz löst das Problem in linearer Zeit ($\mathcal O (n)$). 
+   Genau wie im \textit{naiven} Ansatz werden hier keine zusätzlichen Datenstrukturen verwendet,
+   lediglich werden einzelne Integers gespeichert und überschreiben. Demnach ist der \textit{optimale}
+   Ansatz auch bezogen auf den Arbeitsspeicher sehr effizient. 
+
+
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{../times_1000_all.png}
-    \caption{all}
-    \label{fig:Test}
+    \caption{Überblick aller Algorithmen für Eingabeintervall [1; 1000]}
+    \label{fig:overview}
 \end{figure}
 
 \section{Aufgabe}
 
+\subsection{2a - SMSS}\label{sec:2a}
+Wir erweitern den optimalen Ansatz, indem wir jedes gefundene \textit{segment} in einer \textit{ArrayList< ArrayList<int[3]> >} abspeichern.
+Die äu\ss ere Liste initialisiert für jeden neuen \textit{max\_score} der gefunden wurde eine neue innere Liste. Diese innere
+Liste wird so lange mit gleichwertigen \textit{segmenten} befüllt, bis ein \textit{segment} gefunden wurde, mit einen grö\ss erem
+\textit{max\_score}. So ist die Liste von links nach rechts aufsteigend nach \textit{max\_score} sortiert (d.h. die letzte innere Liste beinhaltet alle \textit{MSS}).
+Am Ende wird einmal über die am \textit{Endindex} stehende Liste in $\mathcal{O}(n)$ iteriert, um die tatsächlichen non overlapping
+\textit{MSS} in einer finale Liste zu speichern.
+
+Folgende Fälle werden abgedeckt: \\
+\begin{verbatim} 
+   CASE 1:
+   1: ---+===+-----------
+   2: ---+=====+---------
+\end{verbatim}
+Hier darf das $segment_{2}$ nicht ausgegeben werden, da $segment_{1} \subseteq segment_2$. Also merken wir uns
+jeweils den Start- und Endindex des letzten \textit{segments}. So können wir die letzten Indizes mit den 
+momentanen vergleichen und \textbf{CASE 1} abfangen. 
+
+\begin{verbatim}
+   CASE 2:
+   1: ---+=====+---------
+   2: ---+===+-----------
+\end{verbatim}
+\textbf{CASE 2} ist nicht möglich, da $segment_{2}$ vor $segment_{1}$ in der Liste abgespeichert ist.
+Der Algorithmus ist so konzipiert, dass er wie bei \textbf{CASE 1} erst das kürzere $segment_{1}$ findet und dann das
+längere $segment_{2}$. Also müssen wir uns nicht um \textbf{CASE 2} kümmern.
+\begin{verbatim}
+   CASE 3:
+   1: -----+=+-----------
+   2: ---+=====+---------
+
+   CASE 4
+   1: ---+=====+---------
+   2: -----+=+-----------
+\end{verbatim}
+\textbf{CASE 3 \& 4} Sind ebenfalls nicht möglich, da \textit{MSS} entweder den gleichen Start- oder Endindex haben.
+
+\begin{verbatim} 
+   CASE 5:
+   1: -----+===+---------
+   2: ---+=====+---------
+\end{verbatim}
+Hier wird sich in der \textit{i-ten} Iteration die Start- und Endindizes von $segment_{1}$ gemerkt
+und demnach das $segment_{2}$ in der \textit{i+1-ten} Iteration nicht dem Endresultat hinzugefügt,
+da der Endindex von $segment_2 \not >$  Endindex von $segment_1$.
+\subsection{2b - SMSS mit minimaler Länge}\label{sec:2b}
 \lipsum[1]
-\subsection{2a - SMSS}\label{2a}
-\lipsum[1]
-\subsection{2b - SMSS mit minimaler Länge}\label{2b}
-\lipsum[1]
-\subsection{2c - Alle MSS} 
+\subsection{2c - Alle MSS}\label{sec:2c}
 
 Für die 2c haben wir unseren ursprünglichen Ansatz nicht weiter verwendet. Der \textit{optimale Algorithmus} ist in sich selbst so effizient,
 dass er null Folgen am Anfang und am Ende von Segmenten direkt ignoriert. Wir haben uns also überlegt, welcher der anderen 
@@ -112,15 +163,15 @@ die der \textit{optimale Algorithmus} nicht in Betracht zieht.
                               +====================+
 \end{verbatim}
 
-Der \textit{dynamic programming Algorithmus} betrachtet in dem oberen Beispiel alle der Teilfolgen. 
-Also haben wir wieder wie in \ref{2a} eine äu\ss ere Liste mit inneren Listen erstellt, und für jeden neuen \textit{maxscore} eine neue innere Liste
+\newpage
+Der \textit{dynamic programming} Algorithmus betrachtet in dem oberen Beispiel alle der Teilfolgen. 
+Also haben wir wieder wie in \ref{sec:2a} eine äu\ss ere Liste mit inneren Listen erstellt, und für jeden neuen \textit{maxscore} eine neue innere Liste
 erstellt, die dann mit allen gleichwertigen Segmenten (also allen Segmenten mit demselben \textit{maxscore}) befüllt wird, bis ein grö\ss erer \textit{maxscore} gefunden wird.
 So findet der \textit{2\_c Algorithmus} also definitiv alle MSS, denn wir wissen bereits, dass der \textit{dynamic programming} Ansatz korrekt ist und
 alle Kombinationen in Betracht zieht. Jedoch bu\ss t dieser Ansatz bei der Speicherkomplexität ein, das \textit{int[][]} Array wächst 
 zu einem gegebenen Eingabe Vektor mit Länge $n$ exponentiell: $n^{2}$. D.h. für gro\ss e Eingaben verbrauchen wir enorm viel
 Speicherplatz. 
-
-Wie bereits in \textit{1. Theorie Blatt Aufgabe 2} gezeigt, benutzt der \textit{dynamic programming Algorithmus} immer nur 
+Wie bereits in \ref{sec:dynamic} gezeigt, benutzt der \textit{dynamic programming} Ansatz immer nur 
 die Hälfte des Arrays. Allgemein hat das Array die folgende Form:
 
 $$
@@ -136,15 +187,12 @@ $$
     \end{pNiceMatrix}
 $$
 
-Man könnte also Platz einsparen, wo nur \textit{0er} stehen:
-\newpage
-
- \textbf{Beispiel}\\
+\textbf{Beispiel}\\
  Betrachten wir die jeweiligen Endzustände der Datenstrukturen von Algorithmus \textit{2\_c} und der 
  Arbeitsspeicher schonenden Variante \textit{2\_c\_1}:
  \begin{itemize}
      \item Eingabe: $v = \left\{5, -5, 9, -3, 13, -5, 5, -5, 5\right\}$
-     \item Hardware: (\textit{Processor: AMD® Ryzen 7 pro 4750u with radeon graphics × 16; Memory: 16.0 GB})
+     \item Hardware: ()
  \end{itemize}
 
 \begin{verbatim}
@@ -156,11 +204,11 @@ Man könnte also Platz einsparen, wo nur \textit{0er} stehen:
     4: [0 ,0 ,0 ,0 ,13,8 ,13,8 ,13]
     5: [0 ,0 ,0 ,0 ,0 ,-5,0 ,-5, 0]
     6: [0 ,0 ,0 ,0 ,0 ,0 ,5 , 0, 5]
-    7: [0 ,0 ,0 ,0 ,0 ,0 ,0 ,-5,0 ]
-    8: [0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ]
+    7: [0 ,0 ,0 ,0 ,0 ,0 ,0 ,-5, 0]
+    8: [0 ,0 ,0 ,0 ,0 ,0 ,0 , 0, 5]
                                
  Max n on given Hardware: 30808:
- java -jar ... --algorithms 2_c --size 30808
+ java -jar SMSS.jar --algorithms 2_c --size 30808
 \end{verbatim}
 
 \begin{verbatim}
@@ -176,7 +224,7 @@ Man könnte also Platz einsparen, wo nur \textit{0er} stehen:
     8: [5]
 
  Max n on given Hardware: 44069:
- java -jar ... --algorithms 2_c_1 --size 44069
+ java -jar SMSS.jar --algorithms 2_c_1 --size 44069
 \end{verbatim}
 
 Der \textit{improved dynamic programming 2\_c\_1} hat keine Position in der 
@@ -193,69 +241,4 @@ Die Spikes in der Abbildung entstehen durch die inkonsistente Geschwindigkeit be
     \caption{Ansatz 2\_c verglichen mit dem Arbeitsspeicher optimierten Ansatz 2\_c\_1}
     \label{fig:time_comp_2c}
 \end{figure}
-
-
-
-\newpage
-\subsection{Ergebnisse}\label{performance_on_sheet_vec}
-Um die  Ergebnisse auf dem Beispeil des Übungsblattes 
-zu rekreiren ruft man die \textit{JAR} folgenderma\ss en auf:
-
-\begin{verbatim}
-java -jar JAR --v 5 -2 5 -2 1 -9 12 -2 24 -5 13 -12 3 -13 5 -2 -1 2
-
-// Naive:
-//
-// 	[6,10] mit score 42
-// 	466 µs
-// 	for input size 19
-
-// Recursive:
-//
-// 	[6,10] mit score 42
-// 	180 µs
-// 	for input size 19
-
-// Dynamic Programming:
-//
-// 	[6,10] mit score 42
-// 	29 µs
-// 	for input size 19
-
-// Divide and Conquer:
-//
-// 	[8,8] mit score 24
-// 	847 µs
-// 	for input size 19
-
-// Optimal:
-// 	[6,10] mit score 42
-// 	4 µs
-// 	for input size 19
-
-// 2_a (MSS):
-//
-// 	[6,10] mit score 42
-// 	24 µs
-// 	for input size 19
-
-// 2_b (SMSS):
-//
-// 	[6,10] mit score 42
-// 	24 µs
-// 	for input size 19
-
-// 2_c (All SMSS):
-//
-// 	[6,10] mit score 42
-// 	32 µs
-// 	for input size 19
-
-// 2_c_1 (All SMSS & Optimized space usage):
-//
-// 	[6,10] mit score 42
-// 	49 µs
-// 	for input size 19
-\end{verbatim}
-
 \end{document}
