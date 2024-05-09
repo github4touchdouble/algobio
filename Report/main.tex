@@ -142,7 +142,7 @@ die minimale Länge aller Sequenzen aus \ref{sec:2a}).
 Der Algorithmus durchläuft die Ergebnismenge aus \ref{sec:2a} in linearer Zeitkomplexität $\mathcal{O}(n)$ 
 und bestimmt für jede Sequenz die Länge anhand der Differenz zwischen ihrem Start- und Endindex in 
 konstanter Zeit $\mathcal{O}(1)$. Während dieses Prozesses wird fortlaufend überprüft, 
-ob die aktuelle Sequenz die bisher kürzeste ist, was ebenfalls in konstanter Zeit erfolgt $\mathcal{O}(i)$. 
+ob die aktuelle Sequenz die bisher kürzeste ist, was ebenfalls in konstanter Zeit erfolgt $\mathcal{O}(1)$. 
 Sequenzen gleicher Länge werden in einer Liste zusammengefasst, wobei die Sequenzlängen als Schlüssel 
 in einer \textit{HashMap} dienen. Dadurch ist ein schneller Zugriff gewährleistet, 
 da der Zugriffsschlüssel (die Sequenzlänge) bekannt ist, was zu einer angenäherten Zugriffszeit von 
