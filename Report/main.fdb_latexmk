@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1715177224 "main.tex" "main.pdf" "main" 1715177225
+["pdflatex"] 1715243646 "main.tex" "main.pdf" "main" 1715243647
   "../naive_vs_rec_times.png" 1715112955 38324 a3189439749b3ad0a089dae0533f8ea6 ""
   "../times_1000_all.png" 1714229400 53270 aecd58404b2a85f61f628fc0ca2efe44 ""
   "../times_2c_20000.png" 1715070573 58625 3b468142606fc90f3f9ebcec823c71a6 ""
@@ -192,7 +192,6 @@
   "/usr/share/texmf/fonts/tfm/public/lm/rm-lmr6.tfm" 1254938640 11836 e3b6ce3e601aec94f64a536e7f4224d5 ""
   "/usr/share/texmf/fonts/tfm/public/lm/rm-lmr7.tfm" 1254938640 11852 5a9022f105fd1ee2797df861e79ae9a0 ""
   "/usr/share/texmf/fonts/tfm/public/lm/rm-lmr8.tfm" 1254938640 11864 309fd7f43e4a0ba39f6f7644d76e8edf ""
-  "/usr/share/texmf/fonts/tfm/public/lm/ts1-lmr10.tfm" 1254938640 1556 b86d923e6b2f9aab2e313098a95cb0b8 ""
   "/usr/share/texmf/fonts/tfm/public/lm/ts1-lmri10.tfm" 1254938640 1764 bd63b6aa2f40108e63ad65c1421568c6 ""
   "/usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb" 1254938640 121021 1bf809ce4a594679006bd72263eba59b ""
   "/usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb" 1254938640 116908 1fca96723793882c2e0160350c192fc8 ""
@@ -216,9 +215,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1665143568 4379155 98693266ff65f58d9f98aff394de12d2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1710603686 2797995 f1cbb8358f773fc31b815adc5780c735 ""
-  "main.aux" 1715177225 4717 cf5f13b5dc4720e6d1d2651a574999ad "pdflatex"
-  "main.out" 1715177225 1170 268ca99a1df2a45203e46e9cab320f25 "pdflatex"
-  "main.tex" 1715115997 11417 441bea9257bded63d3c79f5087373eab ""
+  "main.aux" 1715243647 4946 e9106f5c4a0b9af6c939ed6c63cbb281 "pdflatex"
+  "main.out" 1715243647 1326 3e3452eee404d5ca42d96b2937906574 "pdflatex"
+  "main.tex" 1715243644 14121 acdf6c526274d620ef440fba66e80d42 ""
   (generated)
   "main.aux"
   "main.log"

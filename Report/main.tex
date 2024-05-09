@@ -46,13 +46,13 @@
     Ansatz auf dem Papier etwas effizienter ist, für gro\ss e Eingaben immer noch der \textit{naive} Ansatz
     am realistischen ist. Beide Algorithmen sind zeitlich eingeschränkt, vor allem ist aber der 
     \textit{rekursive} Ansatz klar limitiert (vom Arbeitsspeicher) was die Eingabegrö\ss e $n$ an geht.
-     
-    In der folgenden Abbildung ist die Laufzeit in Sekunden beider Ansätze gegen die Eingabelänge $n$ grafisch dargestellt:
+    In Abbildung \ref{fig:naiv_vs_rec} ist die Laufzeit in Sekunden beider Ansätze gegen die Eingabelänge $n$ grafisch dargestellt:
 
     \begin{figure}[ht]
         \centering
         \includegraphics[width=0.45\textwidth]{../naive_vs_rec_times.png}
         \caption{\textit{Naive} algorithm versus \textit{recursive} solution.}
+        \label{fig:naiv_vs_rec}
     \end{figure}
 
         \newpage
@@ -79,18 +79,12 @@
 
 
 
-   Der \textit{optimale} Ansatz löst das Problem in linearer Zeit ($\mathcal O (n)$). 
+       Der \textit{optimale} Ansatz löst das Problem in linearer Zeit $\mathcal{O}(n)$. 
    Genau wie im \textit{naiven} Ansatz werden hier keine zusätzlichen Datenstrukturen verwendet,
    lediglich werden einzelne Integers gespeichert und überschreiben. Demnach ist der \textit{optimale}
    Ansatz auch bezogen auf den Arbeitsspeicher sehr effizient. 
 
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.8\textwidth]{../times_1000_all.png}
-    \caption{Überblick aller Algorithmen für Eingabeintervall [1; 1000]}
-    \label{fig:overview}
-\end{figure}
 
 \section{Aufgabe}
 
@@ -139,31 +133,62 @@ längere $segment_{2}$. Also müssen wir uns nicht um \textbf{CASE 2} kümmern.
 Hier wird sich in der \textit{i-ten} Iteration die Start- und Endindizes von $segment_{1}$ gemerkt
 und demnach das $segment_{2}$ in der \textit{i+1-ten} Iteration nicht dem Endresultat hinzugefügt,
 da der Endindex von $segment_2 \not >$  Endindex von $segment_1$.
+
 \subsection{2b - SMSS mit minimaler Länge}\label{sec:2b}
-\lipsum[1]
+Wir verwenden den Algorithmus aus \ref{sec:2a}, um alle SMSS zu finden. 
+Unser Ziel ist es, aus der Ergebnismenge von \ref{sec:2a} die SMSS mit minimaler Länge zu ermitteln. 
+Hierbei interessieren wir uns für die Länge jeder Sequenz in der Ergebnismenge sowie für 
+die minimale Länge aller Sequenzen aus \ref{sec:2a}).
+Der Algorithmus durchläuft die Ergebnismenge aus \ref{sec:2a} in linearer Zeitkomplexität $\mathcal{O}(n)$ 
+und bestimmt für jede Sequenz die Länge anhand der Differenz zwischen ihrem Start- und Endindex in 
+konstanter Zeit $\mathcal{O}(1)$. Während dieses Prozesses wird fortlaufend überprüft, 
+ob die aktuelle Sequenz die bisher kürzeste ist, was ebenfalls in konstanter Zeit erfolgt $\mathcal{O}(i)$. 
+Sequenzen gleicher Länge werden in einer Liste zusammengefasst, wobei die Sequenzlängen als Schlüssel 
+in einer \textit{HashMap} dienen. Dadurch ist ein schneller Zugriff gewährleistet, 
+da der Zugriffsschlüssel (die Sequenzlänge) bekannt ist, was zu einer angenäherten Zugriffszeit von 
+$\mathcal{O}(1)$ führ.
+Am Ende des Durchlaufs ist die minimale Sequenzlänge bekannt, und die Liste der Sequenzen mit dieser 
+Länge kann durch einen Lesezugriff auf die \textit{HashMap} als Ergebnismenge extrahiert werden.
+Mit zunehmender Größe der Eingabemenge steigt die Laufzeit von 2b) linear an. 
+Jedes Element wird einmal gespeichert, wodurch auch die Speicherbelastung proportional mit der 
+Größe der Eingabe wächst.
+
+Anzumerken ist, dass die tatsächliche Laufzeit dieses Ansatzes auf der Konzeption und Implementierung 
+von \ref{sec:2a} abhängt. 
+Eine Laufzeitkomplexität von \ref{sec:2a} in $\mathcal{O}(n)$ ist vorausgesetzt, sodass die 
+Laufzeitkomplexität von 2b) in $\mathcal{O}(n)$ liegt, da 2b) die Ergebnismenge 
+aus \ref{sec:2a} als Eingabe verarbeitet.
+Die Sortierung der Ergebnismenge aus \ref{sec:2a} spielt keine Rolle, da allein aus der Kenntnis der minimalen 
+Sequenzlänge nicht automatisch die Anzahl oder die Indexpositionen der SMSS mit minimaler Länge in 
+der Ergebnismenge aus \ref{sec:2a} folgen. 
+Selbst wenn die Ergebnismenge nach Sequenzlänge aufsteigend sortiert ist, wird der beschriebene 
+Algorithmus 2b) angewendet. Lediglich könnte die Iteration vorzeitig abgebrochen werden, 
+wenn für ein Element die berechnete Sequenzlänge größer als die bisher bekannte minimale Länge ist. 
+In diesem Fall wäre aufgrund der Sortierung sichergestellt, dass alle SMSS mit minimaler 
+Länge gefunden wurden. Der Algorithmus 2b) müsste im Falle einer sortierten Ergebnismenge leicht 
+angepasst werden, um diese Bedingung zu überprüfen und die Iteration gegebenenfalls abzubrechen.
+
 \subsection{2c - Alle MSS}\label{sec:2c}
 
 Für die 2c haben wir unseren ursprünglichen Ansatz nicht weiter verwendet. Der \textit{optimale Algorithmus} ist in sich selbst so effizient,
 dass er null Folgen am Anfang und am Ende von Segmenten direkt ignoriert. Wir haben uns also überlegt, welcher der anderen 
-Algorithmen mit eine möglichst guten Laufzeit, diese Fälle auch betrachtet. Wir haben uns dazu entschieden den \textit{dynamic programming Algorithmus} zu erweitern. Dieser hat nämlich den Vorteil
+Algorithmen mit eine möglichst guten Laufzeit, diese Fälle auch betrachtet. Wir haben uns dazu entschieden 
+den \textit{dynamic programming Algorithmus} zu erweitern. Dieser hat nämlich den Vorteil
 bereits ohne Erweiterungen, alle Kombinationen von Teilintervallen zu betrachten. Insbesondere die Teilintervalle,
-die der \textit{optimale Algorithmus} nicht in Betracht zieht.
-
-\textbf{Beispiel}
-
+die der \textit{optimale Algorithmus} nicht in Betracht zieht. Im unteren Fallbeispiel sieht man, wie der \textit{optimale Algorithmus}
+die Nullerpräfixe der MSS ignoriert:
 \begin{verbatim}
-                              5 -5 9 -3 13 -5 5 -5 5
-      optimal             :   -----+=====+----------
+Für Sequenz:            5 -5 9 -3 13 -5 5 -5 5
+optimal             :   -----+=====+----------
 
-      tatsächliche MSS    :   -----+=====+----------
-                              -----+==========+-----
-                              -----+===============+
-                              +==========+----------
-                              +===============+-----
-                              +====================+
+tatsächliche MSS    :   -----+=====+----------
+                        -----+==========+-----
+                        -----+===============+
+                        +==========+----------
+                        +===============+-----
+                        +====================+
 \end{verbatim}
 
-\newpage
 Der \textit{dynamic programming} Algorithmus betrachtet in dem oberen Beispiel alle der Teilfolgen. 
 Also haben wir wieder wie in \ref{sec:2a} eine äu\ss ere Liste mit inneren Listen erstellt, und für jeden neuen \textit{maxscore} eine neue innere Liste
 erstellt, die dann mit allen gleichwertigen Segmenten (also allen Segmenten mit demselben \textit{maxscore}) befüllt wird, bis ein grö\ss erer \textit{maxscore} gefunden wird.
@@ -187,15 +212,11 @@ $$
     \end{pNiceMatrix}
 $$
 
-\textbf{Beispiel}\\
- Betrachten wir die jeweiligen Endzustände der Datenstrukturen von Algorithmus \textit{2\_c} und der 
+ Betrachten wir die jeweiligen Endzustände der Datenstruktur $S$ von Algorithmus \textit{2\_c} und der 
  Arbeitsspeicher schonenden Variante \textit{2\_c\_1}:
- \begin{itemize}
-     \item Eingabe: $v = \left\{5, -5, 9, -3, 13, -5, 5, -5, 5\right\}$
-     \item Hardware: ()
- \end{itemize}
 
 \begin{verbatim}
+ Eingabe: v = {5, -5, 9, -3, 13, -5, 5, -5, 5}
  Array S[n][n] of Default Dynamic Programming (2_c) on v:
     0: [5 ,0 ,9 ,6 ,19,14,19,14,19]
     1: [0 ,-5,4 ,1 ,14,9 ,14,9 ,14]
@@ -212,6 +233,7 @@ $$
 \end{verbatim}
 
 \begin{verbatim}
+ Eingabe: v = {5, -5, 9, -3, 13, -5, 5, -5, 5}
  ArrayList S containing int[] Arrays of Improved Dynamic Programming (2_c_1) on v:
     0: [5 ,0 ,9 ,6 ,19,14,19,14,19]
     1: [-5,4 ,1 ,14,9 ,14,9 ,14]
@@ -240,5 +262,15 @@ Die Spikes in der Abbildung entstehen durch die inkonsistente Geschwindigkeit be
     \includegraphics[width=0.8\textwidth]{../times_2c_20000.png}
     \caption{Ansatz 2\_c verglichen mit dem Arbeitsspeicher optimierten Ansatz 2\_c\_1}
     \label{fig:time_comp_2c}
+\end{figure}
+
+\section{Supplementary Material}
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../times_1000_all.png}
+    \caption{Überblick aller Algorithmen für Eingabeintervall [1; 1000]}
+    \label{fig:overview}
 \end{figure}
 \end{document}
