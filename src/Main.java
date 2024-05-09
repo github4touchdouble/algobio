@@ -93,7 +93,7 @@ public class Main {
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
                 }
 
-                for (int i = 0; i < 200; i++) {
+                for (int i = 0; i < 1000; i++) {
 
                     for (int j = 0; j < stepSize; j++) { // increase n based on global stepSize
                         vec.add(random.nextInt(max - min) + min); // add one rand number to vec
@@ -125,7 +125,7 @@ public class Main {
 
             int min = -100; // Define the minimum value
             int max = 100;  // Define the maximum value
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 2000; i++) {
 
                 for (int j = 0; j < stepSize; j++) {
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec

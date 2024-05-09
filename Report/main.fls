@@ -1158,11 +1158,11 @@ INPUT ../times_2c_20000.png
 INPUT ../times_2c_20000.png
 INPUT ../times_2c_20000.png
 INPUT ../times_2c_20000.png
-INPUT ../times_1000_all.png
-INPUT ../times_1000_all.png
-INPUT ../times_1000_all.png
-INPUT ../times_1000_all.png
-INPUT ../times_1000_all.png
+INPUT ../compare_all.png
+INPUT ../compare_all.png
+INPUT ../compare_all.png
+INPUT ../compare_all.png
+INPUT ../compare_all.png
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out

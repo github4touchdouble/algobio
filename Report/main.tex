@@ -255,6 +255,8 @@ Zahlen zu verarbeiten, also ein $\approx 43\%$ grö\ss eres $n$ als der \textit{
 (*auf der gegebenen Hardware). An der Komplexität hat sich durch die Abänderungen nichts geändert.
 In Abbildung \ref{fig:time_comp_2c} werden die zwei Ansätze in ihrer Laufzeit verglichen.
 Die Spikes in der Abbildung entstehen durch die inkonsistente Geschwindigkeit bei der Array Initialisierung.
+Bezüglich der Komplexität verhalten sich sowohl \textit{2\_c} als auch \textit{2\_c\_1} in 
+der selben Klasse wie der \textit{dynamic programming} Algorithmus \ref{sec:dynamic}. 
 
 
 \begin{figure}[t]
@@ -269,8 +271,8 @@ Die Spikes in der Abbildung entstehen durch die inkonsistente Geschwindigkeit be
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{../times_1000_all.png}
-    \caption{Überblick aller Algorithmen für Eingabeintervall [1; 1000]}
+    \includegraphics[width=0.8\textwidth]{../compare_all.png}
+    \caption{Überblick aller Algorithmen für Eingabeintervall [1; 2000]}
     \label{fig:overview}
 \end{figure}
 \end{document}

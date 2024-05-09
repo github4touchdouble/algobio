@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.16)  9 MAY 2024 18:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.16)  9 MAY 2024 23:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -922,33 +922,33 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 \l__nicematrix_initial_j_int=\count368
 \l__nicematrix_final_i_int=\count369
 \l__nicematrix_final_j_int=\count370
-<../times_2c_20000.png, id=89, 625.1355pt x 399.6531pt>
+<../times_2c_20000.png, id=90, 625.1355pt x 399.6531pt>
 File: ../times_2c_20000.png Graphic file (type png)
 <use ../times_2c_20000.png>
-Package pdftex.def Info: ../times_2c_20000.png  used on input line 262.
+Package pdftex.def Info: ../times_2c_20000.png  used on input line 264.
 (pdftex.def)             Requested size: 393.1496pt x 251.3437pt.
-<../times_1000_all.png, id=90, 658.3797pt x 389.5353pt>
-File: ../times_1000_all.png Graphic file (type png)
-<use ../times_1000_all.png>
-Package pdftex.def Info: ../times_1000_all.png  used on input line 272.
-(pdftex.def)             Requested size: 393.1496pt x 232.60553pt.
- [4] [5 <../times_2c_20000.png> <../times_1000_all.png>] (./main.aux)
+<../compare_all.png, id=91, 620.0766pt x 401.0985pt>
+File: ../compare_all.png Graphic file (type png)
+<use ../compare_all.png>
+Package pdftex.def Info: ../compare_all.png  used on input line 274.
+(pdftex.def)             Requested size: 393.1496pt x 254.30913pt.
+ [4] [5 <../times_2c_20000.png> <../compare_all.png>] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 3E3452EEE404D5CA42D96B2937906574;1326.
  ) 
 Here is how much of TeX's memory you used:
  27106 strings out of 478287
- 546029 string characters out of 5849289
- 904665 words of memory out of 5000000
+ 546008 string characters out of 5849289
+ 905665 words of memory out of 5000000
  44809 multiletter control sequences out of 15000+600000
  535417 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  100i,15n,104p,406b,733s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb>
-Output written on main.pdf (5 pages, 361134 bytes).
+Output written on main.pdf (5 pages, 361399 bytes).
 PDF statistics:
- 171 PDF objects out of 1000 (max. 8388607)
- 131 compressed objects within 2 object streams
+ 172 PDF objects out of 1000 (max. 8388607)
+ 132 compressed objects within 2 object streams
  19 named destinations out of 1000 (max. 500000)
  100 words of extra memory for PDF output out of 10000 (max. 10000000)
 
