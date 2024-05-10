@@ -76,15 +76,31 @@
     umgesetzt.
 
     \subsection{Divide and Conquer \& Optimal Solution}
-   Der \textit{divide and conquer} hat eine Komplexität von ....
-       TODO JAAAN
+    Der \textit{divide and conquer} Ansatz hat eine Komplexität von:
+    \[
+       n \cdot \log n - n + 1 
+    .\]
+    Er bedient sich ebenfalls der Rekursion, jedoch wird her viel effizienter vorgegangen als in dem \textit{rekursiven} Ansatz.
+    Der Vektor wird in Teilvektoren zerlegt und es werden pro Rekursion jeweils 3 zusätzliche Segmente (links, Mitte, rechts) betrachtet. 
+    
+    Der \textit{optimale} Ansatz löst das Problem in linearer Zeit $\mathcal{O}(n)$. 
+    Genau wie im \textit{naiven} Ansatz werden hier keine zusätzlichen Datenstrukturen verwendet,
+    lediglich werden einzelne Integers gespeichert und überschreiben. Demnach ist der \textit{optimale}
+    Ansatz auch bezogen auf den Arbeitsspeicher sehr effizient. 
+    In Abbildung \ref{fig:compare_divide_optimal} sieht man die zwei Ansätze für Eingabewerte von $[1:100000]$.
+    Hier sieht man, wie bei dem \textit{divide and conquer} Ansatz ab einer gewissen Grö\ss e von $n$
+    die "Spikes" zunehmen. Zudem scheint es, als würden die selben Spikes auch in dem \textit{optimalen} Ansatz entstehen, jedoch
+    weniger bis kaum ausgeprägt. Das liegt wahrscheinlich an der Hardware und an \textit{IntelliJ}, nur dass diese
+    Irregularitäten den \textit{divide and conquer} Algorithmus viel stärker beeinflussen. Schlie\ss lich ist dieser viel Arbeitsintensiver als der
+    \textit{optimale} Ansatz.
 
 
-
-       Der \textit{optimale} Ansatz löst das Problem in linearer Zeit $\mathcal{O}(n)$. 
-   Genau wie im \textit{naiven} Ansatz werden hier keine zusätzlichen Datenstrukturen verwendet,
-   lediglich werden einzelne Integers gespeichert und überschreiben. Demnach ist der \textit{optimale}
-   Ansatz auch bezogen auf den Arbeitsspeicher sehr effizient. 
+   \begin{figure}[ht]
+       \centering
+       \includegraphics[width=0.8\textwidth]{../compare_divide_optimal.png}
+       \caption{Comparison of divide and conquer versus optimal algorithm}
+       \label{fig:compare_divide_optimal}
+   \end{figure}
 
 
 

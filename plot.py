@@ -23,7 +23,10 @@ if __name__ == "__main__":
 
     for col_name in df.columns:
         if col_name != "n":
-            plt.plot(df["n"], df[col_name] / 1e6 , label=col_name)
+            if sec:
+                plt.plot(df["n"], df[col_name] / 1e6 , label=col_name)
+            else:
+                plt.plot(df["n"], df[col_name], label=col_name)
 
     plt.xlabel("n", fontsize=20)
     plt.xticks(fontsize=20)

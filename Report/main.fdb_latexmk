@@ -1,6 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1715290830 "main.tex" "main.pdf" "main" 1715290830
+["pdflatex"] 1715325483 "main.tex" "main.pdf" "main" 1715325484
   "../compare_all.png" 1715286897 52620 d87a835f05ad3318a38b5a551302b886 ""
+  "../compare_divide_optimal.png" 1715324636 57281 38494fd29c0daf3c44dc937ea4616a18 ""
   "../naive_vs_rec_times.png" 1715278229 38324 a3189439749b3ad0a089dae0533f8ea6 ""
   "../times_2c_20000.png" 1715070573 58625 3b468142606fc90f3f9ebcec823c71a6 ""
   "/etc/texmf/web2c/texmf.cnf" 1665143549 475 c0e671620eb5563b2130f56340a5fde8 ""
@@ -215,9 +216,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1665143568 4379155 98693266ff65f58d9f98aff394de12d2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1710603686 2797995 f1cbb8358f773fc31b815adc5780c735 ""
-  "main.aux" 1715290830 4946 42cf07d55474693c7a7a569541f620db "pdflatex"
-  "main.out" 1715290830 1326 3e3452eee404d5ca42d96b2937906574 "pdflatex"
-  "main.tex" 1715290828 14299 683eb47917d9612a42694bfb518d53bb ""
+  "main.aux" 1715325483 5221 e917a252cf731cf8760433fb74d2624b "pdflatex"
+  "main.out" 1715325483 1326 3e3452eee404d5ca42d96b2937906574 "pdflatex"
+  "main.tex" 1715325481 15497 c75a79ccc57b30f07e9ecf694bf0ba23 ""
   (generated)
   "main.aux"
   "main.log"

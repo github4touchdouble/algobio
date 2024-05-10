@@ -1137,6 +1137,11 @@ INPUT ../naive_vs_rec_times.png
 INPUT ../naive_vs_rec_times.png
 INPUT ../naive_vs_rec_times.png
 INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
+INPUT ../compare_divide_optimal.png
+INPUT ../compare_divide_optimal.png
+INPUT ../compare_divide_optimal.png
+INPUT ../compare_divide_optimal.png
+INPUT ../compare_divide_optimal.png
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr17.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/rm-lmr17.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/rm-lmr17.tfm
