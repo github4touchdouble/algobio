@@ -15,8 +15,10 @@ java -jar main.jar [--vec] [--algorithms] [--path] [--step] [--size]
      It is still not optimal, but it works on larger input `n` (see report).
      If not provided, all elements of the set will be executed.
 - `--path` can be the name of the csv file, `default=times.csv`.
-- `--step` this flag is used in benchmarking. The input vec of each iteration is 
-   increased by this constant per iteration, `default=1`.
+- `--step` this parameter is used in benchmarking. You can control the inner and outer loop 
+   iterations: `--step 100 10` will set the outer loop to run 100 times and the vec will be increased by 10 
+   each iteration. So the algorithms will be benchmarked on sizes: 10, 20, 30, 40, ..., 990, 1000.
+   Default value is set to 100 10.
 
 > [!NOTE]  
 > A csv containing the execution times per algorithm is only created when in `benchmark mode`   
@@ -102,9 +104,10 @@ Benchmarks `naive`, `optimal`, `dynamic`, increases input vec by 300 each iterat
 
 ### Example 4
 ```sh
-java -jar SMSS.jar
+java -jar SMSS.jar --step 1000 1
 ```
-Benchmarks all and saves times to `times.csv`
+Benchmarks all and saves times to `times.csv`. The algorithms will be benchmarked on vectors, that 
+increase by one each iteration until the size of the vec is equal to 1000.
 
 ### Example 5
 ```sh
@@ -114,10 +117,11 @@ Runs all algorithms on `vec`
 
 ## Plotting Results
 ```sh
-python3 plot.py -p <name.csv>
+python3 plot.py -p <name.csv> -s
 
 ```
-Saves plot as `<name.png>` and labels y-axis with seconds:
+Saves plot as `<name.png>` and labels y-axis with seconds. If `-s` is not passed, the y values will be 
+displayed in microseconds.
 ![Example](times_sec_1000_all.png)
 
 

@@ -17,7 +17,7 @@ public class Main {
     static HashMap<String, ArrayList<Long>> timeStamps = new HashMap<>();
     static ArrayList<Integer> inSize = new ArrayList<>();
     static final ArrayList<String> DEFAULT_TYPES = new ArrayList<>();
-    static Integer stepSize;
+    static List<Integer> stepSize;
     static Integer size;
     public static void main(String[] args) throws ArgumentParserException, IOException {
         ArgumentParser parser = ArgumentParsers.newFor("MSS").build().defaultHelp(true).description("Calculate maximum scoring subsequence for given input vector --v");
@@ -38,10 +38,11 @@ public class Main {
                 type(Integer.class).
                 setDefault(0).
                 help("run given algorithms on a fixed size input (good for testing)");
-        parser.addArgument("--step").
-                type(Integer.class).
-                setDefault(1).
-                help("when benchmarking, increase n with this constant for each iteration");
+        parser.addArgument("--step")
+                .metavar("N")
+                .type(Integer.class)
+                .nargs("+")
+                .help("when benchmarking, increase n with this constant for each iteration");
 
         DEFAULT_TYPES.add("naive");
         DEFAULT_TYPES.add("recursive");
@@ -53,13 +54,19 @@ public class Main {
         DEFAULT_TYPES.add("2_c");
         DEFAULT_TYPES.add("2_c_1");
 
-        // get vec
+        // get args
         Namespace ns = parser.parseArgs(args);
         java.util.List<Integer> vec = ns.getList("vec"); // input vec
         java.util.List<String> algorithms = ns.getList("algorithms"); // algorithm (alg) types
         String path = ns.get("path"); // out path, default = times.csv
-        stepSize = ns.getInt("step"); // set global
+        stepSize = ns.getList("step"); // set global
         size = ns.getInt("size"); // set global
+
+        if (stepSize == null) {
+            stepSize = new ArrayList<>();
+            stepSize.add(100);
+            stepSize.add(10);
+        }
 
         // init all HashMaps for storing time stamps
         for (String type : DEFAULT_TYPES) {
@@ -89,33 +96,24 @@ public class Main {
             int max = 100;  // Define the maximum value
 
 
-                for (int i = 0; i < size; i++) {
+            // init vec with size if --siye was set
+            for (int i = 0; i < size; i++) {
+                vec.add(random.nextInt(max - min) + min); // add one rand number to vec
+            }
+
+            for (int i = 0; i < stepSize.get(0); i++) {
+
+                for (int j = 0; j < stepSize.get(1); j++) { // increase n based on global stepSize
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
                 }
 
-                for (int i = 0; i < 1000; i++) {
+                inSize.add(vec.size()); // add size of vec
 
-                    for (int j = 0; j < stepSize; j++) { // increase n based on global stepSize
-                        vec.add(random.nextInt(max - min) + min); // add one rand number to vec
-                    }
-
-                    inSize.add(vec.size()); // add size of vec
-
-                    for(String algorithm : algorithms) {
-                        benchmarkCode(algorithm, vec);
-                    }
+                for(String algorithm : algorithms) {
+                    benchmarkCode(algorithm, vec);
                 }
-
-                // for (int i = 0; i < size; i++) {
-                //     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
-                // }
-                // inSize.add(vec.size()); // add size of vec
-
-                // for(String algorithm : algorithms) {
-                //     benchmarkCode(algorithm, vec);
-                // }
-
-                writeCsv(path, algorithms);
+            }
+            writeCsv(path, algorithms);
         }
 
         else // benchmark all approaches in this case
@@ -123,11 +121,17 @@ public class Main {
             Random random = new Random(42L); // seed for reproducibility vec = new ArrayList<>(); // reset vec
             vec = new ArrayList<>(); // reset vec
 
+
             int min = -100; // Define the minimum value
             int max = 100;  // Define the maximum value
-            for (int i = 0; i < 2000; i++) {
 
-                for (int j = 0; j < stepSize; j++) {
+            // init vec with size if --siye was set
+            for (int i = 0; i < size; i++) {
+                vec.add(random.nextInt(max - min) + min); // add one rand number to vec
+            }
+
+            for (int i = 0; i < stepSize.get(0); i++) {
+                for (int j = 0; j < stepSize.get(1); j++) {
                     vec.add(random.nextInt(max - min) + min); // add one rand number to vec
                 }
 
