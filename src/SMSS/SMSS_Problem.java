@@ -1,3 +1,5 @@
+package SMSS;
+
 import java.util.List;
 
 public class SMSS_Problem {
