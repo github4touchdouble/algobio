@@ -64,10 +64,10 @@ public class Main {
         }
         Graph g = new CityGraph();
         for (List<String> record : records) {
-            System.out.println(record);
-            g.add_vertex(new Vertex<>(new City(record.get(1), Double.parseDouble(record.get(2)), Double.parseDouble(record.get(3))), Integer.parseInt(record.get(2))));
+            g.add_vertex(new Vertex<>(new City(record.get(1), Double.parseDouble(record.get(2)), Double.parseDouble(record.get(3))), Integer.parseInt(record.get(0))));
         }
         g.compute_edges();
-        System.out.println(g);
+        System.out.println("Read " + g.get_vertex_count() + " cities");
+        System.out.println("Generated " + g.get_edge_count() + " edges");
     }
 }

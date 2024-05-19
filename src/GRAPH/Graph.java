@@ -86,5 +86,20 @@ public class Graph {
             }
         }
     }
+
+    public int get_vertex_count() {
+        return adj_list.size();
+    }
+    public int get_edge_count() {
+        int count = 0;
+        for (Map.Entry<Vertex, HashMap<Double, ArrayList<Vertex>>> entry : adj_list.entrySet()) {
+            HashMap<Double, ArrayList<Vertex>> edges = entry.getValue();
+            for (Map.Entry<Double, ArrayList<Vertex>> entry2 : edges.entrySet()) {
+                count += entry2.getValue().size();
+            }
+        }
+        return count;
+    }
+
 }
 
