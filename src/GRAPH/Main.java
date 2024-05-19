@@ -1,8 +1,14 @@
 package GRAPH;
+
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,8 +26,13 @@ public class Main {
             Namespace ns = parser.parseArgs(args);
             int task = ns.getInt("task");
             switch (task) {
+
                 case 1:
-                    task1();
+                    String path = ns.getString("path");
+                    if (path == null) {
+                        throw new ArgumentParserException("--path is required for task 1", parser);
+                    }
+                    task1(path);
                     break;
 
                 default:
@@ -33,13 +44,30 @@ public class Main {
         }
 
     }
-    public static void task1() {
-        Graph g = new CityGraph();
-        g.add_vertex(new Vertex<>(new City("Goslar (Niedersachsen)", 51.54, 10.26), 0));
-        g.add_vertex(new Vertex<>(new City("Dettelbach (Bayern)", 49.48, 10.11), 1));
-        g.add_vertex(new Vertex<>(new City("Hiroshima (Japan)", 34.23, 132.27), 2));
-        g.compute_edges();
 
+    public static void task1(String tsv_path) {
+        List<List<String>> records = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(tsv_path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split("\t");
+                records.add(Arrays.asList(values));
+            }
+            if (records.size() == 0) {
+                throw new Exception("No records found in the file");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Graph g = new CityGraph();
+        for (List<String> record : records) {
+            System.out.println(record);
+            g.add_vertex(new Vertex<>(new City(record.get(1), Double.parseDouble(record.get(2)), Double.parseDouble(record.get(3))), Integer.parseInt(record.get(2))));
+        }
+        g.compute_edges();
         System.out.println(g);
     }
 }
