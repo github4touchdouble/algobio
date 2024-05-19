@@ -63,7 +63,7 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Graph g = new CityGraph(false, true);
+        Graph g = new CityGraph(false, false);
         long add_vertex_time = 0;
         for (List<String> record : records) {
             long s = System.currentTimeMillis();
