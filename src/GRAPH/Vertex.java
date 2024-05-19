@@ -2,8 +2,8 @@ package GRAPH;
 
 public class Vertex<A> {
     A node;
-    public String label;
-    public Vertex(A node, String label) {
+    public Integer label;
+    public Vertex(A node, int label) {
         this.node = node;
         this.label = label;
     }
@@ -15,10 +15,12 @@ public class Vertex<A> {
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (!(obj instanceof Vertex)) return false;
-        if (obj instanceof String) {
-            return label.equals(obj);
+        Vertex<?> v = (Vertex<?>) obj;
+        if (obj instanceof Integer){
+            return label == v.label;
         }
-        return false;
+        return node.equals(v.node);
+
 
     }
     @Override

@@ -1,18 +1,45 @@
 package GRAPH;
 
+import java.util.ArrayList;
+
 public class CityGraph extends Graph{
+    private boolean debug = false;
     public CityGraph() {
         super();
     }
+    public CityGraph(boolean debug) {
+        super();
+        this.debug = debug;
+    }
+    @Override
+    public void add_edge(Vertex v1, Vertex v2) {
+        City c1 = (City) v1.node;
+        City c2 = (City) v2.node;
+        double distance = compute_distance(c1, c2);
+        if (super.adj_list.get(v1).get(distance) == null) {
+            super.adj_list.get(v1).put(distance, new ArrayList<>());
+            super.adj_list.get(v1).get(distance).add(v2);
+        } else {
+            if (!super.adj_list.get(v1).get(distance).contains(v2)){
+                super.adj_list.get(v1).get(distance).add(v2);
+            }
+        }
+    }
+
     @Override
     public void compute_edges() {
-        for (Vertex v : adj_list.keySet()) {
-            City c1 = (City) v.node;
-            for (Vertex v2 : adj_list.keySet()) {
-                City c2 = (City) v2.node;
-                if (!c1.equals(c2)) {
-                    double distance = compute_distance(c1, c2);
-
+        for (Vertex v1 : super.adj_list.keySet()) {
+            for (Vertex v2 : super.adj_list.keySet()) {
+                if (!v1.label.equals(v2.label)) {
+                    if (debug) {
+                        System.out.println("Adding edge between " + v1.node + " and " + v2.node);
+                    }
+                    add_edge(v1, v2);
+                }
+                else {
+                    if (debug) {
+                        System.out.println("Same city: " + v1.node + " and " + v2.node + " (skipping)");
+                    }
                 }
             }
         }
