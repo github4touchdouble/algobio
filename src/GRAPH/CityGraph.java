@@ -56,7 +56,7 @@ public class CityGraph extends Graph{
         if (!round) {
             return unrounded_distance;
         }
-        return (double) Math.round(unrounded_distance * 100.0) / 100.0;
+        return Double.parseDouble(String.format("%.5g%n",unrounded_distance).replace(",","."));
     }
 
 }
