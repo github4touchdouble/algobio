@@ -31,3 +31,4 @@ bin/
 
 ### Ignore created data ###
 *.csv
+/out/
