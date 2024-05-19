@@ -47,6 +47,7 @@ public class Main {
 
     public static void task1(String tsv_path) {
         List<List<String>> records = new ArrayList<>();
+
         try (BufferedReader br = new BufferedReader(new FileReader(tsv_path))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -62,12 +63,19 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Graph g = new CityGraph();
+        Graph g = new CityGraph(false, true);
+        long add_vertex_time = 0;
         for (List<String> record : records) {
+            long s = System.currentTimeMillis();
             g.add_vertex(new Vertex<>(new City(record.get(1), Double.parseDouble(record.get(2)), Double.parseDouble(record.get(3))), Integer.parseInt(record.get(0))));
+            long e = System.currentTimeMillis();
+            add_vertex_time += e - s;
         }
+        long s = System.currentTimeMillis();
         g.compute_edges();
-        System.out.println("Read " + g.get_vertex_count() + " cities");
-        System.out.println("Generated " + g.get_edge_count() + " edges");
+        long e = System.currentTimeMillis();
+
+        System.out.println("Added " + g.get_vertex_count() + " cities into the City Graph in " + add_vertex_time + "ms");
+        System.out.println("Generated " + g.get_edge_count() + " City Graph edges in " + (e - s) + "ms");
     }
 }
