@@ -6,9 +6,11 @@ import java.util.Map;
 
 public class Graph {
     HashMap<Vertex, HashMap<Double, ArrayList<Vertex>>> adj_list;
+    ArrayList<Edge> edges; // this makes things easier for kruskal
 
     public Graph() {
         this.adj_list = new HashMap<>();
+        this.edges = new ArrayList<>();
     }
 
     public void add_vertex(Vertex v) {
@@ -100,5 +102,8 @@ public class Graph {
         return count;
     }
 
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
 }
 

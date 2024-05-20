@@ -26,6 +26,8 @@ public class CityGraph extends Graph{
                 super.adj_list.get(v1).get(distance).add(v2);
             }
         }
+
+        super.edges.add(new Edge(v1, v2, distance));
     }
 
     @Override
