@@ -1,8 +1,7 @@
 package GRAPH;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.logging.SocketHandler;
 
 public class Graph {
     HashMap<Vertex, HashMap<Double, ArrayList<Vertex>>> adj_list;
@@ -100,6 +99,28 @@ public class Graph {
             }
         }
         return count;
+    }
+
+
+    public void depthFirstSearch(Vertex v, StringBuilder path, int[] steps) {
+        if (!v.isVisited()) {
+            steps[0]++;
+            v.setVisited(true); // mark start as visited
+
+            HashMap<Double, ArrayList<Vertex>> edges = adj_list.get(v);
+
+            for (Double distance : edges.keySet()) {
+                if (distance < 20.24) {
+                    ArrayList<Vertex> vertices = edges.get(distance);
+                    for (Vertex w : vertices) {
+                        if (!w.isVisited()) { // make sure to visit only unvisited vertices
+                            path.append(v.label + "\t" + w.label + "\t" + distance +"\n");
+                            depthFirstSearch(w, path, steps);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public ArrayList<Edge> getEdges() {
