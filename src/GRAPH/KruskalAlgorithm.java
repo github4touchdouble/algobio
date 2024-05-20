@@ -10,16 +10,16 @@ public class KruskalAlgorithm {
         Set<Edge> edges = new HashSet<>(graph.getEdges());
         List<Edge> sortedEdges = new ArrayList<>(edges);
 
-        // Schritt 3: Kanten sortieren
+        // sort edges by weight
         Collections.sort(sortedEdges, Comparator.comparingDouble(Edge::getWeight));
 
         while (!sortedEdges.isEmpty()) {
-            // Schritt 5: Die Kante mit dem kleinsten Gewicht auswählen
+            // get edge with smallest weight
             Edge minEdge = sortedEdges.remove(0);
 
-            // Schritt 7: Prüfen, ob das Hinzufügen der Kante einen Kreis erzeugt
+            // are we in a cycle
             if (!createsCycle(mstEdges, minEdge)) {
-                // Schritt 8: Kante zum minimalen Spannbaum hinzufügen
+                // add enge to mst
                 mstEdges.add(minEdge);
             }
         }
@@ -28,15 +28,10 @@ public class KruskalAlgorithm {
     }
 
     private static boolean createsCycle(Set<Edge> mstEdges, Edge edge) {
-        // Wir überprüfen, ob die Hinzufügung der Kante einen Kreis im minimalen Spannbaum erzeugt
-        // Dies kann geschehen, wenn die beiden Endpunkte der Kante bereits miteinander verbunden sind
         return isConnected(mstEdges, edge.from, edge.to);
     }
 
     private static boolean isConnected(Set<Edge> mstEdges, Vertex source, Vertex destination) {
-        // Wir überprüfen, ob es einen Pfad zwischen den beiden Endpunkten im minimalen Spannbaum gibt
-        // Dies kann mit einer Tiefensuche (DFS) oder einer Breitensuche (BFS) durchgeführt werden
-        // Hier verwenden wir eine einfache rekursive Tiefensuche
         Set<Vertex> visited = new HashSet<>();
         return dfs(mstEdges, visited, source, destination);
     }
@@ -64,7 +59,6 @@ public class KruskalAlgorithm {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write(mstEdges.size() + "\n");
             for (Edge edge : mstEdges) {
-                // Schreibe die Kante im Edge-List-Format
                 writer.write(edge.from.label + " " + edge.to.label + " " + edge.weight + "\n");
             }
         }
