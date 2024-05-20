@@ -5,13 +5,11 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ArgumentParser parser = ArgumentParsers.newFor("GRAPH").build().defaultHelp(true).description("Solve given graph problem --task");
         parser.addArgument("--task")
                 .metavar("N")
@@ -25,14 +23,31 @@ public class Main {
         try {
             Namespace ns = parser.parseArgs(args);
             int task = ns.getInt("task");
+            String path = ns.getString("path");
+
             switch (task) {
 
                 case 1:
-                    String path = ns.getString("path");
                     if (path == null) {
                         throw new ArgumentParserException("--path is required for task 1", parser);
                     }
                     task1(path);
+                    break;
+
+                case 2:
+                    if (path == null) {
+                        throw new ArgumentParserException("--path is required for task 2", parser);
+                    }
+
+                    task2(path);
+                    break;
+
+               case 3:
+                    if (path == null) {
+                        throw new ArgumentParserException("--path is required for task 2", parser);
+                    }
+
+                    task3(path);
                     break;
 
                 default:
@@ -45,7 +60,7 @@ public class Main {
 
     }
 
-    public static void task1(String tsv_path) {
+    public static Graph task1(String tsv_path) {
         List<List<String>> records = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(tsv_path))) {
@@ -77,5 +92,46 @@ public class Main {
 
         System.out.println("Added " + g.get_vertex_count() + " cities into the City Graph in " + add_vertex_time + "ms");
         System.out.println("Generated " + g.get_edge_count() + " City Graph edges in " + (e - s) + "ms");
+
+        return g;
+    }
+
+    public static void task2(String tsv_path) throws IOException {
+        Graph g = task1(tsv_path);  // init City Graph
+
+        // compute start id O(n) and map ids to vertices
+        // this is only to get the start vertex correct
+        int minID = Integer.MAX_VALUE;
+        HashMap<Integer, Vertex> idToVertex = new HashMap<>();
+        for(Vertex v : g.adj_list.keySet()) {
+            if (v.label < minID) {
+                minID = v.label;
+            }
+            idToVertex.put(v.label, v);
+        }
+
+        Vertex startVertex = idToVertex.get(minID);
+        StringBuilder sb = new StringBuilder();
+        int[] stepCounter = {0}; // due to recursion we pass an int array along, this can also be used for cycle detection
+        sb.append("ID (von)\tID (nach)\tDistanz\n");
+        long s = System.currentTimeMillis();
+        g.depthFirstSearch(startVertex, sb, stepCounter);
+        long e = System.currentTimeMillis();
+        long dfs = e - s;
+        System.out.println("traversed graph in " + stepCounter[0] + " in " + dfs + " ms");
+
+        writeCsv("cities.250.bfs.tsv", sb.toString());
+    }
+
+    public static void task3(String tsv_path) throws IOException {
+        Graph g = task1(tsv_path);  // init City Graph
+        Set<Edge> mstEdges = KruskalAlgorithm.kruskal(g);
+        KruskalAlgorithm.writeMSTToFile(mstEdges, "cities.250.mst.edgelist");
+    }
+
+    public static void writeCsv(String path, String content) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+        bw.write(content);
+        bw.close();
     }
 }
