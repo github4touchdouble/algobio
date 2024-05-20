@@ -125,7 +125,16 @@ public class Main {
 
     public static void task3(String tsv_path) throws IOException {
         Graph g = task1(tsv_path);  // init City Graph
+        long s = System.currentTimeMillis();
         Set<Edge> mstEdges = KruskalAlgorithm.kruskal(g);
+        long e = System.currentTimeMillis();
+        double sum = 0;
+        for (Edge edge: mstEdges) {
+            sum += edge.weight;
+        }
+        long dfs = e - s;
+        System.out.println("done creating mst with " + mstEdges.size() + " edges in " + dfs + " ms");
+        System.out.println("sum of edges in mst: " + sum);
         KruskalAlgorithm.writeMSTToFile(mstEdges, "cities.250.mst.edgelist");
     }
 
