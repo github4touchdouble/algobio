@@ -8,5 +8,26 @@ Nach dem Übertragen aller `Vertex`-Objekte in das `CityGraph`-Objekt werden die
 
 Die Gesamtlaufzeit der Methode beträgt im schlimmsten Fall O(n^3).
 ## Task 2
-Die Tiefensuche ist in unserem Fall eine rekursive
+Bevor `depthFirstSearch` aufgerufen wird, muss einiges an Vorarbeit passieren:
+1. Die *Initialisierung* des Graphen (mit der **Laufzeit** von `Task 1`)
+2. Die *Sortierung* der Knoten Ids in $\mathcal{O} (|V|)$.
+
+Die ***Tiefensuche*** ist in unserem Fall eine **rekursive** Methode, welche vom
+<u>Startkonten</u> (= Konten mit niedrigster `ID`) aus, alle benachbarten Knoten
+besucht, um sich dort erneut **rekursiv** aufzurufen.
+Zudem wird jeder besuchter Knoten als `visited` markiert, d.h. wenn in einem **Rekursionsaufruf**
+ein Konten $v$ besucht wird, welcher bereits besucht wurde, wird
+diese **Rekursion** abgebrochen (in $\mathcal{O} (1)$, da dies mit einem
+`if-statement` überprüft wird.).
+Mit dieser Eigenschaft, dass bereits besuchte Knoten nicht mehr betrachtet werden und das
+in $\mathcal{O} (1)$ überprüft wird, können also maximal $|V|$ viele $Vertices$
+besucht werden.
+
+Zudem wissen wir auch, dass alle $E_{i} \in V_E$ pro Knoten betrachtet werden.
+Da der Graph **ungerichtet** ist, gibt es also jedes $E_{i} \in E$ doppelt
+(einmal hin und einmal zurück). Also werden insgesamt maximal $2 * |E|$ viele
+$Edges$ besucht.
+
+Insgesamt also $\mathcal {O}(|V| + 2 |E|) = \mathcal {O}(|V| + |E|)$
+
 ## Task 3
