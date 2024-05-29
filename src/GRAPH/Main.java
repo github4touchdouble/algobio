@@ -134,7 +134,7 @@ public class Main {
         }
         long dfs = e - s;
         System.out.println("done creating mst with " + mstEdges.size() + " edges in " + dfs + " ms");
-        System.out.println("sum of edges in mst: " + sum);
+        System.out.println("sum of edges in mst: " + String.format("%.2f", sum));
         KruskalAlgorithm.writeMSTToFile(mstEdges, "cities.250.mst.edgelist");
     }
 
