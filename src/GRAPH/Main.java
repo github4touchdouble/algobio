@@ -112,8 +112,8 @@ public class Main {
 
         Vertex startVertex = idToVertex.get(minID);
         StringBuilder sb = new StringBuilder();
-        int[] stepCounter = {0}; // due to recursion we pass an int array along, this can also be used for cycle detection
-        sb.append("ID (von)\tID (nach)\tDistanz\n");
+        int[] stepCounter = {0}; // due to recursion we pass an int array along
+        sb.append("ID(von)\tID(nach)\tDistanz\n");
         long s = System.currentTimeMillis();
         g.depthFirstSearch(startVertex, sb, stepCounter);
         long e = System.currentTimeMillis();

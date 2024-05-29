@@ -71,7 +71,7 @@ python3 plot.py -p <name.csv> -s
 ```
 Saves plot as `<name.png>` and labels y-axis with seconds. If `-s` is not passed, the y values will be 
 displayed in microseconds.
-![Example](compare_all.png)
+![Example](times/compare_all.png)
 
 # Run all algorithms on input from sheet
 ```
