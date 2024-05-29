@@ -10,14 +10,14 @@ public class KruskalAlgorithm {
         Set<Edge> edges = new HashSet<>(graph.getEdges());
         List<Edge> sortedEdges = new ArrayList<>(edges);
 
-        // sort edges by weight
+        // sort edges by weight O(|E| * log(|E|)) (Collections.sort sollte bubblesort sein)
         Collections.sort(sortedEdges, Comparator.comparingDouble(Edge::getWeight));
 
         while (!sortedEdges.isEmpty()) {
             // get edge with smallest weight
             Edge minEdge = sortedEdges.remove(0);
 
-            // are we in a cycle
+            // are we in a cycle?
             if (!createsCycle(mstEdges, minEdge)) {
                 // add enge to mst
                 mstEdges.add(minEdge);

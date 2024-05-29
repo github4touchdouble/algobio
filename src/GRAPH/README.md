@@ -1,12 +1,30 @@
 # Praxisblatt 2 - Algorithmische Bioinformatik I
+## Usage
+
+```bash
+java -jar GRAPH.jar --path PATH_TO_CITIES_TSV --task [1|2|3]
+```
+
+# Laufzeitanalyse
 ## Task 1
-Wir erstellen zunächst ein Objekt der Klasse `CityGraph` in konstanter Laufzeit O(1). Dann lesen wir eine TSV-Datei in eine Liste von `ArrayList`-Objekten ein. Dies ermöglicht den Zugriff auf jedes Attribut eines Eintrags in konstanter Zeit O(1). 
+Wir erstellen zunächst ein Objekt der Klasse `CityGraph` in konstanter Laufzeit $\mathcal{O}(1)$.
+Dann lesen wir eine TSV-Datei in eine Liste von `ArrayList`-Objekten ein.
+Dies ermöglicht den Zugriff auf jedes Attribut eines Eintrags in konstanter Zeit $\mathcal{O}(1)$.
 
-Anschließend iterieren wir in linearer Zeit O(n) über die Liste der Einträge. Für jeden Eintrag erstellen wir ein `City`-Objekt in konstanter Zeit O(1). Dieses `City`-Objekt wird zur Erstellung eines `Vertex`-Objekts verwendet, was ebenfalls in konstanter Zeit O(1) erfolgt. Das `Vertex`-Objekt wird anschließend in konstanter Laufzeit O(1) in das `CityGraph`-Objekt eingefügt.
+Anschließend iterieren wir in linearer Zeit $\mathcal{O}(n)$ über die Liste der Einträge.
+Für jeden Eintrag erstellen wir ein `City`-Objekt in konstanter Zeit $\mathcal{O}(1)$.
+Dieses `City`-Objekt wird zur Erstellung eines `Vertex`-Objekts verwendet, was ebenfalls in konstanter Zeit $\mathcal{O}(1)$ erfolgt.
+Das `Vertex`-Objekt wird anschließend in konstanter Laufzeit $\mathcal{O}(1)$ in das `CityGraph`-Objekt eingefügt.
 
-Nach dem Übertragen aller `Vertex`-Objekte in das `CityGraph`-Objekt werden die Kanten des Graphen erstellt. Jeder `Vertex` ist mit jedem anderen `Vertex` verbunden, jedoch nicht mit sich selbst. Wir iterieren über alle `Vertex`-Objekte und überprüfen für jeden `Vertex`, ob eine Kante zu einem anderen `Vertex` bereits existiert. Falls nicht, wird eine neue Kante hinzugefügt. Die äußere Schleife benötigt O(n) Zeit, die innere ebenfalls O(n), und die Überprüfung auf bestehende Kanten im schlimmsten Fall O(n). Das Hinzufügen einer neuen Kante erfolgt in O(1).
+Nach dem Übertragen aller `Vertex`-Objekte in das `CityGraph`-Objekt werden die Kanten des Graphen erstellt.
+Jeder `Vertex` ist mit jedem anderen `Vertex` verbunden, jedoch nicht mit sich selbst.
+Wir iterieren über alle `Vertex`-Objekte und überprüfen für jeden `Vertex`, ob eine Kante zu einem anderen `Vertex` bereits existiert.
+Falls nicht, wird eine neue Kante hinzugefügt.
+Die äußere Schleife benötigt $\mathcal{O}(n)$ Zeit, die innere ebenfalls $\mathcal{O}(n)$, und die Überprüfung auf bestehende Kanten im schlimmsten Fall $\mathcal{O}(n)$.
+Das Hinzufügen einer neuen Kante erfolgt in $\mathcal{O}(1)$.
 
-Die Gesamtlaufzeit der Methode beträgt im schlimmsten Fall O(n^3).
+Die Gesamtlaufzeit der Methode beträgt im schlimmsten Fall $\mathcal{O}(n^3)$.
+
 ## Task 2
 Bevor `depthFirstSearch` aufgerufen wird, muss einiges an Vorarbeit passieren:
 1. Die *Initialisierung* des Graphen (mit der **Laufzeit** von `Task 1`)
