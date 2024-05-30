@@ -1,6 +1,12 @@
 # Praxisblatt 2 - Algorithmische Bioinformatik I
-## Usage
 
+----
+**GitHub Repo:**    
+https://github.com/github4touchdouble/algobio/tree/master/src/GRAPH
+
+----
+
+## Usage
 ```bash
 java -jar GRAPH.jar --path PATH_TO_CITIES_TSV --task [1|2|3]
 ```
@@ -49,7 +55,7 @@ Das heißt, für jeden Konten, muss diese Sortierung genau einmal geschehen,
 also lässt sich der Gesamtaufwand für das Sortieren der Kantengewichte mit 
 $|E| \cdot \log(|E|)$ beschreiben (`Collections.sort`).
 
-In unserem Fall ist die Komplexität also: $\mathcal{O}(|V| + |E| + |E| \cdot \log(|E|))$.
+In unserem Fall ist die Komplexität also: $\mathcal{O}(|V| + |E| + |E| \cdot \log(|E|)) = \mathcal{O}(|V| + |E| \cdot \log(|E|))$.
 
 ## Task 3
 
@@ -66,11 +72,14 @@ Die Idee des Algorithmus lässt sich folgendermaßen zusammenfassen (**Notizen a
 ```
 𝐸′ ←  ∅
 Sortiere 𝐸 aufsteigend nach 𝑐(𝐸)
-Solange 𝐸 ≠ ∅
-	𝑒 ←  min(𝐸)
-	𝐸=𝐸−{𝑒}
-	Falls 𝐺(𝑉, 𝐸′ ∪ {𝑒}) zyklenfrei:
+Solange 𝐸 ≠ ∅    // loop in Zeile 16 (in KruskalAlgorithmus.Java)
+	𝑒 ←  min(𝐸)  // Zeile 18
+	𝐸=𝐸−{𝑒}      // Zeile 18
+	Falls 𝐺(𝑉, 𝐸′ ∪ {𝑒}) zyklenfrei:  // wird in der Methode createsCycle(mstEdges, minEdge) geprüft
 		𝐸′ = 𝐸′ ∪ {𝑒}
 ```
-Hier dominiert das Sortieren die Laufzeit: $\mathcal{O} (|E| \cdot \log(|E|))$
+Hier dominiert das Sortieren die Laufzeit: $\mathcal{O} (|E| \cdot \log(|E|))$,
+denn auch hier wird initial `Collections.sort(sortedEdges, Comparator.comparingDouble(Edge::getWeight));`
+aufgerufen, um die Kanten nach Gewicht zu sortieren.
+
 
