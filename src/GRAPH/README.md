@@ -52,3 +52,25 @@ $|E| \cdot \log(|E|)$ beschreiben (`Collections.sort`).
 In unserem Fall ist die Komplexität also: $\mathcal{O}(|V| + |E| + |E| \cdot \log(|E|))$.
 
 ## Task 3
+
+Die Idee des Algorithmus lässt sich folgendermaßen zusammenfassen (**Notizen aus der ADS Vorlesung von mir :)**):
+- Starte mit leerer Kantenmenge.
+- Kanten sind aufsteigend sortiert
+- Füge sukzessive minimale Kanten bezüglich ihrer Kosten hinzu, sodass kein Zyklus entsteht.
+  Es entstehen dann zuerst nicht zusammenhängende Teilgraphen,
+  die dann durch Hinzufügen von Kanten verbunden werden.
+- Stoppe, falls keine solche Kante mehr gefunden werden kann (die nächste Kante bildet einen Zyklus,
+  alle Knoten erreichbar).
+
+*Pseudocode:*
+```
+𝐸′ ←  ∅
+Sortiere 𝐸 aufsteigend nach 𝑐(𝐸)
+Solange 𝐸 ≠ ∅
+	𝑒 ←  min(𝐸)
+	𝐸=𝐸−{𝑒}
+	Falls 𝐺(𝑉, 𝐸′ ∪ {𝑒}) zyklenfrei:
+		𝐸′ = 𝐸′ ∪ {𝑒}
+```
+Hier dominiert das Sortieren die Laufzeit: $\mathcal{O} (|E| \cdot \log(|E|))$
+
