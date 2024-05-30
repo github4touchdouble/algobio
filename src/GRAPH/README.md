@@ -55,7 +55,8 @@ Das heißt, für jeden Konten, muss diese Sortierung genau einmal geschehen,
 also lässt sich der Gesamtaufwand für das Sortieren der Kantengewichte mit 
 $|E| \cdot \log(|E|)$ beschreiben (`Collections.sort`).
 
-In unserem Fall ist die Komplexität also: $\mathcal{O}(|V| + |E| + |E| \cdot \log(|E|)) = \mathcal{O}(|V| + |E| \cdot \log(|E|))$.
+Da $|E|$ oft größer als $|V|$ ist (zum Beispiel in dichten Graphen), 
+dominiert der Term $|E| \log(|E|)$, was die Gesamtlaufzeit zu $\mathcal{O}(|V| + |E| \log(|E|))$ macht.
 
 ## Task 3
 
