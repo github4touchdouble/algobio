@@ -108,8 +108,10 @@ public class Graph {
             v.setVisited(true); // mark start as visited
 
             HashMap<Double, ArrayList<Vertex>> edges = adj_list.get(v);
+            List<Double> sortedEdges = new ArrayList<>(edges.keySet());
+            Collections.sort(sortedEdges);
 
-            for (Double distance : edges.keySet()) {
+            for (Double distance : sortedEdges) {
                 if (distance < 20.24) {
                     ArrayList<Vertex> vertices = edges.get(distance);
                     for (Vertex w : vertices) {

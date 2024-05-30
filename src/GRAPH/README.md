@@ -41,11 +41,14 @@ Mit dieser Eigenschaft, dass bereits besuchte Knoten nicht mehr betrachtet werde
 in $\mathcal{O} (1)$ überprüft wird, können also maximal $|V|$ viele $Vertices$
 besucht werden.
 
-Zudem wissen wir auch, dass alle $E_{i} \in V_E$ pro Knoten betrachtet werden.
-Da der Graph **ungerichtet** ist, gibt es also jedes $E_{i} \in E$ doppelt
-(einmal hin und einmal zurück). Also werden insgesamt maximal $2 * |E|$ viele
-$Edges$ besucht.
+Insgesamt also $\mathcal {O}(|V| + |E|).
+Jedoch müssen zusätzlich bei jedem Aufruf eines unbesuchten Kontens 
+dessen Kanten nach Gewicht sortiert werden
+(die von uns gewählte Datenstruktur [HashMap], gibt die Keys [Distanz] eben nicht geordnet zurück).
+Das heißt, für jeden Konten, muss diese Sortierung genau einmal geschehen, 
+also lässt sich der Gesamtaufwand für das Sortieren der Kantengewichte mit 
+$|E| \cdot \log(|E|)$ beschreiben (`Collections.sort`).
 
-Insgesamt also $\mathcal {O}(|V| + 2 |E|) = \mathcal {O}(|V| + |E|)$
+In unserem Fall ist die Komplexität also: $\mathcal{O}(|V| + |E| + |E| \cdot \log(|E|))$.
 
 ## Task 3
