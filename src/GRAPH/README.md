@@ -41,7 +41,7 @@ Mit dieser Eigenschaft, dass bereits besuchte Knoten nicht mehr betrachtet werde
 in $\mathcal{O} (1)$ überprüft wird, können also maximal $|V|$ viele $Vertices$
 besucht werden.
 
-Insgesamt also $\mathcal {O}(|V| + |E|).
+Insgesamt also $\mathcal {O}(|V| + |E|)$.
 Jedoch müssen zusätzlich bei jedem Aufruf eines unbesuchten Kontens 
 dessen Kanten nach Gewicht sortiert werden
 (die von uns gewählte Datenstruktur [HashMap], gibt die Keys [Distanz] eben nicht geordnet zurück).
