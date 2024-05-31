@@ -37,7 +37,7 @@ Bevor `depthFirstSearch` aufgerufen wird, muss einiges an Vorarbeit passieren:
 2. Die *Sortierung* der Knoten Ids in $\mathcal{O} (|V|)$.
 
 Die ***Tiefensuche*** ist in unserem Fall eine **rekursive** Methode, welche vom
-<u>Startkonten</u> (= Konten mit niedrigster `ID`) aus, alle benachbarten Knoten
+<u>Startknoten</u> (= Konten mit niedrigster `ID`) aus, alle benachbarten Knoten
 besucht, um sich dort erneut **rekursiv** aufzurufen.
 Zudem wird jeder besuchter Knoten als `visited` markiert, d.h. wenn in einem **Rekursionsaufruf**
 ein Konten $v$ besucht wird, welcher bereits besucht wurde, wird
@@ -48,7 +48,7 @@ in $\mathcal{O} (1)$ überprüft wird, können also maximal $|V|$ viele $Vertice
 besucht werden.
 
 Insgesamt also $\mathcal {O}(|V| + |E|)$.
-Jedoch müssen zusätzlich bei jedem Aufruf eines unbesuchten Kontens 
+Jedoch müssen zusätzlich bei jedem Aufruf eines unbesuchten Knotens 
 dessen Kanten nach Gewicht sortiert werden
 (die von uns gewählte Datenstruktur [HashMap], gibt die Keys [Distanz] eben nicht geordnet zurück).
 Das heißt, für jeden Konten, muss diese Sortierung genau einmal geschehen, 
