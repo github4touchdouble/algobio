@@ -20,8 +20,8 @@ java -jar GRN.jar -network PATH_TO_EDGE_LIST -active PATH_TO_ACTIVE_GENES -all
 
 ## Complexity
 ### Generation of GRN
-The complexity of initializing `GRN` should be $\mathcal{O}(m + n)$ where $n = \# \text{ lines in edge list}$
-and $m = \# \text{ active genes}$, since we read each file only once.
+The complexity of initializing `GRN` should be $\mathcal{O}(m + n)$ where $n = \text{ number of lines in edge list}$
+and $m = \text{number of active genes}$, since we read each file only once.
 
 Converting the `GRN` to a $SAP$ formatted file in `toSAP()`:  
 We loop through each `gene` ($\equiv$ clauses) and for each clause $C$ we loop 
