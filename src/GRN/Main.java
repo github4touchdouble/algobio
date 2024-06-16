@@ -48,6 +48,7 @@ public class Main {
             String defaultSAPOutPath = "out.sap.dimacs.txt";
             String solvedSAPPath = "SOLVED.txt";
             GRN grn = new GRN(pathToNetwork, pathToActiveGenes);
+            System.out.println("Writing SAP of GRN to " + defaultSAPOutPath);
             writeSAP(defaultSAPOutPath, grn.toSAP());
             execAkmaxsat(defaultSAPOutPath, "SOLVED.txt");
             grn.assignVariableValues(solvedSAPPath);
@@ -104,6 +105,7 @@ public class Main {
 
         if (exitCode == 0) {
             System.out.println("Akmaxsat executed successfully.");
+            System.out.println("Solution can be found in: " + outPath + ".");
 
         } else {
             System.err.println("Akmaxsat failed with exit code: " + exitCode);
