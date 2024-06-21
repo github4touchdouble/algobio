@@ -1,13 +1,12 @@
 package GRAPH;
 
 import java.util.*;
-import java.util.logging.SocketHandler;
 
-public class Graph {
+public class EdgeGraph {
     public HashMap<Vertex, HashMap<Double, ArrayList<Vertex>>> adj_list;
-    ArrayList<Edge> edges; // this makes things easier for kruskal
+    ArrayList<Edge> edges;
 
-    public Graph() {
+    public EdgeGraph() {
         this.adj_list = new HashMap<>();
         this.edges = new ArrayList<>();
     }
@@ -22,23 +21,23 @@ public class Graph {
     }
 
     public void add_edge(Vertex v1, Vertex v2) {
-        ArrayList<Vertex> eV1 = adj_list.get(v1).get(0);
-        ArrayList<Vertex> eV2 = adj_list.get(v2).get(0);
+        ArrayList<Vertex> eV1 = adj_list.get(v1).get(0.0);
+        ArrayList<Vertex> eV2 = adj_list.get(v2).get(0.0);
         if (eV1 == null) {
             eV1 = new ArrayList<>();
-            adj_list.get(v1).put((double)0, eV1);
+            adj_list.get(v1).put(0.0, eV1);
         }
         if (eV2 == null) {
             eV2 = new ArrayList<>();
-            adj_list.get(v2).put((double)0, eV2);
+            adj_list.get(v2).put(0.0, eV2);
         }
         eV1.add(v2);
         eV2.add(v1);
     }
 
     public void remove_edge(Vertex v1, Vertex v2) {
-        ArrayList<Vertex> eV1 = adj_list.get(v1).get(0);
-        ArrayList<Vertex> eV2 = adj_list.get(v2).get(0);
+        ArrayList<Vertex> eV1 = adj_list.get(v1).get(0.0);
+        ArrayList<Vertex> eV2 = adj_list.get(v2).get(0.0);
         if (eV1 != null) {
             eV1.remove(v2);
         }
@@ -70,8 +69,8 @@ public class Graph {
             for (Vertex v2 : adj_list.keySet()) {
                 if (!v.equals(v2)) {
                     boolean found = false;
-                    if (adj_list.get(v2).get(0) != null) {
-                        for(Vertex x : adj_list.get(v2).get(0)) {
+                    if (adj_list.get(v2).get(0.0) != null) {
+                        for (Vertex x : adj_list.get(v2).get(0.0)) {
                             if (x.equals(v)) {
                                 found = true;
                                 break;
@@ -79,7 +78,6 @@ public class Graph {
                         }
                     }
                     if (!found) {
-                        double weight = 0;
                         add_edge(v, v2);
                     }
                 }
@@ -90,6 +88,7 @@ public class Graph {
     public int get_vertex_count() {
         return adj_list.size();
     }
+
     public int get_edge_count() {
         int count = 0;
         for (Map.Entry<Vertex, HashMap<Double, ArrayList<Vertex>>> entry : adj_list.entrySet()) {
@@ -101,7 +100,6 @@ public class Graph {
         return count;
     }
 
-
     public void depthFirstSearch(Vertex v, StringBuilder path, int[] steps) {
         if (!v.isVisited()) {
             steps[0]++;
@@ -112,13 +110,11 @@ public class Graph {
             Collections.sort(sortedEdges);
 
             for (Double distance : sortedEdges) {
-                if (distance < 20.24) {
-                    ArrayList<Vertex> vertices = edges.get(distance);
-                    for (Vertex w : vertices) {
-                        if (!w.isVisited()) { // make sure to visit only unvisited vertices
-                            path.append(v.label + "\t" + w.label + "\t" + distance +"\n");
-                            depthFirstSearch(w, path, steps);
-                        }
+                ArrayList<Vertex> vertices = edges.get(distance);
+                for (Vertex w : vertices) {
+                    if (!w.isVisited()) { // make sure to visit only unvisited vertices
+                        path.append(v.label).append("\t").append(w.label).append("\t").append(distance).append("\n");
+                        depthFirstSearch(w, path, steps);
                     }
                 }
             }
@@ -129,4 +125,3 @@ public class Graph {
         return edges;
     }
 }
-

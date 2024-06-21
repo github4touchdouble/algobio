@@ -1,9 +1,9 @@
 package GRAPH;
 
 public class Edge {
-    Vertex from;
-    Vertex to;
-    Double weight;
+    public Vertex from;
+    public Vertex to;
+    public Double weight;
 
     public Edge(Vertex from, Vertex to, Double weight) {
         this.from = from;

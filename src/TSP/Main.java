@@ -1,8 +1,5 @@
 package TSP;
-import GRAPH.City;
-import GRAPH.CityGraph;
-import GRAPH.Graph;
-import GRAPH.Vertex;
+import GRAPH.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static TSP.Approx.twoApproximationTSP;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,32 +28,23 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Graph g = new CityGraph(false,false);
+        EdgeCityGraph mst = new EdgeCityGraph();
+        boolean seen = false;
+        Vertex start = null;
         for (List<String> record : records) {
-            g.add_vertex(new Vertex<>(new City(record.get(1), Double.parseDouble(record.get(2)), Double.parseDouble(record.get(3))), Integer.parseInt(record.get(0))));
-        }
-        g.compute_edges();
-
-        records.clear();
-        try (BufferedReader br = new BufferedReader(new FileReader("cities.250.mst.edgelist"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split("\t");
-                records.add(Arrays.asList(values));
+            Vertex bin = new Vertex<>(new City(record.get(1), Double.parseDouble(record.get(2)), Double.parseDouble(record.get(3))), Integer.parseInt(record.get(0)));
+            mst.add_vertex(bin);
+            if (seen == false) {
+                start = bin;
+                seen = true;
             }
-            if (records.size() == 0) {
-                throw new Exception("No records found in the file");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        Graph m = new Graph();
-        for (List<String> record : records) {
-            m.add_vertex(new Vertex<>(Integer.parseInt(record.get(0)), Integer.parseInt(record.get(0)));
-            System.out.println("Edge from " + record.get(0) + " to " + record.get(1) + " with weight " + record.get(2));
+
+        mst.compute();
+        List<Edge> tspTour = twoApproximationTSP(mst, start);
+
+        for (Edge edge : tspTour) {
+            System.out.println("Edge: " + edge.from.label + " -> " + edge.to.label + " Weight: " + edge.weight);
         }
 
 
